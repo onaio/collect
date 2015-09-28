@@ -25,9 +25,9 @@
   <string name="recapture_osm">Ponów OSM Tagging</string>
   <string name="capture_video">Nagraj Wideo</string>
   <string name="change_language">Zmień Język</string>
-  <string name="change_password">Hasło ODK</string>
+  <string name="change_password">Hasło ONA</string>
   <string name="change_protocol_settings_default">Ustawienia Platformy</string>
-  <string name="change_username">Nazwa użytkownika ODK</string>
+  <string name="change_username">Nazwa użytkownika ONA</string>
   <string name="clearanswer_confirm">Czy usunąć odpowiedź na \"%s\"?</string>
   <string name="clear_answer">Usuń odpowiedź</string>
   <string name="clear_answer_ask">Czy Usunąć Tę Odpowiedź?</string>
@@ -138,7 +138,7 @@
   <string name="show_splash">Pokaż ekran powitalny</string>
   <string name="show_splash_summary">Pokazuje się, gdy aplikacja startuje</string>
   <string name="splash_path">Wybrany obraz ekranu powitalnego</string>
-  <string name="default_splash_path">Domyślne ODK</string>
+  <string name="default_splash_path">Domyślne ONA</string>
   <string name="select_another_image">Wybierz inny obraz</string>
   <string name="use_odk_default">Użyj obraz domyślny</string>
   <string name="change_splash_path">Zmień obraz</string>
@@ -176,7 +176,7 @@
   <string name="save_as_error">Zapisana nazwa nie może być pusta!</string>
   <string name="edit_prompt">Edytuj Pytanie</string>
   <string name="selected_google_account_text">Konto Google</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Formularze Google</string>
   <string name="server_platform_other">Inny</string>
   <string name="font_size_extra_large">Extra Duży</string>
@@ -305,7 +305,7 @@
   <string name="go_shared">Dzielone ze Mną</string>
   <string name="modified_on_date_at_time">\'Zmieniony\' EEE, MMM dd, yyyy \'o\' HH:mm</string>
   <string name="protocol_settings">Skonfiguruj ustawienia platformy</string>
-  <string name="aggregate_preferences">Ustawienia ODK Aggregate</string>
+  <string name="aggregate_preferences">Ustawienia ONA Aggregate</string>
   <string name="other_preferences">Inne ustawienia platformy</string>
   <string name="gme_preferences">Ustawienia silnika Google Maps</string>
   <string name="no_coordinates">Przykład nie ma współrzędnych. Nie mogę wysłać.</string>
@@ -318,8 +318,8 @@
   <string name="gme_table_error">Nie mogę znaleźć lub stworzyć tabeli silnika Google Maps</string>
   <string name="gme_create_400">Otrzymałem 400 BAD REQUEST. Jest to znany błąd silnika Google Maps tuż po utworzeniu nowej tabeli, spróbuj wysłać ponownie za kilka sekund.</string>
   <string name="picasa_upload_error">Nie udało się wysłać zdjęcia, które nie istnieje: %1$s</string>
-  <string name="odk_auth_auth_fail">Błąd autentykacji ODK Autosend, proszę upewnij się, że twoje ustawienia są poprawne</string>
-  <string name="odk_auto_note">Powiadomienie ODK Autosend</string>
+  <string name="odk_auth_auth_fail">Błąd autentykacji ONA Autosend, proszę upewnij się, że twoje ustawienia są poprawne</string>
+  <string name="odk_auto_note">Powiadomienie ONA Autosend</string>
   <string name="notification_error">Błąd przy wyświetlaniu tekstu powiadomienia</string>
   <string name="delete_after_send">Skasuj po wysłaniu</string>
   <string name="delete_after_send_summary">Usuń zakończone formularze i pliki medialne po wysłaniu na serwer.</string>

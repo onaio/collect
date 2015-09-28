@@ -25,7 +25,7 @@
   <string name="change_language">ენის შეცვლა</string>
   <string name="change_password">პაროლი</string>
   <string name="change_protocol_settings_default">პლატფორმის პარამეტრები</string>
-  <string name="change_username">ODK-ის მომხმარებლის სახელი</string>
+  <string name="change_username">ONA-ის მომხმარებლის სახელი</string>
   <string name="clearanswer_confirm">შევცვალოთ ეს გამოპასუხება \"%s\"-ით?</string>
   <string name="clear_answer">გამოპასუხების მოცილება</string>
   <string name="clear_answer_ask">მოვაცილოთ ეს გამოპასუხება?</string>
@@ -136,7 +136,7 @@
   <string name="show_splash">სპლეშ-ეკრანის ჩვენება</string>
   <string name="show_splash_summary">აჩვენებს, როდესაც ირთვება აპლიკაცია</string>
   <string name="splash_path">არჩეული სპლეშ-სურათი</string>
-  <string name="default_splash_path">ODK დეფოლტი</string>
+  <string name="default_splash_path">ONA დეფოლტი</string>
   <string name="select_another_image">სხვა სურათების არჩევა</string>
   <string name="use_odk_default">გამოიყენე დეფოლტ-სურათი</string>
   <string name="change_splash_path">სურათის შეცვლა</string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">სახელი არ უნდა იყოს ცარიელი!</string>
   <string name="edit_prompt">გამოპასუხების რედაქტირება</string>
   <string name="selected_google_account_text">Google ექაუნთი</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google ფორმები</string>
   <string name="server_platform_other">სხვა</string>
   <string name="font_size_extra_large">ძალიან დიდი</string>
@@ -260,7 +260,7 @@
   <string name="google_drive">Google Drive</string>
   <string name="go_drive">ჩემი Drive</string>
   <string name="protocol_settings">პლატფორმის პარამეტრების შეცვლა</string>
-  <string name="aggregate_preferences">ODK Aggregate-ის პარამეტრები</string>
+  <string name="aggregate_preferences">ONA Aggregate-ის პარამეტრები</string>
   <string name="picasa_upload_error">არარსებული ფოტო ვერ აიტვირთა: %1$s</string>
   <string name="notification_error">შეცდომა შეტყობინების ტექსტის ჩვენებისას</string>
   <string name="delete_after_send">გაგზავნის შემდგომ წაშლა</string>

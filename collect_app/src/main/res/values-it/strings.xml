@@ -25,9 +25,9 @@
   <string name="recapture_osm">Rifai tag a OSM</string>
   <string name="capture_video">Registra Video</string>
   <string name="change_language">Cambia Lingua</string>
-  <string name="change_password">Password ODK</string>
+  <string name="change_password">Password ONA</string>
   <string name="change_protocol_settings_default">Impostazioni Piattaforma</string>
-  <string name="change_username">Nome utente ODK</string>
+  <string name="change_username">Nome utente ONA</string>
   <string name="clearanswer_confirm">Rimuovere la risposta a \"%s\"?</string>
   <string name="clear_answer">Rimuovere la risposta</string>
   <string name="clear_answer_ask">Rimuovere questa risposta?</string>
@@ -139,7 +139,7 @@
   <string name="show_splash">Mostra schermata di avvio</string>
   <string name="show_splash_summary">Indica quando l\'applicazione si avvia</string>
   <string name="splash_path">Immagine di avvio selezionata</string>
-  <string name="default_splash_path">ODK Default</string>
+  <string name="default_splash_path">ONA Default</string>
   <string name="select_another_image">Selezionare un\'altra immagine</string>
   <string name="use_odk_default">Usa immagine di default</string>
   <string name="change_splash_path">Cambiare immagine</string>
@@ -177,7 +177,7 @@
   <string name="save_as_error">Il nome Salvato non deve essere vuoto!</string>
   <string name="edit_prompt">Modifica Prompt</string>
   <string name="selected_google_account_text">Account Google</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Altro</string>
   <string name="font_size_extra_large">Molto Grande</string>
@@ -306,7 +306,7 @@
   <string name="go_shared">Condiviso con Me</string>
   <string name="modified_on_date_at_time">\'Modificato il\' EEE, dd MMM yyyy \'alle\' HH:mm</string>
   <string name="protocol_settings">Configura le impostazioni della piattaforma</string>
-  <string name="aggregate_preferences">Impostazioni ODK Aggregate</string>
+  <string name="aggregate_preferences">Impostazioni ONA Aggregate</string>
   <string name="other_preferences">Altre impostazioni piattaforma</string>
   <string name="gme_preferences">Impostazioni Motore Google Maps</string>
   <string name="no_coordinates">L\'istanza non ha coordinate. Impossibile caricare.</string>
@@ -319,8 +319,8 @@
   <string name="gme_table_error">Impossibile cercare o creare una tabella Motore Google Maps</string>
   <string name="gme_create_400">Ricevuto 400 BAD REQUEST. Questo è un errore noto con il Motore Google Maps dopo che una tabella viene creata, per favore riprova tra pochi secondi.</string>
   <string name="picasa_upload_error">Impossibile caricare foto inesistente: %1$s</string>
-  <string name="odk_auth_auth_fail">Autenticazione ODK Autosend fallira, per favore assicurati che le tue impostazioni siano corrette</string>
-  <string name="odk_auto_note">Notifica ODK Autosend</string>
+  <string name="odk_auth_auth_fail">Autenticazione ONA Autosend fallira, per favore assicurati che le tue impostazioni siano corrette</string>
+  <string name="odk_auto_note">Notifica ONA Autosend</string>
   <string name="notification_error">Errore di visualizzazione nella notifica</string>
   <string name="delete_after_send">Elimina dopo invio</string>
   <string name="delete_after_send_summary">Elimina moduli finalizzati e media dopo l\'\'invio al server</string>

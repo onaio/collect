@@ -25,9 +25,9 @@
   <string name="recapture_osm">OSM タグ付けを繰り返す</string>
   <string name="capture_video">ビデオを録画</string>
   <string name="change_language">言語を変更</string>
-  <string name="change_password">ODK パスワード</string>
+  <string name="change_password">ONA パスワード</string>
   <string name="change_protocol_settings_default">プラットフォームの設定</string>
-  <string name="change_username">ODK ユーザー名</string>
+  <string name="change_username">ONA ユーザー名</string>
   <string name="clearanswer_confirm">\"%s\" への回答を削除しますか?</string>
   <string name="clear_answer">回答を削除</string>
   <string name="clear_answer_ask">回答を削除しますか?</string>
@@ -138,7 +138,7 @@
   <string name="show_splash">スプラッシュスクリーンを表示</string>
   <string name="show_splash_summary">アプリケーションの起動時に表示します</string>
   <string name="splash_path">選択したスプラッシュ画像</string>
-  <string name="default_splash_path">ODK デフォルト</string>
+  <string name="default_splash_path">ONA デフォルト</string>
   <string name="select_another_image">別の画像を選択</string>
   <string name="use_odk_default">デフォルト画像を使用</string>
   <string name="change_splash_path">画像を変更</string>
@@ -176,7 +176,7 @@
   <string name="save_as_error">保存する名前は空にできません!</string>
   <string name="edit_prompt">プロンプトを編集</string>
   <string name="selected_google_account_text">Google アカウント</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google フォーム</string>
   <string name="server_platform_other">その他</string>
   <string name="font_size_extra_large">特大</string>
@@ -305,7 +305,7 @@
   <string name="go_shared">私と共有</string>
   <string name="modified_on_date_at_time">yyyy/MM/dd HH:mm \'に変更しました\'</string>
   <string name="protocol_settings">プラットフォーム設定を構成</string>
-  <string name="aggregate_preferences">ODK Aggregate 設定</string>
+  <string name="aggregate_preferences">ONA Aggregate 設定</string>
   <string name="other_preferences">その他のプラットフォーム設定</string>
   <string name="gme_preferences">Google マップ エンジン設定</string>
   <string name="no_coordinates">インスタンスにコーディネートがありません。アップロードできません。</string>
@@ -318,8 +318,8 @@
   <string name="gme_table_error">Google マップ エンジンのテーブルを、検索または作成できません</string>
   <string name="gme_create_400">400 BAD REQUESTを受け取りました。これはGoogle マップ エンジンで、テーブルが新たに作成された後に、既知のバグです、数秒後に再送信してみてください。</string>
   <string name="picasa_upload_error">写真が存在しないため、アップロードできませんでした: %1$s</string>
-  <string name="odk_auth_auth_fail">ODK 自動送信で認証に失敗しました。設定が正しいことを確認してください</string>
-  <string name="odk_auto_note">ODK 自動送信通知</string>
+  <string name="odk_auth_auth_fail">ONA 自動送信で認証に失敗しました。設定が正しいことを確認してください</string>
+  <string name="odk_auto_note">ONA 自動送信通知</string>
   <string name="notification_error">通知テキストの表示中にエラー</string>
   <string name="delete_after_send">送信後に削除</string>
   <string name="delete_after_send_summary">サーバに送信した後、確定されたフォームやメディアを削除します</string>

@@ -22,7 +22,7 @@
   <string name="capture_video">Video aufnehmen</string>
   <string name="change_language">Sprache ändern</string>
   <string name="change_password">Passwort</string>
-  <string name="change_username">ODK Benutzername</string>
+  <string name="change_username">ONA Benutzername</string>
   <string name="clearanswer_confirm">Antwort zu \"%s\" entfernen?</string>
   <string name="clear_answer">Antwort entfernen</string>
   <string name="clear_answer_ask">Diese Antwort entfernen?</string>
@@ -126,7 +126,7 @@
   <string name="show_splash">Startbild anzeigen</string>
   <string name="show_splash_summary">Wird angezeigt während die Applikation aufstartet</string>
   <string name="splash_path">Ausgewähltes Startbild</string>
-  <string name="default_splash_path">ODK Standard</string>
+  <string name="default_splash_path">ONA Standard</string>
   <string name="select_another_image">Anderes Bild auswählen</string>
   <string name="use_odk_default">Standardbild verwenden</string>
   <string name="change_splash_path">Bild ändern</string>
@@ -164,7 +164,7 @@
   <string name="save_as_error">Gespeicherter Name darf nicht leer sein!</string>
   <string name="edit_prompt">Eingabe ändern</string>
   <string name="selected_google_account_text">Google-Konto</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Formulare</string>
   <string name="server_platform_other">Andere</string>
   <string name="font_size_extra_large">Sehr gross</string>

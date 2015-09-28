@@ -23,9 +23,9 @@
   <string name="capture_image">Pren foto</string>
   <string name="capture_video">Enregistrar Vídeo</string>
   <string name="change_language">Canvia idioma</string>
-  <string name="change_password">Clau d\'accés ODK</string>
+  <string name="change_password">Clau d\'accés ONA</string>
   <string name="change_protocol_settings_default">Característiques de la plataforma</string>
-  <string name="change_username">nom d\'usuari ODK</string>
+  <string name="change_username">nom d\'usuari ONA</string>
   <string name="clearanswer_confirm">Eliminar la resposta a \"%s\"?</string>
   <string name="clear_answer">Eliminar resposta</string>
   <string name="clear_answer_ask">Eliminar aquesta resposta?</string>
@@ -136,7 +136,7 @@
   <string name="show_splash">Mostrar pantalla de benvinguda</string>
   <string name="show_splash_summary">Mostrar quan inicia l\'aplicació</string>
   <string name="splash_path">Imatge de benvinguda seleccionada</string>
-  <string name="default_splash_path">ODK per defecte</string>
+  <string name="default_splash_path">ONA per defecte</string>
   <string name="select_another_image">Seleccionar una altre imatge</string>
   <string name="use_odk_default">Usar imatge per defecte</string>
   <string name="change_splash_path">Canviar imatge</string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">El nom no pot deixar-se en blanc</string>
   <string name="edit_prompt">Editar entrada:</string>
   <string name="selected_google_account_text">Compte Google</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Altres</string>
   <string name="font_size_extra_large">Extra gran</string>
@@ -303,7 +303,7 @@
   <string name="go_shared">Comparteix amb mi</string>
   <string name="modified_on_date_at_time">\'Modificat el\' EEE, dd-MMM-yyyy \'a les\' HH:mm</string>
   <string name="protocol_settings">Configurar característiques de la plataforma</string>
-  <string name="aggregate_preferences">Paràmetres d\'ODK Aggregate</string>
+  <string name="aggregate_preferences">Paràmetres d\'ONA Aggregate</string>
   <string name="other_preferences">Paràmetres d\'altres plataformes</string>
   <string name="gme_preferences">característiques de Google Maps Engine</string>
   <string name="no_coordinates">Instància sense coordenades. No pot enviar.</string>
@@ -316,8 +316,8 @@
   <string name="gme_table_error">No pot trobar o crear una taula Google Maps Engine</string>
   <string name="gme_create_400">400 BAD REQUEST rebut. Es un error conegut amb Google Maps Engine després de crear una nova taula, si us plau, provar de tornar a enviar en uns segons.</string>
   <string name="picasa_upload_error">No pot pujar una foto que no existeix: %1$s</string>
-  <string name="odk_auth_auth_fail">Fallo en la autenticació ODK Autosend, si us plau, revisar els paràmetres de la configuració</string>
-  <string name="odk_auto_note">Notificació ODK Autosend</string>
+  <string name="odk_auth_auth_fail">Fallo en la autenticació ONA Autosend, si us plau, revisar els paràmetres de la configuració</string>
+  <string name="odk_auto_note">Notificació ONA Autosend</string>
   <string name="notification_error">Error mostrant notificació</string>
   <string name="delete_after_send">Esborra despres d\'enviar</string>
   <string name="delete_after_send_summary">Esborra formularis tancats i arxius multimedia després d\'enviar a servidor</string>

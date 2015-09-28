@@ -15,9 +15,9 @@
   <string name="capture_image">ថត​រូបភាព</string>
   <string name="capture_video">ថត​វីដេអូ</string>
   <string name="change_language">ប្ដូរ​ភាសា</string>
-  <string name="change_password">ពាក្យ​សម្ងាត់ ODK</string>
+  <string name="change_password">ពាក្យ​សម្ងាត់ ONA</string>
   <string name="change_protocol_settings_default">ការ​កំណត់​ប្រព័ន្ធ​កម្មវិធី</string>
-  <string name="change_username">ឈ្មោះ​អ្នកប្រើ ODK</string>
+  <string name="change_username">ឈ្មោះ​អ្នកប្រើ ONA</string>
   <string name="clear_answer_no">បោះបង់</string>
   <string name="completed_data">បញ្ចប់ (%s)</string>
   <string name="data">កម្រង​សំណួរ​ដែល​បាន​រក្សា​ទុក</string>

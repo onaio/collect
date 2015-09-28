@@ -25,9 +25,9 @@
   <string name="recapture_osm">Doen OSM-tagging oor</string>
   <string name="capture_video">Neem video</string>
   <string name="change_language">Verander Taal</string>
-  <string name="change_password">ODK Wagwoord</string>
+  <string name="change_password">ONA Wagwoord</string>
   <string name="change_protocol_settings_default">Platform Verstellings</string>
-  <string name="change_username">ODK Gebruikersnaam</string>
+  <string name="change_username">ONA Gebruikersnaam</string>
   <string name="clearanswer_confirm">Verwyer die antwoord op \"%s\"?</string>
   <string name="clear_answer">Verwyder antwoord</string>
   <string name="clear_answer_ask">Verwyder hierdie antwoord?</string>
@@ -138,7 +138,7 @@
   <string name="show_splash">Vertoon splash skerm</string>
   <string name="show_splash_summary">Vertoon wanneer program begin</string>
   <string name="splash_path">Geselekteerde splash prentjie</string>
-  <string name="default_splash_path">ODK Default</string>
+  <string name="default_splash_path">ONA Default</string>
   <string name="select_another_image">Kies \'n ander prentjie</string>
   <string name="use_odk_default">Gebruik default prentjie</string>
   <string name="change_splash_path">Verander Prentjie</string>
@@ -176,7 +176,7 @@
   <string name="save_as_error">Gestoorde naam mag nie leeg wees nie!</string>
   <string name="edit_prompt">Wysig Vraag</string>
   <string name="selected_google_account_text">Google rekening</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Vorms</string>
   <string name="server_platform_other">Ander</string>
   <string name="font_size_extra_large">Extra Large</string>
@@ -305,7 +305,7 @@
   <string name="go_shared">Met my gedeel</string>
   <string name="modified_on_date_at_time">\'Verander op\' EEE, MMM dd, yyyy \'om\' HH:mm</string>
   <string name="protocol_settings">Verstel platform verstellings</string>
-  <string name="aggregate_preferences">ODK Aggregate verstellings</string>
+  <string name="aggregate_preferences">ONA Aggregate verstellings</string>
   <string name="other_preferences">Ander platform verstellings</string>
   <string name="gme_preferences">Google Maps Engine verstellings</string>
   <string name="no_coordinates">Instance het nie koördinate nie. Kan nie oplaai nie.</string>
@@ -318,8 +318,8 @@
   <string name="gme_table_error">Kon nie \'n Google Maps Engine tabel vind of skep nie</string>
   <string name="gme_create_400">Het 400 BAD REQUEST ontvang. Hierdie is \'n bekende bug met Google Maps Engine nadat \'n tabel nuut geskep is, probeer asseblief weer na \'n paar sekondes.</string>
   <string name="picasa_upload_error">Kon nie foto oplaai nie want dit bestaan nie: %1$s</string>
-  <string name="odk_auth_auth_fail">ODK Outostuur authentication mislukking, maak asseblief seker u verstellings is korrek</string>
-  <string name="odk_auto_note">ODK Outostuur Kennisgewing</string>
+  <string name="odk_auth_auth_fail">ONA Outostuur authentication mislukking, maak asseblief seker u verstellings is korrek</string>
+  <string name="odk_auto_note">ONA Outostuur Kennisgewing</string>
   <string name="notification_error">Fout met vertoon van kennisgewing teks</string>
   <string name="delete_after_send">Verwyder na stuur</string>
   <string name="delete_after_send_summary">Verwyder gefinaliseerde vorms en media nadat dit server toe gestuur is</string>

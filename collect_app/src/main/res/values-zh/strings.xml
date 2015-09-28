@@ -126,7 +126,7 @@
   <string name="show_splash">显示开始界面</string>
   <string name="show_splash_summary">当应用开始时显示</string>
   <string name="splash_path">选定的开始图片</string>
-  <string name="default_splash_path">ODK默认图片</string>
+  <string name="default_splash_path">ONA默认图片</string>
   <string name="select_another_image">选择其他图片</string>
   <string name="use_odk_default">使用默认图片</string>
   <string name="change_splash_path">修改图片</string>
@@ -164,7 +164,7 @@
   <string name="save_as_error">保存的名字不能为空!</string>
   <string name="edit_prompt">修改提示</string>
   <string name="selected_google_account_text">Google账号</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google表格</string>
   <string name="server_platform_other">其他</string>
   <string name="font_size_extra_large">极大</string>

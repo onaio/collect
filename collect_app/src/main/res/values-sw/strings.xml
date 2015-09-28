@@ -22,7 +22,7 @@
   <string name="capture_video">Rekodi Video</string>
   <string name="change_language">Badili Lugha</string>
   <string name="change_password">Neno siri</string>
-  <string name="change_username">Jina la mtumiaji wa ODK</string>
+  <string name="change_username">Jina la mtumiaji wa ONA</string>
   <string name="clearanswer_confirm">Ondoa jawabu kwa \"%s\"?</string>
   <string name="clear_answer">Ondoa Jawabu</string>
   <string name="clear_answer_ask">Ondoa jawabu hili?</string>
@@ -126,7 +126,7 @@
   <string name="show_splash">Onyesha ukurusa wa mwanzo</string>
   <string name="show_splash_summary">Inaonyesha wakati programu inapoanza</string>
   <string name="splash_path">Picha ya ukurasa wa kuanza iliyochaguliwa</string>
-  <string name="default_splash_path">ODK Ya</string>
+  <string name="default_splash_path">ONA Ya</string>
   <string name="select_another_image">Chagua Picha Nyingine</string>
   <string name="use_odk_default">Tumia Picha Kuu</string>
   <string name="change_splash_path">Badili Picha</string>
@@ -164,7 +164,7 @@
   <string name="save_as_error">Jina la Kuhifadhi haipaswi kuwa tupu!</string>
   <string name="edit_prompt">Batilisha chanzo</string>
   <string name="selected_google_account_text">Google Account</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Other</string>
   <string name="font_size_extra_large">Kubwa sana</string>

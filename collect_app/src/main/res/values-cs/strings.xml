@@ -23,9 +23,9 @@
   <string name="capture_image">Udělat fotku</string>
   <string name="capture_video">Nahrát video</string>
   <string name="change_language">Změnit jazyk</string>
-  <string name="change_password">Heslo do ODK</string>
+  <string name="change_password">Heslo do ONA</string>
   <string name="change_protocol_settings_default">Nastavení platformy</string>
-  <string name="change_username">Uživatelské jméno do ODK</string>
+  <string name="change_username">Uživatelské jméno do ONA</string>
   <string name="clearanswer_confirm">Odstranit odpověď na \"%s\"?</string>
   <string name="clear_answer">Odstranit odpověď</string>
   <string name="clear_answer_ask">Odstranit tuto odpověď?</string>
@@ -137,7 +137,7 @@ Není co zobrazit.\n\nZkuste před odesláním označit dotazníky jako dokonče
   <string name="show_splash">Zobrazit úvodní obrazovku</string>
   <string name="show_splash_summary">Zobrazit při startu aplikace</string>
   <string name="splash_path">Vyberte úvodní obrázek</string>
-  <string name="default_splash_path">Výchozí obrazovka ODK</string>
+  <string name="default_splash_path">Výchozí obrazovka ONA</string>
   <string name="select_another_image">Vybrat další obrázek</string>
   <string name="use_odk_default">Použít výchozí obrázek</string>
   <string name="change_splash_path">Změnit obrázek</string>
@@ -175,7 +175,7 @@ Není co zobrazit.\n\nZkuste před odesláním označit dotazníky jako dokonče
   <string name="save_as_error">Uložené jméno nesmí být prázdné!</string>
   <string name="edit_prompt">Editovat otázku</string>
   <string name="selected_google_account_text">Účet Google</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Jiný</string>
   <string name="font_size_extra_large">Extra velký</string>
@@ -297,7 +297,7 @@ Není co zobrazit.\n\nZkuste před odesláním označit dotazníky jako dokonče
   <string name="go_shared">Sdíleno se mnou</string>
   <string name="modified_on_date_at_time">\'Upraveno v \' EEE, dd MMM, yyyy \'v\' HH:mm</string>
   <string name="protocol_settings">Konfigurovat nastavení platformy</string>
-  <string name="aggregate_preferences">Nastavení ODK Aggregate</string>
+  <string name="aggregate_preferences">Nastavení ONA Aggregate</string>
   <string name="other_preferences">Ostatní nastavení platformy</string>
   <string name="gme_preferences">Nastavení Google Maps Engine</string>
   <string name="no_coordinates">Instance nemá žádné souřadnice, Není možné ji nahrát.</string>
@@ -310,8 +310,8 @@ Není co zobrazit.\n\nZkuste před odesláním označit dotazníky jako dokonče
   <string name="gme_table_error">Nemohu najít nebo vytvořit tabulku Google Maps Engine</string>
   <string name="gme_create_400">Chyba 400 BAD REQUEST. Toto je chyba Google Maps Engine po vytvoření nové tabulky. Zkuste prosím odeslat znovu za několik vteřin.</string>
   <string name="picasa_upload_error">Chyba při nahrávání fotografie - Fotografie není k dispozici : %1$s</string>
-  <string name="odk_auth_auth_fail">Chyba autorizace ODK pro automatické odesílání dat, ujistěte se, že Vaše nastavení je správné</string>
-  <string name="odk_auto_note">ODK - výsledek automatického odeslání</string>
+  <string name="odk_auth_auth_fail">Chyba autorizace ONA pro automatické odesílání dat, ujistěte se, že Vaše nastavení je správné</string>
+  <string name="odk_auto_note">ONA - výsledek automatického odeslání</string>
   <string name="notification_error">Chyba při zobrazení oznámení</string>
   <string name="delete_after_send">Vymazat po odeslání</string>
   <string name="delete_after_send_summary">Vymaže dokončené dotazníky a média po odeslání na server</string>

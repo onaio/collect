@@ -25,9 +25,9 @@
   <string name="recapture_osm">Reface etichetare (tagging) OSM</string>
   <string name="capture_video">Înregistrează videoclipul</string>
   <string name="change_language">Schimbă limba</string>
-  <string name="change_password">Parola ODK</string>
+  <string name="change_password">Parola ONA</string>
   <string name="change_protocol_settings_default">Setările platformei</string>
-  <string name="change_username">Nume utilizator ODK</string>
+  <string name="change_username">Nume utilizator ONA</string>
   <string name="clearanswer_confirm">Ștergeți răspunsul de la \"%s\"?</string>
   <string name="clear_answer">Ștergeți răspunsul</string>
   <string name="clear_answer_ask">Ștergeți acest răspuns?</string>
@@ -138,7 +138,7 @@
   <string name="show_splash">Afișați ecranul de început</string>
   <string name="show_splash_summary">Afișat la startul aplicației</string>
   <string name="splash_path">Pagină de start selectată</string>
-  <string name="default_splash_path">ODK Implicit</string>
+  <string name="default_splash_path">ONA Implicit</string>
   <string name="select_another_image">Selectați altă imagine</string>
   <string name="use_odk_default">Utilizați imaginea implicită</string>
   <string name="change_splash_path">Schimbați imaginea</string>
@@ -176,7 +176,7 @@
   <string name="save_as_error">Numele salvat nu trebuie să fie gol!</string>
   <string name="edit_prompt">Editare câmp</string>
   <string name="selected_google_account_text">Cont Google</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Formulare Google</string>
   <string name="server_platform_other">Alte</string>
   <string name="font_size_extra_large">Extra mare</string>
@@ -305,7 +305,7 @@
   <string name="go_shared">Partajate cu mine</string>
   <string name="modified_on_date_at_time">\'Modificat în\' EEE, dd MMM yyyy \'la\' HH:mm</string>
   <string name="protocol_settings">Configurați setările platformei</string>
-  <string name="aggregate_preferences">Setări ODK Aggregate</string>
+  <string name="aggregate_preferences">Setări ONA Aggregate</string>
   <string name="other_preferences">Setările altor platforme</string>
   <string name="gme_preferences">Setări Google Maps Engine</string>
   <string name="no_coordinates">Instanța nu are coordonate. Nu am putut încărca</string>
@@ -318,8 +318,8 @@
   <string name="gme_table_error">Nu am putut găsi sau crea un tabel Google Maps Engine</string>
   <string name="gme_create_400">Am recepționat 400 BAD REQUEST. Acesta este un bug cunoscut al Google Maps Engine după ce un tabel este nou creat, vă rugăm să transmiteți din nou în câteva secunde.</string>
   <string name="picasa_upload_error">Nu am putut încărca o fotografie care nu există: %1$s</string>
-  <string name="odk_auth_auth_fail">Eroare la autentificare ODK Autosend authentication, vă rugăm să vă asigurați că setările sunt corecte</string>
-  <string name="odk_auto_note">Notificare ODK Autosend</string>
+  <string name="odk_auth_auth_fail">Eroare la autentificare ONA Autosend authentication, vă rugăm să vă asigurați că setările sunt corecte</string>
+  <string name="odk_auto_note">Notificare ONA Autosend</string>
   <string name="notification_error">Eroare la afișarea textului notificării</string>
   <string name="delete_after_send">Ștergeți după trimitere</string>
   <string name="delete_after_send_summary">Ștergeți formulare finalizate și fișierele media după trimiterea către server</string>

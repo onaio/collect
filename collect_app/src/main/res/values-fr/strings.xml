@@ -25,7 +25,7 @@
   <string name="change_language">Changer la Langue</string>
   <string name="change_password">Mot de passe</string>
   <string name="change_protocol_settings_default">Paramètres de la plate-forme</string>
-  <string name="change_username">Nom d\'utilisateur ODK</string>
+  <string name="change_username">Nom d\'utilisateur ONA</string>
   <string name="clearanswer_confirm">Enlever la réponse à \"%s\" ?</string>
   <string name="clear_answer">Enlever la réponse</string>
   <string name="clear_answer_ask">Enlever cette réponse ?</string>
@@ -136,7 +136,7 @@
   <string name="show_splash">Afficher l\'écran de Bienvenue</string>
   <string name="show_splash_summary">Montrer lors du démarrage</string>
   <string name="splash_path">Image sélectionnée</string>
-  <string name="default_splash_path">Défaut d\'ODK</string>
+  <string name="default_splash_path">Défaut d\'ONA</string>
   <string name="select_another_image">Sélectionner une autre Image</string>
   <string name="use_odk_default">Utiliser l\'Image par Défaut</string>
   <string name="change_splash_path">Modifier l\'image</string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">Le nom ne peut pas être vide !</string>
   <string name="edit_prompt">Ligne de modification</string>
   <string name="selected_google_account_text">Compte Google</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Autre</string>
   <string name="font_size_extra_large">Très grand</string>
@@ -303,7 +303,7 @@
   <string name="go_shared">Partagé avec moi</string>
   <string name="modified_on_date_at_time">\'Modifié\' EEE, MMM dd, yyyy \'à\' HH:mm</string>
   <string name="protocol_settings">Configurer les paramètres de la plate-forme</string>
-  <string name="aggregate_preferences">Paramètres d\'ODK Aggregate</string>
+  <string name="aggregate_preferences">Paramètres d\'ONA Aggregate</string>
   <string name="other_preferences">Autres paramètres de la plate-forme</string>
   <string name="gme_preferences">Paramètres de Google Maps Engine</string>
   <string name="no_coordinates">L\'instance n\'a pas de coordonnées. Impossible de télécharger.</string>
@@ -316,8 +316,8 @@
   <string name="gme_table_error">Il est impossible de retrouver ou créer une table Google Maps Engine.</string>
   <string name="gme_create_400">Réception de 400 BAD REQUEST. Il s\'agit d\'un bug connu dans Google Maps Engine après la création d\'une nouvelle table. Essayer de l\'enregistrer à nouveau dans quelques secondes.</string>
   <string name="picasa_upload_error">Échec de téléchargement de photo qui n\'existe pas: %1$s</string>
-  <string name="odk_auth_auth_fail">Échec d\'authentification d\'ODK Auto-envoi. Merci de vous assurez que vos paramètres sont corrects.</string>
-  <string name="odk_auto_note">Notification d\'ODK Auto-envoi</string>
+  <string name="odk_auth_auth_fail">Échec d\'authentification d\'ONA Auto-envoi. Merci de vous assurez que vos paramètres sont corrects.</string>
+  <string name="odk_auto_note">Notification d\'ONA Auto-envoi</string>
   <string name="notification_error">Erreur d\'affichage du texte de notification</string>
   <string name="delete_after_send">Supprimer après l\'envoi</string>
   <string name="delete_after_send_summary">Suppression des médias et formulaire finalisés après l\'envoi au serveur</string>

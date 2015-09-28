@@ -25,7 +25,7 @@
   <string name="change_language">Ubah bahasa</string>
   <string name="change_password">Kata sandi</string>
   <string name="change_protocol_settings_default">Pengaturan Platform</string>
-  <string name="change_username">ODK Username</string>
+  <string name="change_username">ONA Username</string>
   <string name="clearanswer_confirm">Hapus jawaban atas \"%s\"?</string>
   <string name="clear_answer">Hapus jawaban</string>
   <string name="clear_answer_ask">Hapus jawaban ini?</string>
@@ -136,7 +136,7 @@
   <string name="show_splash">Perlihatkan tampilan pembuka</string>
   <string name="show_splash_summary">Tampilkan pada awal aplikasi berjalan</string>
   <string name="splash_path">Gambar tampilan pembuka yang dipilih</string>
-  <string name="default_splash_path">ODK Bawaan</string>
+  <string name="default_splash_path">ONA Bawaan</string>
   <string name="select_another_image">Pilih gambar lainnya</string>
   <string name="use_odk_default">Gunakan gambar bawaan</string>
   <string name="change_splash_path">Ubah gambar</string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">Nama tidak boleh kosong!</string>
   <string name="edit_prompt">Ubah risalah</string>
   <string name="selected_google_account_text">Akun Google</string>
-  <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Lainnya</string>
   <string name="font_size_extra_large">Sangat besar</string>
@@ -262,7 +262,7 @@
   <string name="replace_bearing">Mengganti arah suatu titik</string>
   <string name="getting_bearing">Memuat arah suatu titik</string>
   <string name="accept_bearing">Merekam arah suatu titik</string>
-  <string name="sdcard_unmounted">ODK Collect tidak dapat mengakses SD card. Mungkin itu terpasang melalui USB? (kondisi saat ini: %s)</string>
+  <string name="sdcard_unmounted">ONA Collect tidak dapat mengakses SD card. Mungkin itu terpasang melalui USB? (kondisi saat ini: %s)</string>
   <string name="ext_file_no_data_error">File tidak memiliki data!</string>
   <string name="ext_conflicting_columns_error">Semua kolom %s sesuai!</string>
   <string name="ext_sortBy_numeric_error">Kolom terfilter anda harus hanya berisi nilai numerik. Nilai yang  konflik adalah \'%s\'.</string>
@@ -281,8 +281,8 @@
   <string name="ext_assign_value_error">Tidak dapat memberikan nilai pada \'%s\'.</string>
   <string name="fs_delete_media_path_if_file_error">Tidak dapat menghapus \'%s\'. Silahkan hapus file secara manual dan unduh ulang formulirnya.</string>
   <string name="fs_create_media_folder_error">Tidak dapat membuat folder media \'%s\'.</string>
-  <string name="fs_create_folder_error">Laporan ODK Collect: Tidak dapat membuat direktori: %s</string>
-  <string name="fs_create_folder_is_file_error">Laporan ODK Collect: \'%s\' sudah ada, tetapi bukan sebuah direktori.</string>
+  <string name="fs_create_folder_error">Laporan ONA Collect: Tidak dapat membuat direktori: %s</string>
+  <string name="fs_create_folder_is_file_error">Laporan ONA Collect: \'%s\' sudah ada, tetapi bukan sebuah direktori.</string>
   <string name="fs_file_copy_error">Tidak dapat menyalin \'%1$s\' terhadap \'%2$s\'. Penyebab: %3$s</string>
   <string name="survey_internal_error">Kesalahan internal: langkah menuju pertanyaan selanjutnya gagal.</string>
   <string name="survey_multiple_forms_error">Kamu mengunduh dua formulir berbeda tapi memiliki ID dan versi formulir yang sama. Kemungkinan keduanya adalah formulir sama yang diunggah pada saat yang berbeda atau pada server yang berbeda. Pada kasus ini, hapus salah satu formulir.</string>
@@ -303,7 +303,7 @@
   <string name="go_shared">Berbagi dengan saya</string>
   <string name="modified_on_date_at_time">\'dirubah pada tanggal\' EEE, MMM dd, yyyy \'di jam\' HH:mm</string>
   <string name="protocol_settings">Konfigurasi pengaturan platform</string>
-  <string name="aggregate_preferences">Pengaturan ODK Aggregate</string>
+  <string name="aggregate_preferences">Pengaturan ONA Aggregate</string>
   <string name="other_preferences">Pengaturan platform lainnya</string>
   <string name="gme_preferences">Pengaturan Google Maps Engine</string>
   <string name="no_coordinates">Permintaan tidak memiliki koordinat. Tidak dapat mengunggah.</string>
@@ -316,8 +316,8 @@
   <string name="gme_table_error">Tidak dapat mencari atau membuat tabel Google Maos Engine</string>
   <string name="gme_create_400">Menerima 400 BAD RQUEST. Ini merupakan bug umum pada Google Maps Engine setelah pembuatan tabel baru, Silahkan coba memasukkan kembali dalam beberapa detik.</string>
   <string name="picasa_upload_error">Gagal mengunggah foto yang tidak ada: %1$s</string>
-  <string name="odk_auth_auth_fail">Autentikasi pengiriman otomatis ODK gagal, pastikan pengaturan anda sudah benar</string>
-  <string name="odk_auto_note">Notifikasi Pengiriman otomatis ODK</string>
+  <string name="odk_auth_auth_fail">Autentikasi pengiriman otomatis ONA gagal, pastikan pengaturan anda sudah benar</string>
+  <string name="odk_auto_note">Notifikasi Pengiriman otomatis ONA</string>
   <string name="notification_error">Gagal menampilkan teks notifikasi</string>
   <string name="delete_after_send">Hapus setelah mengirim</string>
   <string name="delete_after_send_summary">Menghapus media dan formulir yang sempurna setelah mengirim ke server  </string>

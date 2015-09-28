@@ -63,7 +63,7 @@ public class AndroidShortcuts extends Activity {
         ArrayList<Uri> commands = new ArrayList<Uri>();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select ODK Shortcut");
+        builder.setTitle("Select ONA Shortcut");
 
         Cursor c = null;
         try {
