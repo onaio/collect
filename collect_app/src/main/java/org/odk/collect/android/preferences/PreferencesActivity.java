@@ -169,6 +169,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
       getPreferenceScreen().removePreference(autosendCategory);
     }
 
+    // other
+    Intent prefIntent = new Intent(this, OtherPreferencesActivity.class);
+
+
     mUsernamePreference.setOnPreferenceChangeListener(this);
     mUsernamePreference.setSummary(mUsernamePreference.getText());
     mUsernamePreference.getEditText().setFilters(new InputFilter[] { getReturnFilter() });

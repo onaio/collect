@@ -35,7 +35,7 @@ import com.google.api.client.xml.atom.Atom;
  */
 public final class PicasaClient extends GDataXmlClient {
 
-  static final XmlNamespaceDictionary DICTIOnaRY =
+  static final XmlNamespaceDictionary DICTIONARY =
       new XmlNamespaceDictionary().set("", "http://www.w3.org/2005/Atom")
           .set("exif", "http://schemas.google.com/photos/exif/2007")
           .set("gd", "http://schemas.google.com/g/2005")
@@ -48,7 +48,7 @@ public final class PicasaClient extends GDataXmlClient {
           .set("xml", "http://www.w3.org/XML/1998/namespace");
 
   public PicasaClient(HttpRequestFactory requestFactory) {
-    super("2", requestFactory, DICTIOnaRY);
+    super("2", requestFactory, DICTIONARY);
   }
 
   public void executeDelete(Entry entry) throws IOException {
@@ -107,7 +107,7 @@ public final class PicasaClient extends GDataXmlClient {
       PhotoEntry photo, PicasaUrl albumFeedUrl, AbstractInputStreamContent content)
       throws IOException {
     HttpRequest request = getRequestFactory().buildPostRequest(albumFeedUrl, null);
-    AtomContent atomContent = AtomContent.forEntry(DICTIOnaRY, photo);
+    AtomContent atomContent = AtomContent.forEntry(DICTIONARY, photo);
     request.setContent(new MultipartContent().setContentParts(Arrays.asList(atomContent, content)));
     request.getHeaders().setMimeVersion("1.0");
     return execute(request).parseAs(PhotoEntry.class);
