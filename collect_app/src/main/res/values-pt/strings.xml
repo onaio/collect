@@ -23,7 +23,7 @@
   <string name="change_language">Alterar Idioma</string>
   <string name="change_password">Senha</string>
   <string name="change_protocol_settings_default">Configurações da plataforma</string>
-  <string name="change_username">Usuário ONA</string>
+  <string name="change_username">Usuário Ona</string>
   <string name="clearanswer_confirm">Remover a resposta para \"%s\"?</string>
   <string name="clear_answer">Remover a resposta</string>
   <string name="clear_answer_ask">Remover esta Resposta?</string>
@@ -130,7 +130,7 @@
   <string name="show_splash">Mostrar Splash Screen</string>
   <string name="show_splash_summary">Mostrar quando a aplicação iniciar</string>
   <string name="splash_path">Selecionada imagem Splash</string>
-  <string name="default_splash_path">ONA Default</string>
+  <string name="default_splash_path">Ona Default</string>
   <string name="select_another_image">Selecionar Outra Imagem</string>
   <string name="use_odk_default">Usar Imagem Padrão</string>
   <string name="change_splash_path">Trocar Imagem</string>
@@ -169,7 +169,7 @@ Escolher Imagem</string>
   <string name="save_as_error">Nome salvo não pode ser em vazio!</string>
   <string name="edit_prompt">Editar Prompt</string>
   <string name="selected_google_account_text">Conta Google</string>
-  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
+  <string name="server_platform_odk_aggregate">Ona Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Outro</string>
   <string name="font_size_extra_large">Extra Grande</string>
@@ -290,7 +290,7 @@ Escolher Imagem</string>
   <string name="go_shared">Compartilhado comigo</string>
   <string name="modified_on_date_at_time">\'Modificado em\' EEE, MMM dd, yyyy \'às\' HH:mm</string>
   <string name="protocol_settings">Configurações da plataforma</string>
-  <string name="aggregate_preferences">Configurações do Agregador ONA.</string>
+  <string name="aggregate_preferences">Configurações do Agregador Ona.</string>
   <string name="other_preferences">Configurações de outras plataformas.</string>
   <string name="gme_preferences">Configurações da Ferramenta Google Maps.</string>
   <string name="no_coordinates">O exemplo não possui coordenadas. Não foi possível carregar.</string>
@@ -303,8 +303,8 @@ Escolher Imagem</string>
   <string name="gme_table_error">Não foi possível encontrar ou criar uma tabela na Ferramenta Google Maps.</string>
   <string name="gme_create_400">400 BAD REQUEST recebida. Esta é uma falha conhecida com a Ferramenta Google Maps depois de criada uma nova tabela. Por favor, tente realizar o envio novamente em alguns segundos.</string>
   <string name="picasa_upload_error">Falha ao carregar foto não existente: %1$s</string>
-  <string name="odk_auth_auth_fail">Falhar de envio automático do ONA, por favor certifique-se de que suas configurações estão corretas.</string>
-  <string name="odk_auto_note">Notificação de envio automático do ONA</string>
+  <string name="odk_auth_auth_fail">Falhar de envio automático do Ona, por favor certifique-se de que suas configurações estão corretas.</string>
+  <string name="odk_auto_note">Notificação de envio automático do Ona</string>
   <string name="notification_error">Erro ao exibir texto de notificação.</string>
   <string name="delete_after_send">Apagar depois de enviado</string>
   <string name="delete_after_send_summary">Apaga formulários completos e arquivos de mídia depois de enviados ao servidor.</string>

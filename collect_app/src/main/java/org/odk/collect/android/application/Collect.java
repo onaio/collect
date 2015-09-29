@@ -136,14 +136,14 @@ public class Collect extends Application {
             if (!dir.exists()) {
                 if (!dir.mkdirs()) {
                     RuntimeException e =
-                            new RuntimeException("ONA reports :: Cannot create directory: "
+                            new RuntimeException("Ona reports :: Cannot create directory: "
                                     + dirName);
                     throw e;
                 }
             } else {
                 if (!dir.isDirectory()) {
                     RuntimeException e =
-                            new RuntimeException("ONA reports :: " + dirName
+                            new RuntimeException("Ona reports :: " + dirName
                                     + " exists, but is not a directory");
                     throw e;
                 }

@@ -89,7 +89,7 @@ public abstract class GoogleMapsEngineAbstractUploader<Params, Progress, Result>
 	/*
 	 * By default, GME has a rate limit of 1 request/sec, so we've added GME_SLEEP_TIME
 	 * to make sure we stay within that limit
-	 * The production version of ONA Collect is not rate limited by GME, and is reflected
+	 * The production version of Ona Collect is not rate limited by GME, and is reflected
 	 * in the code below.  
 	 * You should change this if working on a non Google Play version of Collect.
 	 */
@@ -761,7 +761,7 @@ public abstract class GoogleMapsEngineAbstractUploader<Params, Progress, Result>
 		t.schema = s;
 		String[] tags = { md5 };
 		t.tags = tags;
-		t.description = "auto-created by ONA Collect for formid " + jrformid;
+		t.description = "auto-created by Ona Collect for formid " + jrformid;
 
 		URL createTableUrl = new URL(
 				"https://www.googleapis.com/mapsengine/v1/tables");

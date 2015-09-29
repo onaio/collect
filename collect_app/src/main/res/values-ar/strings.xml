@@ -23,7 +23,7 @@
   <string name="capture_image">التقط صورة</string>
   <string name="capture_video">سجل فيديو</string>
   <string name="change_language">تغيير اللغة</string>
-  <string name="change_password">ONA كلمة المرور</string>
+  <string name="change_password">Ona كلمة المرور</string>
   <string name="change_protocol_settings_default">إعدادات المنصة</string>
   <string name="change_username">إسم المستخدم</string>
   <string name="clearanswer_confirm">حذف الإجابة ل \"%s\"</string>
@@ -136,7 +136,7 @@
   <string name="show_splash">عرض شاشة البداية</string>
   <string name="show_splash_summary">اظهار عند بدء التطبيق</string>
   <string name="splash_path">اختيار صورة البداية</string>
-  <string name="default_splash_path">ONA الإفتراضي</string>
+  <string name="default_splash_path">Ona الإفتراضي</string>
   <string name="select_another_image">حدد صورة أخرى</string>
   <string name="use_odk_default">استخدام الصورة الإفتراضية</string>
   <string name="change_splash_path">تغيير الصورة</string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">الاسم لا يمكن أن يكون فارغ</string>
   <string name="edit_prompt">تعديل التوجيه</string>
   <string name="selected_google_account_text">حساب غوغل</string>
-  <string name="server_platform_odk_aggregate">جمع ONA </string>
+  <string name="server_platform_odk_aggregate">جمع Ona </string>
   <string name="server_platform_google_forms">استمارات غوغل</string>
   <string name="server_platform_other">اخرى</string>
   <string name="font_size_extra_large">كبير جدا</string>
@@ -303,7 +303,7 @@
   <string name="go_shared">مشاركة معي</string>
   <string name="modified_on_date_at_time">التعديل على اليوم, الشهر, السنة</string>
   <string name="protocol_settings">تكوين اعدادات البرنامج</string>
-  <string name="aggregate_preferences">ONA  جمع الاعدادات</string>
+  <string name="aggregate_preferences">Ona  جمع الاعدادات</string>
   <string name="other_preferences">اعدادات المنصة الاخرى</string>
   <string name="gme_preferences">اعدادات محرك خرائط القوقل</string>
   <string name="no_coordinates">لا يوجد احداثيات للمثال. غير قادر على التحميل</string>
@@ -316,8 +316,8 @@
   <string name="gme_table_error">غير قادر على ايجاد او انشاء محرك القوقل: جدول محرك الخرائط</string>
   <string name="gme_create_400">استقبال 400 طلب غير صحيح. هذا خطأ معروف في محرك خرائط قوقل بعد انشاء جدول حديث, يرجى اعادة المحاولة بعد مرور بض ثواني.</string>
   <string name="picasa_upload_error">فشل تحميل الصورة الغير موجودة%1$s</string>
-  <string name="odk_auth_auth_fail">ONA فشل ارسال مصادقة السيارات, رجاءا تأكد من ان جميع الاعدادات صحيحة</string>
-  <string name="odk_auto_note">ONA  ارسال الاشعارات اوتوماتيكيا</string>
+  <string name="odk_auth_auth_fail">Ona فشل ارسال مصادقة السيارات, رجاءا تأكد من ان جميع الاعدادات صحيحة</string>
+  <string name="odk_auto_note">Ona  ارسال الاشعارات اوتوماتيكيا</string>
   <string name="notification_error">خطأ في عرض اشعار النص</string>
   <string name="delete_after_send">حذف بعد الارسال</string>
   <string name="delete_after_send_summary">حذف الاشكال في صيغتها النهائية والوسائط المتعددة بعد ارسالها الى الخادم</string>

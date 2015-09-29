@@ -23,9 +23,9 @@
   <string name="capture_image">ຖ່າຍຮູບ</string>
   <string name="capture_video">ບັນທຶກວີດີໂອ</string>
   <string name="change_language">ເລືອກພາສາ</string>
-  <string name="change_password">ລະຫັດຜ່ານ ONA</string>
+  <string name="change_password">ລະຫັດຜ່ານ Ona</string>
   <string name="change_protocol_settings_default">ການຕັ້ງຄ່າ Platform</string>
-  <string name="change_username">ບັນຊີຜູ້ໃຊ້ ONA</string>
+  <string name="change_username">ບັນຊີຜູ້ໃຊ້ Ona</string>
   <string name="clearanswer_confirm">ຕ້ອງການລຶບຄຳຕອບໄປທີ່ \"%s\" ບໍ່?</string>
   <string name="clear_answer">ລຶບຄຳຕອບ</string>
   <string name="clear_answer_ask">ຕ້ອງການຍ້າຍຄຳຕອບນີ້ບໍ່?</string>
@@ -136,7 +136,7 @@
   <string name="show_splash">ສະແດງພາບເລີ່ມຕົ້ນ</string>
   <string name="show_splash_summary">ສະແ​ດງເມື່ອໂປແກຼມ ເລີ່ມຕົ້ນໃຊ້ງານ</string>
   <string name="splash_path">ເລືອກພາບເລີ່ມຕົ້ນ</string>
-  <string name="default_splash_path">ຄ່າເລີ່ມຕົ້ນ ONA</string>
+  <string name="default_splash_path">ຄ່າເລີ່ມຕົ້ນ Ona</string>
   <string name="select_another_image">ເລືອກພາບອື່ນ</string>
   <string name="use_odk_default">ເລືອກພາບທີ່ກຳນົດໄວ້</string>
   <string name="change_splash_path">ປ່ຽນຮູບພາບ</string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">ການໃສ່ຊື່ເອກະສານທີ່ຈະບັນທຶກບໍ່​ຕ້ອງຍະຫວ່າງ!</string>
   <string name="edit_prompt">ແກ້ໄຂຈຸດທີ່ເລືອກ</string>
   <string name="selected_google_account_text">ບັນຊີໃຊ້ງານໃນ Google </string>
-  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
+  <string name="server_platform_odk_aggregate">Ona Aggregate</string>
   <string name="server_platform_google_forms">ແບບຟອມ Google</string>
   <string name="server_platform_other">ອື່ນໆ</string>
   <string name="font_size_extra_large">ຂະໜາດໃຫຍ່ທີ່ສຸດ</string>
@@ -297,7 +297,7 @@
   <string name="go_shared">ແບ່ງກັບຂ້ອຍ</string>
   <string name="modified_on_date_at_time">\'ດັດແກ້ວັນທີ\' EEE, MMM dd, yyyy \'ເວລາ\' HH:mm</string>
   <string name="protocol_settings">ດັດແກ້ການຕັ້ງຄ່າ Platform</string>
-  <string name="aggregate_preferences">ການຕັ້ງຄ່າ ONA Aggregate</string>
+  <string name="aggregate_preferences">ການຕັ້ງຄ່າ Ona Aggregate</string>
   <string name="other_preferences">ການຕັ້ງຄ່າ platform ອື່ນໆ</string>
   <string name="gme_preferences">ການຕັ້ງຄ່າ Google Maps Engine</string>
   <string name="no_coordinates">ບໍ່ມີຄ່າເສັ້ນແວງ ເສັ້ນຂະໜານ. ບໍ່ສາມາດອັບໂຫຼດໄດ້.</string>
@@ -310,8 +310,8 @@
   <string name="gme_table_error">ບໍ່ສາມາດຊອກຫາ ຫຼື ສ້າງຕາຕະລາງ Google Maps Engine</string>
   <string name="gme_create_400">ໄດ້ຮັບ 400 BAD REQUEST. ນີ້ມີບັນຫາກັບ Google Maps Engine ພາຍຫຼັງສ້າງຕາຕະລາງໃໝ່, ລໍຖ້າຄາວນຶ່ງ ແລ້ວສົ່ງອີກຄັ້ງ</string>
   <string name="picasa_upload_error">ບໍ່ສາມາດອັບໂຫຼດຮູບທີ່ບໍ່ມີ: %1$s</string>
-  <string name="odk_auth_auth_fail">ການກວດສອບ ONA Autosend ຜິດພາດ, ກະລຸນາກວດສອບການຕັ້ງຄ່າວ່າຖືກຕ້ອງບໍ່</string>
-  <string name="odk_auto_note">ສົ່ງການແຈ້ງເຕືອນແບບໂອໂຕຂອງ ONA</string>
+  <string name="odk_auth_auth_fail">ການກວດສອບ Ona Autosend ຜິດພາດ, ກະລຸນາກວດສອບການຕັ້ງຄ່າວ່າຖືກຕ້ອງບໍ່</string>
+  <string name="odk_auto_note">ສົ່ງການແຈ້ງເຕືອນແບບໂອໂຕຂອງ Ona</string>
   <string name="notification_error">ຂໍ້ຜິດພາດສະແດງຂໍ້ຄວາມແຈ້ງເຕືອນ</string>
   <string name="delete_after_send">ລຶບພາຍຫຼັງສົ່ງແລ້ວ</string>
   <string name="delete_after_send_summary">ລຶບຟອມທີ່ສຳເລັດແລ້ວ ແລະ ສື່ ຫຼັງຈາກສົ່ງຫາເສີບເວີ</string>

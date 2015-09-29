@@ -18,9 +18,9 @@
   <string name="capture_image">Сфотографувати</string>
   <string name="capture_video">Записати відео</string>
   <string name="change_language">Змінити мову</string>
-  <string name="change_password">Пароль ONA</string>
+  <string name="change_password">Пароль Ona</string>
   <string name="change_protocol_settings_default">Налаштування платформи</string>
-  <string name="change_username">Ім\'я користувача ONA</string>
+  <string name="change_username">Ім\'я користувача Ona</string>
   <string name="clearanswer_confirm">Видалити відповідь на \"%s\"?</string>
   <string name="clear_answer">Видалити відповідь</string>
   <string name="clear_answer_ask">Видалити цю відповідь?</string>

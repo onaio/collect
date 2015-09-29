@@ -36,9 +36,9 @@
 <string name="recapture_osm">Redo OSM Tagging</string>
 <string name="capture_video">Record Video</string>
 <string name="change_language">Change Language</string>
-<string name="change_password">ONA Password</string>
+<string name="change_password">Ona Password</string>
 <string name="change_protocol_settings_default">Platform Settings</string>
-<string name="change_username">ONA Username</string>
+<string name="change_username">Ona Username</string>
 <string name="clearanswer_confirm">Remove the response to \"%s\"?</string>
 <string name="clear_answer">Remove response</string>
 <string name="clear_answer_ask">Remove This Response?</string>
@@ -149,7 +149,7 @@
 <string name="show_splash">Show splash screen</string>
 <string name="show_splash_summary">Shows when application starts</string>
 <string name="splash_path">Selected splash image</string>
-<string name="default_splash_path">ONA Default</string>
+<string name="default_splash_path">Ona Default</string>
 <string name="select_another_image">Select another image</string>
 <string name="use_odk_default">Use default image</string>
 <string name="change_splash_path">Change image</string>
@@ -187,7 +187,7 @@
 <string name="save_as_error">Saved name must not be blank!</string>
 <string name="edit_prompt">Edit Prompt</string>
 <string name="selected_google_account_text">Google account</string>
-<string name="server_platform_odk_aggregate">ONA Aggregate</string>
+<string name="server_platform_odk_aggregate">Ona Aggregate</string>
 <string name="server_platform_google_forms">Google Forms</string>
 <string name="server_platform_other">Other</string>
 <string name="font_size_extra_large">Extra Large</string>
@@ -310,8 +310,8 @@
 <string name="go_drive">My Drive</string>
 <string name="go_shared">Shared with Me</string>
 <string name="modified_on_date_at_time">\'Modified on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
-<string name="protocol_settings">Configure platform settings</string>
-<string name="aggregate_preferences">ONA Aggregate settings</string>
+<string name="protocol_settings">Configure Ona settings</string>
+<string name="aggregate_preferences">Ona Aggregate settings</string>
 <string name="other_preferences">Other platform settings</string>
 <string name="gme_preferences">Google Maps Engine settings</string>
 <string name="no_coordinates">Instance has no coordinates. Unable to upload.</string>
@@ -324,8 +324,8 @@
 <string name="gme_table_error">Unable to find or create a Google Maps Engine table</string>
 <string name="gme_create_400">Received 400 BAD REQUEST. This is a known bug with Google Maps Engine after a table is newly created, please try submitting again in a few seconds.</string>
 <string name="picasa_upload_error">Failed to upload photo that does not exist: %1$s</string>
-<string name="odk_auth_auth_fail">ONA Autosend authentication failure, please make sure your settings are correct</string>
-<string name="odk_auto_note">ONA Autosend Notification</string>
+<string name="odk_auth_auth_fail">Ona Autosend authentication failure, please make sure your settings are correct</string>
+<string name="odk_auto_note">Ona Autosend Notification</string>
 <string name="notification_error">Error displaying notification text</string>
 <string name="delete_after_send">Delete after send</string>
 <string name="delete_after_send_summary">Deletes finalized forms and media after sending to server</string>

@@ -101,11 +101,6 @@
             android:name=".activities.DrawActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".activities.GoogleDriveActivity"
-            android:label="@string/app_name" 
-            android:windowSoftInputMode="stateHidden"
-            />
-        <activity
             android:name=".activities.InstanceChooserList"
             android:label="@string/app_name" />
 
@@ -147,9 +142,6 @@
             android:name=".activities.FileManagerTabs"
             android:label="@string/app_name" />
         <activity
-            android:name=".activities.GoogleMapsEngineUploaderActivity"
-            android:label="@string/app_name" />
-        <activity
             android:name=".activities.InstanceUploaderList"
             android:label="@string/app_name">
 	        <intent-filter>
@@ -164,9 +156,6 @@
             android:label="@string/app_name" />
         <activity
             android:name=".preferences.PreferencesActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".preferences.GMEPreferencesActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".preferences.OtherPreferencesActivity"

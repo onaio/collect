@@ -27,7 +27,7 @@
   <string name="change_language">Cambiar el Idioma</string>
   <string name="change_password">Contraseña</string>
   <string name="change_protocol_settings_default">Configuración de Plataforma.</string>
-  <string name="change_username">Nombre de Usuario ONA</string>
+  <string name="change_username">Nombre de Usuario Ona</string>
   <string name="clearanswer_confirm">¿Borrar la respuesta a \"%s\"?</string>
   <string name="clear_answer">Borrar respuesta</string>
   <string name="clear_answer_ask">¿Borrar esta respuesta?</string>
@@ -138,7 +138,7 @@
   <string name="show_splash">Mostar la pantalla inicial</string>
   <string name="show_splash_summary">Muestra cuando la aplicacion empieza</string>
   <string name="splash_path">Seleccione la Imagen para la pantalla inicial</string>
-  <string name="default_splash_path">Predeterminado por ONA</string>
+  <string name="default_splash_path">Predeterminado por Ona</string>
   <string name="select_another_image">Seleccione otra imagen</string>
   <string name="use_odk_default">Usar la imagen por defecto</string>
   <string name="change_splash_path">Cambiar la imagen</string>
@@ -177,7 +177,7 @@
   <string name="save_as_error">¡El nombre no puede estar en blanco!</string>
   <string name="edit_prompt">Editar entrada</string>
   <string name="selected_google_account_text">Cuenta de Google</string>
-  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
+  <string name="server_platform_odk_aggregate">Ona Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Otro</string>
   <string name="font_size_extra_large">Extra Grande</string>
@@ -307,7 +307,7 @@
   <string name="go_shared">Compartido conmigo</string>
   <string name="modified_on_date_at_time">\'Modificado el\' EEE, MMM dd, yyyy \'a las\' HH:mm</string>
   <string name="protocol_settings">Configurar Ajustes de Plataforma</string>
-  <string name="aggregate_preferences">Ajustes de ONA Aggregate</string>
+  <string name="aggregate_preferences">Ajustes de Ona Aggregate</string>
   <string name="other_preferences">Ajustes de Otras Plataformas</string>
   <string name="gme_preferences">Ajustes de Google Maps Engine</string>
   <string name="no_coordinates">Instancia no tiene coordenadas. No se puede cargar.</string>
@@ -320,8 +320,8 @@
   <string name="gme_table_error">No se puede encontrar o crear una tabla Google Maps Engine.</string>
   <string name="gme_create_400">Recibido 400 BAD REQUEST. Es un problema conocido de Google Maps Engine después de que una tabla se crea nuevamente. Por favor intente enviarlo de nuevo en unos segundos.</string>
   <string name="picasa_upload_error">Error al cargar la foto que no existe: %1$s</string>
-  <string name="odk_auth_auth_fail">Error de autenticación ONA Autosend, por favor asegúrese de que la configuración es correcta</string>
-  <string name="odk_auto_note">Notificación de ONA Autosend</string>
+  <string name="odk_auth_auth_fail">Error de autenticación Ona Autosend, por favor asegúrese de que la configuración es correcta</string>
+  <string name="odk_auto_note">Notificación de Ona Autosend</string>
   <string name="notification_error">Error al mostrar texto de la notificación</string>
   <string name="delete_after_send">Eliminar después de enviar</string>
   <string name="delete_after_send_summary">Eliminar formularios finalizados y archivos multimedia después de enviar al servidor</string>

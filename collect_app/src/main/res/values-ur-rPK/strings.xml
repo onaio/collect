@@ -23,9 +23,9 @@
   <string name="capture_image">تصویر لیں</string>
   <string name="capture_video">وڈیو ریکارڈ کریں</string>
   <string name="change_language">زبان تبدیل کریں</string>
-  <string name="change_password">  ONA  کا شناختی لفظ (Password)</string>
+  <string name="change_password">  Ona  کا شناختی لفظ (Password)</string>
   <string name="change_protocol_settings_default">پلیٹ فارم ترتیبات</string>
-  <string name="change_username">ONA استعمال کرنے والے کا نام</string>
+  <string name="change_username">Ona استعمال کرنے والے کا نام</string>
   <string name="clearanswer_confirm">‎%s‏ کو دیا گیا جواب ہٹائیں</string>
   <string name="clear_answer">جواب مٹا دیں</string>
   <string name="clear_answer_ask"> یہ جواب مٹا دیں؟</string>
@@ -134,7 +134,7 @@
   <string name="show_splash">منتخب شدہ سپلیش سکرین</string>
   <string name="show_splash_summary">ایپلیکیشن جب  شروع ہو، کو دکھاتا ہے</string>
   <string name="splash_path">منتخب شدہ سپلیش تصویر</string>
-  <string name="default_splash_path">ONA طے شدہ</string>
+  <string name="default_splash_path">Ona طے شدہ</string>
   <string name="select_another_image">دوسری تصویر کا ینتخاب کریں۔</string>
   <string name="use_odk_default">Default  تصویر کو استعمال کریں</string>
   <string name="change_splash_path">عکس بدل دیں</string>
@@ -168,7 +168,7 @@
   <string name="save_as_error">محفوظ کیا گیا نام خالی نہیں ہونا چاہئے</string>
   <string name="edit_prompt">پرامپٹ کی تدوین کریں</string>
   <string name="selected_google_account_text">گوگل اکاونٹ</string>
-  <string name="server_platform_odk_aggregate">مجموعی  ONA</string>
+  <string name="server_platform_odk_aggregate">مجموعی  Ona</string>
   <string name="server_platform_google_forms">گوگل کے فارم</string>
   <string name="server_platform_other">دیگر</string>
   <string name="font_size_extra_large">زیادہ بڑا</string>

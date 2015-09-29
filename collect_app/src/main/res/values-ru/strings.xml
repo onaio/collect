@@ -23,9 +23,9 @@
   <string name="capture_image">Сделать снимок</string>
   <string name="capture_video">Записать видео</string>
   <string name="change_language">Выбрать язык</string>
-  <string name="change_password">Пароль ONA</string>
+  <string name="change_password">Пароль Ona</string>
   <string name="change_protocol_settings_default">Настройки сервера</string>
-  <string name="change_username">Имя пользователя ONA</string>
+  <string name="change_username">Имя пользователя Ona</string>
   <string name="clearanswer_confirm">Удалить ответ к \"%s\"?</string>
   <string name="clear_answer">Удалить ответ</string>
   <string name="clear_answer_ask">Удалить этот ответ?</string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">Имя формы не может быть пустым!</string>
   <string name="edit_prompt">Изменить вопрос</string>
   <string name="selected_google_account_text">Учётная запись Google</string>
-  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
+  <string name="server_platform_odk_aggregate">Ona Aggregate</string>
   <string name="server_platform_google_forms">Google формы</string>
   <string name="server_platform_other">Другое</string>
   <string name="font_size_extra_large">Очень большой</string>
@@ -303,7 +303,7 @@
   <string name="go_shared">Доступные мне</string>
   <string name="modified_on_date_at_time">\'Изменено\' EEE, MMM dd, yyyy \'в\' HH:mm</string>
   <string name="protocol_settings">Изменить настройки сервера</string>
-  <string name="aggregate_preferences">Настройки ONA Aggregate</string>
+  <string name="aggregate_preferences">Настройки Ona Aggregate</string>
   <string name="other_preferences">Настройки других платформ</string>
   <string name="gme_preferences">Настройки Google Maps Engine</string>
   <string name="no_coordinates">Отсутствуют координаты. Не удалось загрузить.</string>
@@ -317,7 +317,7 @@
   <string name="gme_create_400">Получен ответ сервера \'400 BAD REQUEST\'. Это известный баг в Google Maps Engine после создания новой таблицы. Попробуйте отправить заново через несколько минут.</string>
   <string name="picasa_upload_error">Не удалось загрузить несуществующее фото: %1$s</string>
   <string name="odk_auth_auth_fail">Ошибка аутентификации при автоматической отправке. Пожалуйста, проверьте настройки</string>
-  <string name="odk_auto_note">Уведомление автоматической отправки ONA</string>
+  <string name="odk_auto_note">Уведомление автоматической отправки Ona</string>
   <string name="notification_error">Ошибка отображения текста уведомления</string>
   <string name="delete_after_send">Удалить после отправки</string>
   <string name="delete_after_send_summary">Удаляет завершённые формы и их медиа после отправки данных на сервер</string>

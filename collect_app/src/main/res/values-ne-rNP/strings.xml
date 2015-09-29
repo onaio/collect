@@ -23,9 +23,9 @@
   <string name="capture_image">फोटो लिनुहोस् </string>
   <string name="capture_video">भिडियो रेकर्ड गर्नुहोस् </string>
   <string name="change_language">भाषा परिवर्तन गर्नुहोस् |</string>
-  <string name="change_password">ONA पासवर्ड </string>
+  <string name="change_password">Ona पासवर्ड </string>
   <string name="change_protocol_settings_default">प्लेटफर्म सेटिङस् </string>
-  <string name="change_username">ONA प्रयोगकर्ता नाम </string>
+  <string name="change_username">Ona प्रयोगकर्ता नाम </string>
   <string name="clearanswer_confirm">\"%s\"को जवाफ हटाउनु हुन्छ ?</string>
   <string name="clear_answer">जवाफ हटाउनुहोस् </string>
   <string name="clear_answer_ask">यो जवाफ हटाउनु हुन्छ?</string>
@@ -136,7 +136,7 @@
   <string name="show_splash">पहिलो पर्दाको दृश्य देखाउनुहोस् |</string>
   <string name="show_splash_summary">एप्लिकेशन सुरु हुँदा देखाइन्छ |</string>
   <string name="splash_path">पहिलो पर्दा दृश्यको लागि तस्बिर छानियो |</string>
-  <string name="default_splash_path">ONA डिफल्ट </string>
+  <string name="default_splash_path">Ona डिफल्ट </string>
   <string name="select_another_image">अर्को तस्विर छान्नुहोला</string>
   <string name="use_odk_default">डिफल्ट तस्विर प्रयोग गर्नुहोस् </string>
   <string name="change_splash_path">तस्विर बदल्नुहोस् </string>
@@ -174,7 +174,7 @@
   <string name="save_as_error">संचित गर्दा नाम खाली छोड्न मिल्दैन !</string>
   <string name="edit_prompt">सम्पादन गर्न प्रेरित गर्नुहोस् </string>
   <string name="selected_google_account_text">गुगल एकाउण्ट</string>
-  <string name="server_platform_odk_aggregate">ONA एग्रिगेट</string>
+  <string name="server_platform_odk_aggregate">Ona एग्रिगेट</string>
   <string name="server_platform_google_forms">गुगल फारमहरू</string>
   <string name="server_platform_other">अन्य</string>
   <string name="font_size_extra_large">अझ ठूलो </string>
@@ -296,7 +296,7 @@
   <string name="go_shared">म संग साझा गरिएको </string>
   <string name="modified_on_date_at_time">EEE, MMM dd, yyyy \'को\' HH:mm \'मा परिवर्तन गरिएको\'</string>
   <string name="protocol_settings">प्लेटफर्म सेटिङ्स मिलाउनुहोस्</string>
-  <string name="aggregate_preferences">ONA एग्रीगेट सेटिङ्स</string>
+  <string name="aggregate_preferences">Ona एग्रीगेट सेटिङ्स</string>
   <string name="other_preferences">अन्य प्लेटफर्म सेटिङ्स</string>
   <string name="gme_preferences">गुगल म्याप ईन्जिन सेटिङ्स</string>
   <string name="no_coordinates">उदाहरणमा निर्देशांक छैन | त्यसैले अपलोड गर्न सकिएन |</string>
@@ -309,8 +309,8 @@
   <string name="gme_table_error">गुगल म्याप्स ईन्जिन टेबल पत्ता लगाउन वा बनाउन असमर्थ</string>
   <string name="gme_create_400">400 BAD REQUEST प्राप्त भयो |  गुगल म्याप इन्जिनमा नयाँ तालिका बनाएपछि यो समस्या देखिनु नयाँ कुरा होइन | कृपया केहि समयपछि फेरी प्रयास गर्नुहोला |</string>
   <string name="picasa_upload_error">उपलब्ध नभएको तस्विर अपलोड गर्न असफल: %1$s</string>
-  <string name="odk_auth_auth_fail">ONA स्वत: प्रेषण प्रमाणीकरण असफल , कृपया आफ्नो सेटिङ्स सही छ छैन चेक गर्नुहोस्</string>
-  <string name="odk_auto_note">ONA स्वत: प्रेषण सूचना</string>
+  <string name="odk_auth_auth_fail">Ona स्वत: प्रेषण प्रमाणीकरण असफल , कृपया आफ्नो सेटिङ्स सही छ छैन चेक गर्नुहोस्</string>
+  <string name="odk_auto_note">Ona स्वत: प्रेषण सूचना</string>
   <string name="notification_error">सूचना देखाउन गल्ती भयो </string>
   <string name="delete_after_send">पठाए पछि डिलिट गर्नुहोस् </string>
   <string name="delete_after_send_summary">अन्तिम रुप दिइएको फारम र मिडिया सर्भरमा पठाए पछि डिलिट गर्छ </string>

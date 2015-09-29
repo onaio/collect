@@ -197,20 +197,9 @@ public class MainMenuActivity extends Activity {
 			public void onClick(View v) {
 				Collect.getInstance().getActivityLogger()
 						.logAction(this, "downloadBlankForms", "click");
-				SharedPreferences sharedPreferences = PreferenceManager
-						.getDefaultSharedPreferences(MainMenuActivity.this);
-				String protocol = sharedPreferences.getString(
-						PreferencesActivity.KEY_PROTOCOL, getString(R.string.protocol_odk_default));
-				Intent i = null;
-				if (protocol.equalsIgnoreCase(getString(R.string.protocol_google_maps_engine))) {
-					i = new Intent(getApplicationContext(),
-							GoogleDriveActivity.class);
-				} else {
-					i = new Intent(getApplicationContext(),
+				Intent i = new Intent(getApplicationContext(),
 							FormDownloadList.class);
-				}
 				startActivity(i);
-				
 			}
 		});
 

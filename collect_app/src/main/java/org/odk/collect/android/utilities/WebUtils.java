@@ -217,8 +217,7 @@ public final class WebUtils {
 	public static final void setGoogleHeaders(HttpRequest req) {
 		SharedPreferences settings =
                 PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getApplicationContext());
-		String protocol = settings.getString(PreferencesActivity.KEY_PROTOCOL, 
-				Collect.getInstance().getString(R.string.protocol_odk_default));
+		String protocol = Collect.getInstance().getString(R.string.protocol_odk_default);
 
 		// TODO:  this doesn't exist....
 //		if ( protocol.equals(PreferencesActivity.PROTOCOL_GOOGLE) ) {

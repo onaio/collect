@@ -131,41 +131,25 @@ public class NetworkReceiver extends BroadcastReceiver implements InstanceUpload
 
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 
-            String protocol = settings.getString(PreferencesActivity.KEY_PROTOCOL,
-            		context.getString(R.string.protocol_odk_default));
+            String protocol = context.getString(R.string.protocol_odk_default);
 
-            if (protocol.equals(context.getString(R.string.protocol_google_maps_engine))) {
-                mGoogleMapsEngineUploadTask = new GoogleMapsEngineAutoUploadTask(context);
-                String googleUsername = settings.getString(
-                        PreferencesActivity.KEY_SELECTED_GOOGLE_ACCOUNT, null);
-                if (googleUsername == null || googleUsername.equalsIgnoreCase("")) {
-                    // just quit if there's no username
-                    running = false;
-                    return;
-                }
-                mGoogleMapsEngineUploadTask.setUserName(googleUsername);
-                mGoogleMapsEngineUploadTask.setUploaderListener(this);
-                mGoogleMapsEngineUploadTask.execute(toSendArray);
+            // get the username, password, and server from preferences
 
-            } else {
-                // get the username, password, and server from preferences
+            String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+            String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
+            String server = settings.getString(PreferencesActivity.KEY_SERVER_URL,
+                    context.getString(R.string.default_server_url));
+            String url = server
+                    + settings.getString(PreferencesActivity.KEY_FORMLIST_URL,
+                    context.getString(R.string.default_odk_formlist));
 
-                String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-                String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
-                String server = settings.getString(PreferencesActivity.KEY_SERVER_URL,
-                        context.getString(R.string.default_server_url));
-                String url = server
-                        + settings.getString(PreferencesActivity.KEY_FORMLIST_URL,
-                                context.getString(R.string.default_odk_formlist));
+            Uri u = Uri.parse(url);
+            WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
 
-                Uri u = Uri.parse(url);
-                WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
+            mInstanceUploaderTask = new InstanceUploaderTask();
+            mInstanceUploaderTask.setUploaderListener(this);
 
-                mInstanceUploaderTask = new InstanceUploaderTask();
-                mInstanceUploaderTask.setUploaderListener(this);
-
-                mInstanceUploaderTask.execute(toSendArray);
-            }
+            mInstanceUploaderTask.execute(toSendArray);
         }
     }
 

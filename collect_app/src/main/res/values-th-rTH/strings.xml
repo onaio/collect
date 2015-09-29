@@ -23,9 +23,9 @@
   <string name="capture_image">บันทึกภาพ</string>
   <string name="capture_video">บันทึกภาพเคลื่อนไหว</string>
   <string name="change_language">เปลี่ยนภาษา</string>
-  <string name="change_password">รหัสผ่าน ONA</string>
+  <string name="change_password">รหัสผ่าน Ona</string>
   <string name="change_protocol_settings_default">ตั้งค่า Platform</string>
-  <string name="change_username">ชื่อผู้ใช้งาน ONA</string>
+  <string name="change_username">ชื่อผู้ใช้งาน Ona</string>
   <string name="clearanswer_confirm">ย้ายคำตอบไปที่ \"%s\" หรือไม่?</string>
   <string name="clear_answer">ปิดคำตอบ</string>
   <string name="clear_answer_ask">ปิดคำตอบนี้หรือไม่?</string>
@@ -133,7 +133,7 @@
   <string name="show_splash">แสดงภาพเริ่มต้น</string>
   <string name="show_splash_summary">แสดงเมื่อเริ่มการทำงาน</string>
   <string name="splash_path">เลือกภาพเริ่มต้น</string>
-  <string name="default_splash_path">ค่าเริ่มต้น ONA</string>
+  <string name="default_splash_path">ค่าเริ่มต้น Ona</string>
   <string name="select_another_image">เลือกภาพอื่น</string>
   <string name="use_odk_default">ใช้ภาพที่กำหนดไว้</string>
   <string name="change_splash_path">เปลี่ยนภาพใหม่</string>
@@ -171,7 +171,7 @@
   <string name="save_as_error">Saved name must not be blank!</string>
   <string name="edit_prompt">แก้ไขจุดที่เลือก</string>
   <string name="selected_google_account_text">บัญชีกูเกิล</string>
-  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
+  <string name="server_platform_odk_aggregate">Ona Aggregate</string>
   <string name="server_platform_google_forms">แบบฟอร์มของ Google</string>
   <string name="server_platform_other">อื่นๆ</string>
   <string name="font_size_extra_large">ขนาดใหญ่พิเศษ</string>
@@ -280,7 +280,7 @@
   <string name="go_drive">My Drive</string>
   <string name="modified_on_date_at_time">\'แก้ไขเมื่อ\' EEE, MMM dd, yyy \'เวลา\' HH:mm</string>
   <string name="protocol_settings">ปรับตั้งการตั้งค่าของ Platform</string>
-  <string name="aggregate_preferences">ตั้งค่า ONA Aggregate</string>
+  <string name="aggregate_preferences">ตั้งค่า Ona Aggregate</string>
   <string name="other_preferences">ตั้งค่า Platform อื่น</string>
   <string name="gme_preferences">ตั้งค่า Google Maps Engine</string>
   <string name="no_google_account">ไม่ได้เลือกบัญชีผู้ใช้งาน Google</string>

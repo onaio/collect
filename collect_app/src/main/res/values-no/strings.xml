@@ -27,7 +27,7 @@
   <string name="change_language">Endre språk</string>
   <string name="change_password">Passord</string>
   <string name="change_protocol_settings_default">Plattforminnstillinger</string>
-  <string name="change_username">ONA brukernavn</string>
+  <string name="change_username">Ona brukernavn</string>
   <string name="clearanswer_confirm">Slette svar til \"%s\"?</string>
   <string name="clear_answer">Slett svar</string>
   <string name="clear_answer_ask">Slette svaret?</string>
@@ -138,7 +138,7 @@
   <string name="show_splash">Vis oppstartsbilde</string>
   <string name="show_splash_summary">Vis når programmet starter</string>
   <string name="splash_path">Velg oppstartbilde</string>
-  <string name="default_splash_path">ONA Default</string>
+  <string name="default_splash_path">Ona Default</string>
   <string name="select_another_image">Velg annet bilde</string>
   <string name="use_odk_default">Bruk standard bilde</string>
   <string name="change_splash_path">Endre bilde</string>
@@ -176,7 +176,7 @@
   <string name="save_as_error">Navnet kan ikke være blank!</string>
   <string name="edit_prompt">Rediger prompt</string>
   <string name="selected_google_account_text">Google-konto</string>
-  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
+  <string name="server_platform_odk_aggregate">Ona Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="server_platform_other">Andre</string>
   <string name="font_size_extra_large">Ekstra stor</string>
@@ -305,7 +305,7 @@
   <string name="go_shared">Delt med meg</string>
   <string name="modified_on_date_at_time">\'Endret den\' EEE, MMM dd, yyyy \'kl\' HH:mm</string>
   <string name="protocol_settings">Angi plattforminnstillinger</string>
-  <string name="aggregate_preferences">Innstillinger for ONA Aggregate</string>
+  <string name="aggregate_preferences">Innstillinger for Ona Aggregate</string>
   <string name="other_preferences">Andre plattforminnstillinger</string>
   <string name="gme_preferences">Innstillinger for Google Maps Engine</string>
   <string name="no_coordinates">Instansen mangler koordinater. Kan ikke laste opp.</string>
@@ -318,8 +318,8 @@
   <string name="gme_table_error">Klarer ikke å finne eller opprette en Google Maps Engine tabell</string>
   <string name="gme_create_400">Mottok 400 BAD REQUEST. Dette er en kjent feil ved Google Maps Engine etter at en tabell nettopp er opprettet. Prøv på nytt om noen sekunder. </string>
   <string name="picasa_upload_error">Feil ved opplasting av bilde: %1$s</string>
-  <string name="odk_auth_auth_fail">Feil ved autentisering av ONA Autosend. Sjekk innstillingene dine.</string>
-  <string name="odk_auto_note">ONA Autosend kvittering</string>
+  <string name="odk_auth_auth_fail">Feil ved autentisering av Ona Autosend. Sjekk innstillingene dine.</string>
+  <string name="odk_auto_note">Ona Autosend kvittering</string>
   <string name="notification_error">Feil ved visning av kvitteringstekst</string>
   <string name="delete_after_send">Slett etter innsendt.</string>
   <string name="delete_after_send_summary">Sletter fullførte skjemaer og media etter at de er sendt til serveren</string>

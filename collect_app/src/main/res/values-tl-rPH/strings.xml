@@ -22,7 +22,7 @@
   <string name="capture_video">Mag-tala ng Bidyo</string>
   <string name="change_language">Palitan ang Wika</string>
   <string name="change_password">Hudyat</string>
-  <string name="change_username">ONA Username</string>
+  <string name="change_username">Ona Username</string>
   <string name="clearanswer_confirm">Tanggalin ang tugon sa \"%s\"?</string>
   <string name="clear_answer">Tanggalin ang tugon</string>
   <string name="clear_answer_ask">Tanggalin ang tugon na ito?</string>
@@ -126,7 +126,7 @@
   <string name="show_splash">Ipakita ang Panimulang Tabing</string>
   <string name="show_splash_summary">Pinapakita sa umpisa ng application</string>
   <string name="splash_path">Piniling larawan para sa Panimulang Tabing</string>
-  <string name="default_splash_path">Paunang natukoy ng ONA</string>
+  <string name="default_splash_path">Paunang natukoy ng Ona</string>
   <string name="select_another_image">Pumili ng Ibang Imahe</string>
   <string name="use_odk_default">Gamitin ang Paunang natukoy na Imahe</string>
   <string name="change_splash_path">Palitan ang Imahe</string>
@@ -158,7 +158,7 @@
   <string name="save_as_error">Hindi maaaring blangko ang pangalan ng form!</string>
   <string name="edit_prompt">Pamatnugutan ang Udyok</string>
   <string name="selected_google_account_text">Google Account</string>
-  <string name="server_platform_odk_aggregate">ONA Aggregate</string>
+  <string name="server_platform_odk_aggregate">Ona Aggregate</string>
   <string name="server_platform_google_forms">Google Forms</string>
   <string name="font_size_extra_large">Labis na Malaki</string>
   <string name="font_size_large">Malaki</string>
