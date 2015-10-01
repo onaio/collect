@@ -131,7 +131,7 @@
   <string name="username">إسم المستخدم</string>
   <string name="view_hierarchy">ذهاب الى الموجّه</string>
   <string name="general_preferences">الإعدادات العامة</string>
-  <string name="click_to_web">انقر لزيارة http://opendatakit.org</string>
+  <string name="click_to_web">انقر لزيارة http://odk.ona.io</string>
   <string name="client">واجهة المستخدم</string>
   <string name="show_splash">عرض شاشة البداية</string>
   <string name="show_splash_summary">اظهار عند بدء التطبيق</string>
@@ -141,7 +141,7 @@
   <string name="use_odk_default">استخدام الصورة الإفتراضية</string>
   <string name="change_splash_path">تغيير الصورة</string>
   <string name="show_location">إظهار الموقع</string>
-  <string name="app_url">http://opendatakit.org</string>
+  <string name="app_url">http://odk.ona.io</string>
   <string name="keep_changes">حفظ التعديلات</string>
   <string name="go_to_location">الذهاب إلى الموقع</string>
   <string name="change_formlist_url">قائمة مسار النموذج (الحاقا بالرابط)</string>
