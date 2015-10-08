@@ -12,11 +12,11 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.preferences.PreferencesActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;

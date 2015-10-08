@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
 /**
  * Interface implemented by widgets that need binary data.

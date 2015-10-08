@@ -12,13 +12,13 @@
  * the License.
  */
 
-package org.odk.collect.android.provider;
+package org.ona.collect.android.provider;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.database.ODKSQLiteOpenHelper;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
-import org.odk.collect.android.utilities.MediaUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.database.ODKSQLiteOpenHelper;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.utilities.MediaUtils;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;

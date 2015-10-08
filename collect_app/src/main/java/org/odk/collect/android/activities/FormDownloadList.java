@@ -12,24 +12,24 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
 import android.database.Cursor;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.FormDownloaderListener;
-import org.odk.collect.android.listeners.FormListDownloaderListener;
-import org.odk.collect.android.logic.FormDetails;
-import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.tasks.DownloadFormListTask;
-import org.odk.collect.android.tasks.DownloadFormsTask;
-import org.odk.collect.android.utilities.CompatibilityUtils;
-import org.odk.collect.android.utilities.WebUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.FormDownloaderListener;
+import org.ona.collect.android.listeners.FormListDownloaderListener;
+import org.ona.collect.android.logic.FormDetails;
+import org.ona.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.ona.collect.android.tasks.DownloadFormListTask;
+import org.ona.collect.android.tasks.DownloadFormsTask;
+import org.ona.collect.android.utilities.CompatibilityUtils;
+import org.ona.collect.android.utilities.WebUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

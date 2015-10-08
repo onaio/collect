@@ -16,7 +16,7 @@
  * the License.
  */
 
-package org.odk.collect.android.external;
+package org.ona.collect.android.external;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,11 +38,11 @@ import org.javarosa.xpath.XPathParseTool;
 import org.javarosa.xpath.expr.XPathExpression;
 import org.javarosa.xpath.expr.XPathFuncExpr;
 import org.javarosa.xpath.parser.XPathSyntaxException;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.exception.ExternalDataException;
-import org.odk.collect.android.exception.InvalidSyntaxException;
-import org.odk.collect.android.external.handler.ExternalDataHandlerSearch;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.exception.ExternalDataException;
+import org.ona.collect.android.exception.InvalidSyntaxException;
+import org.ona.collect.android.external.handler.ExternalDataHandlerSearch;
 
 /**
  * Author: Meletis Margaritis

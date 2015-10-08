@@ -1,4 +1,4 @@
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ import org.javarosa.core.model.data.StringData;
 import org.javarosa.core.model.osm.OSMTag;
 import org.javarosa.core.model.osm.OSMTagItem;
 import org.javarosa.form.api.FormEntryPrompt;
-import org.odk.collect.android.R;
-import org.odk.collect.android.activities.FormEntryActivity;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.logic.FormController;
+import org.ona.collect.android.R;
+import org.ona.collect.android.activities.FormEntryActivity;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.logic.FormController;
 
 import android.app.Activity;
 import android.app.AlertDialog;

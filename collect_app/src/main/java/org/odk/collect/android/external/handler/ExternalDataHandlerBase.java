@@ -16,10 +16,10 @@
  * the License.
  */
 
-package org.odk.collect.android.external.handler;
+package org.ona.collect.android.external.handler;
 
-import org.odk.collect.android.external.ExternalDataHandler;
-import org.odk.collect.android.external.ExternalDataManager;
+import org.ona.collect.android.external.ExternalDataHandler;
+import org.ona.collect.android.external.ExternalDataManager;
 
 /**
  * Author: Meletis Margaritis

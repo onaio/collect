@@ -37,7 +37,7 @@
  *
  */
 
-package org.odk.collect.android.utilities;
+package org.ona.collect.android.utilities;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

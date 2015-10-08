@@ -12,10 +12,10 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
 
 import android.app.TabActivity;
 import android.content.Intent;

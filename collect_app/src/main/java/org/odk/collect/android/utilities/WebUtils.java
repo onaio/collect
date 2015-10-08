@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.utilities;
+package org.ona.collect.android.utilities;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,9 +30,9 @@ import java.util.zip.GZIPInputStream;
 import org.apache.http.HttpStatus;
 import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.preferences.PreferencesActivity;
 import org.opendatakit.httpclientandroidlib.Header;
 import org.opendatakit.httpclientandroidlib.HttpEntity;
 import org.opendatakit.httpclientandroidlib.HttpHost;

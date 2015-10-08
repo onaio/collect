@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.preferences;
+package org.ona.collect.android.preferences;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,9 +24,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 
 import org.javarosa.core.model.FormDef;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.utilities.CompatibilityUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.utilities.CompatibilityUtils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

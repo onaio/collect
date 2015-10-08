@@ -12,18 +12,18 @@
  * the License.
  */
 
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
 import java.util.Map;
 
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.StringData;
 import org.javarosa.form.api.FormEntryPrompt;
-import org.odk.collect.android.R;
-import org.odk.collect.android.activities.FormEntryActivity;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.exception.ExternalParamsException;
-import org.odk.collect.android.external.ExternalAppsUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.activities.FormEntryActivity;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.exception.ExternalParamsException;
+import org.ona.collect.android.external.ExternalAppsUtils;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;

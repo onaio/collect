@@ -12,9 +12,9 @@
  * the License.
  */
 
-package org.odk.collect.android.utilities;
+package org.ona.collect.android.utilities;
 
-import org.odk.collect.android.R;
+import org.ona.collect.android.R;
 
 import android.content.Context;
 import android.database.Cursor;

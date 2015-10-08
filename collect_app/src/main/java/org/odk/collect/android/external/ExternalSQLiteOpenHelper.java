@@ -16,17 +16,17 @@
  * the License.
  */
 
-package org.odk.collect.android.external;
+package org.ona.collect.android.external;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import au.com.bytecode.opencsv.CSVReader;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.database.ODKSQLiteOpenHelper;
-import org.odk.collect.android.exception.ExternalDataException;
-import org.odk.collect.android.tasks.FormLoaderTask;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.database.ODKSQLiteOpenHelper;
+import org.ona.collect.android.exception.ExternalDataException;
+import org.ona.collect.android.tasks.FormLoaderTask;
 
 import java.io.File;
 import java.io.FileInputStream;

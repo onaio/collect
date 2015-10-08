@@ -12,15 +12,15 @@
  * the License.
  */
 
-package org.odk.collect.android.database;
+package org.ona.collect.android.database;
 
 import java.io.File;
 import java.util.Calendar;
 import java.util.LinkedList;
 
 import org.javarosa.core.model.FormIndex;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.logic.FormController;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.logic.FormController;
 
 import android.app.Activity;
 import android.content.ContentValues;

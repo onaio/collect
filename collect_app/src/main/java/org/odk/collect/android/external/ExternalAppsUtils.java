@@ -16,7 +16,7 @@
  * the License.
  */
 
-package org.odk.collect.android.external;
+package org.ona.collect.android.external;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -35,9 +35,9 @@ import org.javarosa.xpath.XPathParseTool;
 import org.javarosa.xpath.expr.XPathExpression;
 import org.javarosa.xpath.expr.XPathFuncExpr;
 import org.javarosa.xpath.expr.XPathPathExpr;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.exception.ExternalParamsException;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.exception.ExternalParamsException;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 
 import android.content.Intent;
 import android.database.Cursor;

@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.tasks;
+package org.ona.collect.android.tasks;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,22 +45,22 @@ import org.javarosa.xform.parse.XFormParseException;
 import org.javarosa.xform.parse.XFormParser;
 import org.javarosa.xform.util.XFormUtils;
 import org.javarosa.xpath.XPathTypeMismatchException;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.database.ItemsetDbAdapter;
-import org.odk.collect.android.external.ExternalAnswerResolver;
-import org.odk.collect.android.external.ExternalDataHandler;
-import org.odk.collect.android.external.ExternalDataManager;
-import org.odk.collect.android.external.ExternalDataManagerImpl;
-import org.odk.collect.android.external.ExternalDataReader;
-import org.odk.collect.android.external.ExternalDataReaderImpl;
-import org.odk.collect.android.external.handler.ExternalDataHandlerPull;
-import org.odk.collect.android.listeners.FormLoaderListener;
-import org.odk.collect.android.logic.FileReferenceFactory;
-import org.odk.collect.android.logic.FormController;
-import org.odk.collect.android.preferences.AdminPreferencesActivity;
-import org.odk.collect.android.utilities.FileUtils;
-import org.odk.collect.android.utilities.ZipUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.database.ItemsetDbAdapter;
+import org.ona.collect.android.external.ExternalAnswerResolver;
+import org.ona.collect.android.external.ExternalDataHandler;
+import org.ona.collect.android.external.ExternalDataManager;
+import org.ona.collect.android.external.ExternalDataManagerImpl;
+import org.ona.collect.android.external.ExternalDataReader;
+import org.ona.collect.android.external.ExternalDataReaderImpl;
+import org.ona.collect.android.external.handler.ExternalDataHandlerPull;
+import org.ona.collect.android.listeners.FormLoaderListener;
+import org.ona.collect.android.logic.FileReferenceFactory;
+import org.ona.collect.android.logic.FormController;
+import org.ona.collect.android.preferences.AdminPreferencesActivity;
+import org.ona.collect.android.utilities.FileUtils;
+import org.ona.collect.android.utilities.ZipUtils;
 
 import android.content.Intent;
 import android.database.Cursor;

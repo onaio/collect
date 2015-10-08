@@ -12,12 +12,12 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
 import java.util.ArrayList;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.ona.collect.android.R;
+import org.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 
 import android.app.Activity;
 import android.app.AlertDialog;

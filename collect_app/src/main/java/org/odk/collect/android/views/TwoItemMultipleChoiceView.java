@@ -12,9 +12,9 @@
  * the License.
  */
 
-package org.odk.collect.android.views;
+package org.ona.collect.android.views;
 
-import org.odk.collect.android.R;
+import org.ona.collect.android.R;
 
 import android.content.Context;
 import android.util.AttributeSet;

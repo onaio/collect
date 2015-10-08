@@ -13,16 +13,16 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.utilities.ColorPickerDialog;
-import org.odk.collect.android.utilities.FileUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.utilities.ColorPickerDialog;
+import org.ona.collect.android.utilities.FileUtils;
 
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.tasks;
+package org.ona.collect.android.tasks;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.DiskSyncListener;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.utilities.FileUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.DiskSyncListener;
+import org.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.ona.collect.android.utilities.FileUtils;
 
 import android.content.ContentValues;
 import android.database.Cursor;

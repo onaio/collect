@@ -12,20 +12,20 @@
  * the License.
  */
 
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
 import java.text.DecimalFormat;
 
 import org.javarosa.core.model.data.GeoPointData;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.form.api.FormEntryPrompt;
-import org.odk.collect.android.R;
-import org.odk.collect.android.activities.FormEntryActivity;
-import org.odk.collect.android.activities.GeoPointActivity;
-import org.odk.collect.android.activities.GeoPointMapActivity;
-import org.odk.collect.android.activities.GeoPointMapActivitySdk7;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.utilities.CompatibilityUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.activities.FormEntryActivity;
+import org.ona.collect.android.activities.GeoPointActivity;
+import org.ona.collect.android.activities.GeoPointMapActivity;
+import org.ona.collect.android.activities.GeoPointMapActivitySdk7;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.utilities.CompatibilityUtils;
 
 import android.app.Activity;
 import android.content.Context;

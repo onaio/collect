@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.utilities;
+package org.ona.collect.android.utilities;
 
 import org.kxml2.kdom.Document;
  

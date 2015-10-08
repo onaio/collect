@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.database;
+package org.ona.collect.android.database;
 
 import java.io.File;
 
@@ -21,8 +21,8 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 import android.util.Log;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
 
 
 /**

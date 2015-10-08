@@ -12,17 +12,17 @@
  * the License.
  */
 
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.form.api.FormEntryPrompt;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.AudioPlayListener;
-import org.odk.collect.android.utilities.TextUtils;
-import org.odk.collect.android.views.MediaLayout;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.AudioPlayListener;
+import org.ona.collect.android.utilities.TextUtils;
+import org.ona.collect.android.views.MediaLayout;
 
 import android.content.Context;
 import android.graphics.Bitmap;

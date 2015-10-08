@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.logic;
+package org.ona.collect.android.logic;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import org.javarosa.core.services.IPropertyManager;
 import org.javarosa.core.services.properties.IPropertyRules;
-import org.odk.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.preferences.PreferencesActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;

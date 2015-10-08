@@ -16,7 +16,7 @@
  * the License.
  */
 
-package org.odk.collect.android.tasks;
+package org.ona.collect.android.tasks;
 
 /**
  *

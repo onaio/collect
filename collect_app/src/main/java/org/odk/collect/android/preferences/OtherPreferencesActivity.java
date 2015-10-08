@@ -12,9 +12,9 @@
  * the License.
  */
 
-package org.odk.collect.android.preferences;
+package org.ona.collect.android.preferences;
 
-import org.odk.collect.android.R;
+import org.ona.collect.android.R;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

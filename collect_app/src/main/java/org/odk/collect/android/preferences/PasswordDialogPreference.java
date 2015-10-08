@@ -1,5 +1,5 @@
 
-package org.odk.collect.android.preferences;
+package org.ona.collect.android.preferences;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
 
 public class PasswordDialogPreference extends DialogPreference implements
         OnClickListener {

@@ -12,12 +12,12 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.provider.InstanceProviderAPI;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;

@@ -12,12 +12,12 @@
  * the License.
  */
 
-package org.odk.collect.android.preferences;
+package org.ona.collect.android.preferences;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.utilities.UrlUtils;
-import org.odk.collect.android.utilities.WebUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.utilities.UrlUtils;
+import org.ona.collect.android.utilities.WebUtils;
 
 import android.content.SharedPreferences;
 import android.net.Uri;

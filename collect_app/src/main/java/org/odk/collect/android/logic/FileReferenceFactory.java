@@ -2,7 +2,7 @@
  * 
  */
 
-package org.odk.collect.android.logic;
+package org.ona.collect.android.logic;
 
 import org.javarosa.core.reference.PrefixedRootFactory;
 import org.javarosa.core.reference.Reference;

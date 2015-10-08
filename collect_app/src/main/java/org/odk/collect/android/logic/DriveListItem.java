@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.odk.collect.android.logic;
+package org.ona.collect.android.logic;
 
 import android.os.Parcel;
 import android.os.Parcelable;

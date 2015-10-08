@@ -12,13 +12,13 @@
  * the License.
  */
 
-package org.odk.collect.android.utilities;
+package org.ona.collect.android.utilities;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.application.Collect;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;

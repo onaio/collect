@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.utilities;
+package org.ona.collect.android.utilities;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;

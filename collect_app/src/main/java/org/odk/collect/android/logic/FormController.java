@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.logic;
+package org.ona.collect.android.logic;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,8 +45,8 @@ import org.javarosa.model.xform.XPathReference;
 import org.javarosa.xform.parse.XFormParser;
 import org.javarosa.xpath.XPathParseTool;
 import org.javarosa.xpath.expr.XPathExpression;
-import org.odk.collect.android.exception.JavaRosaException;
-import org.odk.collect.android.views.ODKView;
+import org.ona.collect.android.exception.JavaRosaException;
+import org.ona.collect.android.views.ODKView;
 
 import android.util.Log;
 

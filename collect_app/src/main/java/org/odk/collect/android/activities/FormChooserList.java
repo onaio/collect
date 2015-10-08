@@ -12,14 +12,14 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.DiskSyncListener;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.tasks.DiskSyncTask;
-import org.odk.collect.android.utilities.VersionHidingCursorAdapter;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.DiskSyncListener;
+import org.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.ona.collect.android.tasks.DiskSyncTask;
+import org.ona.collect.android.utilities.VersionHidingCursorAdapter;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;

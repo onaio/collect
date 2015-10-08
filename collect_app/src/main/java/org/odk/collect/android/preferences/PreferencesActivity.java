@@ -12,15 +12,15 @@
  * the License.
  */
 
-package org.odk.collect.android.preferences;
+package org.ona.collect.android.preferences;
 
 import java.util.ArrayList;
 
 import org.javarosa.core.services.IPropertyManager;
-import org.odk.collect.android.R;
-import org.odk.collect.android.logic.FormController;
-import org.odk.collect.android.logic.PropertyManager;
-import org.odk.collect.android.utilities.MediaUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.logic.FormController;
+import org.ona.collect.android.logic.PropertyManager;
+import org.ona.collect.android.utilities.MediaUtils;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

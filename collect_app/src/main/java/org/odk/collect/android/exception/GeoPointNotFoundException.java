@@ -1,4 +1,4 @@
-package org.odk.collect.android.exception;
+package org.ona.collect.android.exception;
 
 public class GeoPointNotFoundException extends Exception {
 

@@ -16,7 +16,7 @@
  * the License.
  */
 
-package org.odk.collect.android.exception;
+package org.ona.collect.android.exception;
 
 import java.io.File;
 

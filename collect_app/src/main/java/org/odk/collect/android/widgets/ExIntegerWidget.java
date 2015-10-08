@@ -12,14 +12,14 @@
  * the License.
  */
 
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
-import org.odk.collect.android.external.ExternalAppsUtils;
+import org.ona.collect.android.external.ExternalAppsUtils;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.IntegerData;
 import org.javarosa.form.api.FormEntryPrompt;
-import org.odk.collect.android.activities.FormEntryActivity;
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.activities.FormEntryActivity;
+import org.ona.collect.android.application.Collect;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -34,7 +34,7 @@ import android.text.method.DigitsKeyListener;
  * Launch an external app to supply an integer value. If the app
  * does not launch, enable the text area for regular data entry.
  *
- * See {@link org.odk.collect.android.widgets.ExStringWidget} for usage.
+ * See {@link org.ona.collect.android.widgets.ExStringWidget} for usage.
  *
  * @author mitchellsundt@gmail.com
  *

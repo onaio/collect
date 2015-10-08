@@ -12,16 +12,16 @@
  * the License.
  */
 
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
 import java.text.NumberFormat;
 
-import org.odk.collect.android.external.ExternalAppsUtils;
+import org.ona.collect.android.external.ExternalAppsUtils;
 import org.javarosa.core.model.data.DecimalData;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.form.api.FormEntryPrompt;
-import org.odk.collect.android.activities.FormEntryActivity;
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.activities.FormEntryActivity;
+import org.ona.collect.android.application.Collect;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -36,7 +36,7 @@ import android.text.method.DigitsKeyListener;
  * Launch an external app to supply a decimal value. If the app
  * does not launch, enable the text area for regular data entry.
  *
- * See {@link org.odk.collect.android.widgets.ExStringWidget} for usage.
+ * See {@link org.ona.collect.android.widgets.ExStringWidget} for usage.
  *
  * @author mitchellsundt@gmail.com
  *

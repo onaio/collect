@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.tasks;
+package org.ona.collect.android.tasks;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -34,20 +34,20 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.exception.FormException;
-import org.odk.collect.android.exception.GeoPointNotFoundException;
-import org.odk.collect.android.picasa.AlbumEntry;
-import org.odk.collect.android.picasa.AlbumFeed;
-import org.odk.collect.android.picasa.PhotoEntry;
-import org.odk.collect.android.picasa.PicasaClient;
-import org.odk.collect.android.picasa.PicasaUrl;
-import org.odk.collect.android.picasa.UserFeed;
-import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.exception.FormException;
+import org.ona.collect.android.exception.GeoPointNotFoundException;
+import org.ona.collect.android.picasa.AlbumEntry;
+import org.ona.collect.android.picasa.AlbumFeed;
+import org.ona.collect.android.picasa.PhotoEntry;
+import org.ona.collect.android.picasa.PicasaClient;
+import org.ona.collect.android.picasa.PicasaUrl;
+import org.ona.collect.android.picasa.UserFeed;
+import org.ona.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.ona.collect.android.provider.InstanceProviderAPI;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 

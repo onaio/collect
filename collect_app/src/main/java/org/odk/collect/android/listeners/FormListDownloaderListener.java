@@ -12,9 +12,9 @@
  * the License.
  */
 
-package org.odk.collect.android.listeners;
+package org.ona.collect.android.listeners;
 
-import org.odk.collect.android.logic.FormDetails;
+import org.ona.collect.android.logic.FormDetails;
 
 import java.util.HashMap;
 

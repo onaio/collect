@@ -1,4 +1,4 @@
-package org.odk.collect.android.views;
+package org.ona.collect.android.views;
 
 import android.content.Context;
 import android.content.DialogInterface;

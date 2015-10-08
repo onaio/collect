@@ -12,11 +12,11 @@
  * the License.
  */
 
-package org.odk.collect.android.tasks;
+package org.ona.collect.android.tasks;
 
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.DeleteFormsListener;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.DeleteFormsListener;
+import org.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 
 import android.content.ContentResolver;
 import android.net.Uri;

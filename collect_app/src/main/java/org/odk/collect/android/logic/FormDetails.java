@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.logic;
+package org.ona.collect.android.logic;
 
 import java.io.Serializable;
 

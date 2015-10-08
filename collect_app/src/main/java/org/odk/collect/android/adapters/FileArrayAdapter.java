@@ -12,15 +12,15 @@
  * the License.
  */
 
-package org.odk.collect.android.adapters;
+package org.ona.collect.android.adapters;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.logic.DriveListItem;
+import org.ona.collect.android.R;
+import org.ona.collect.android.logic.DriveListItem;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

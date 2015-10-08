@@ -12,15 +12,15 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
 import java.util.ArrayList;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.DeleteInstancesListener;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
-import org.odk.collect.android.tasks.DeleteInstancesTask;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.DeleteInstancesListener;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.tasks.DeleteInstancesTask;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;

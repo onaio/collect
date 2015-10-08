@@ -12,11 +12,11 @@
  * the License.
  */
 
-package org.odk.collect.android.tasks;
+package org.ona.collect.android.tasks;
 
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.DeleteInstancesListener;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.DeleteInstancesListener;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 
 import android.content.ContentResolver;
 import android.net.Uri;

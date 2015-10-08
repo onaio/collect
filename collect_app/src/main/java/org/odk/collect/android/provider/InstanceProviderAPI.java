@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.odk.collect.android.provider;
+package org.ona.collect.android.provider;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -23,7 +23,7 @@ import android.provider.BaseColumns;
  * Convenience definitions for NotePadProvider
  */
 public final class InstanceProviderAPI {
-    public static final String AUTHORITY = "org.odk.collect.android.provider.odk.instances";
+    public static final String AUTHORITY = "org.ona.collect.android.provider.odk.instances";
 
     // This class cannot be instantiated
     private InstanceProviderAPI() {}

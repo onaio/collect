@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.utilities;
+package org.ona.collect.android.utilities;
 
 import org.apache.commons.io.IOUtils;
 import org.javarosa.xform.parse.XFormParser;
@@ -23,8 +23,8 @@ import org.kxml2.kdom.Node;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,5 +1,5 @@
 
-package org.odk.collect.android.receivers;
+package org.ona.collect.android.receivers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.activities.NotificationActivity;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.listeners.InstanceUploaderListener;
-import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
-import org.odk.collect.android.tasks.GoogleMapsEngineAbstractUploader;
-import org.odk.collect.android.tasks.InstanceUploaderTask;
-import org.odk.collect.android.utilities.WebUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.activities.NotificationActivity;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.listeners.InstanceUploaderListener;
+import org.ona.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.provider.InstanceProviderAPI;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.tasks.GoogleMapsEngineAbstractUploader;
+import org.ona.collect.android.tasks.InstanceUploaderTask;
+import org.ona.collect.android.utilities.WebUtils;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -62,7 +62,7 @@ public class NetworkReceiver extends BroadcastReceiver implements InstanceUpload
 					uploadForms(context);
 				}
 			}
-		} else if (action.equals("org.odk.collect.android.FormSaved")) {
+		} else if (action.equals("org.ona.collect.android.FormSaved")) {
 			ConnectivityManager connectivityManager = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo ni = connectivityManager.getActiveNetworkInfo();

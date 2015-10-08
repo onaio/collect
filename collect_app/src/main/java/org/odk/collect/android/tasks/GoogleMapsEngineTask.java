@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.tasks;
+package org.ona.collect.android.tasks;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
-import org.odk.collect.android.listeners.InstanceUploaderListener;
+import org.ona.collect.android.listeners.InstanceUploaderListener;
 
 import android.content.Context;
 import android.os.AsyncTask;

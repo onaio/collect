@@ -12,11 +12,11 @@
  * the License.
  */
 
-package org.odk.collect.android.views;
+package org.ona.collect.android.views;
 
-import org.odk.collect.android.logic.HierarchyElement;
-import org.odk.collect.android.utilities.MediaUtils;
-import org.odk.collect.android.utilities.TextUtils;
+import org.ona.collect.android.logic.HierarchyElement;
+import org.ona.collect.android.utilities.MediaUtils;
+import org.ona.collect.android.utilities.TextUtils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

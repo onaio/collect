@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.widgets;
+package org.ona.collect.android.widgets;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -22,7 +22,7 @@ import org.javarosa.core.model.data.DateData;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.form.api.FormEntryPrompt;
 import org.joda.time.DateTime;
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.application.Collect;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

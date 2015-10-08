@@ -12,10 +12,10 @@
  * the License.
  */
 
-package org.odk.collect.android.listeners;
+package org.ona.collect.android.listeners;
 
-import org.odk.collect.android.tasks.FormLoaderTask;
-import org.odk.collect.android.tasks.ProgressNotifier;
+import org.ona.collect.android.tasks.FormLoaderTask;
+import org.ona.collect.android.tasks.ProgressNotifier;
 
 /**
  * @author Carl Hartung (carlhartung@gmail.com)

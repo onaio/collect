@@ -12,17 +12,17 @@
  * the License.
  */
 
-package org.odk.collect.android.activities;
+package org.ona.collect.android.activities;
 
 import java.util.ArrayList;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
-import org.odk.collect.android.receivers.NetworkReceiver;
-import org.odk.collect.android.utilities.CompatibilityUtils;
+import org.ona.collect.android.R;
+import org.ona.collect.android.application.Collect;
+import org.ona.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.provider.InstanceProviderAPI;
+import org.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.ona.collect.android.receivers.NetworkReceiver;
+import org.ona.collect.android.utilities.CompatibilityUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -1,11 +1,11 @@
 
-package org.odk.collect.android.database;
+package org.ona.collect.android.database;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.odk.collect.android.application.Collect;
+import org.ona.collect.android.application.Collect;
 
 import android.content.ContentValues;
 import android.database.Cursor;

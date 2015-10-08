@@ -12,17 +12,17 @@
  * the License.
  */
 
-package org.odk.collect.android.application;
+package org.ona.collect.android.application;
 
 import java.io.File;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.database.ActivityLogger;
-import org.odk.collect.android.external.ExternalDataManager;
-import org.odk.collect.android.logic.FormController;
-import org.odk.collect.android.logic.PropertyManager;
-import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.utilities.AgingCredentialsProvider;
+import org.ona.collect.android.R;
+import org.ona.collect.android.database.ActivityLogger;
+import org.ona.collect.android.external.ExternalDataManager;
+import org.ona.collect.android.logic.FormController;
+import org.ona.collect.android.logic.PropertyManager;
+import org.ona.collect.android.preferences.PreferencesActivity;
+import org.ona.collect.android.utilities.AgingCredentialsProvider;
 import org.opendatakit.httpclientandroidlib.client.CookieStore;
 import org.opendatakit.httpclientandroidlib.client.CredentialsProvider;
 import org.opendatakit.httpclientandroidlib.client.protocol.ClientContext;
