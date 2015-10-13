@@ -46,13 +46,13 @@ public class LoginActivity extends Activity {
     private void setLoginCredentials() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
-        String email = m_usernameView.getText().toString().trim();
+        String username = m_usernameView.getText().toString().trim();
         String password = m_passwordView.getText().toString().trim();
-        editor.putString(PreferencesActivity.KEY_USERNAME, email);
+        editor.putString(PreferencesActivity.KEY_USERNAME, username);
         editor.putString(PreferencesActivity.KEY_PASSWORD, password);
         editor.commit();
 
-        if (validateNotEmpty(email) && validateNotEmpty(password)) {
+        if (validateNotEmpty(username) && validateNotEmpty(password)) {
             closeLoginScreen();
         } else {
             setErrorMessage(getResources().getString(R.string.error_username_password_empty));
