@@ -12,6 +12,7 @@
 --><resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 <string name="accept_location">Record Location</string>
 <string name="accuracy">Accuracy</string>
+<string name="action_sign_in">Sign in</string>
 <string name="activity_not_found">No activity found to handle: %s</string>
 <string name="add_another">Add Group</string>
 <string name="add_another_repeat">Add another \"%s\" group?</string>
@@ -336,4 +337,9 @@
     <string name="username_error_whitespace">leading or trailing whitespace not allowed in usernames</string>
     <string name="google_play_services_error_occured">Unable to access Google Maps. Is Google Play Services installed?
     </string>
+	<string name="prompt_username">Username</string>
+	<string name="prompt_password">Password</string>
+	<string name="login_error">Cannot login, verify your email and password.</string>
+	<string name="log_out">Log out</string>
+	<string name="error_username_password_empty">Username and password cannot be empty.</string>
 </resources>
