@@ -261,9 +261,24 @@ public class MainMenuActivity extends Activity {
 		updateButtons();
 	}
 
+	private void showLoginScreen() {
+
+		// Redirect to login screen.
+		startActivity(new Intent(MainMenuActivity.this, LoginActivity.class));
+		finish();
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+		// Redirect to login screen if not signed in
+		SharedPreferences mSharedPreferences  = PreferenceManager.getDefaultSharedPreferences(this);
+		String username = mSharedPreferences.getString(PreferencesActivity.KEY_USERNAME, null);
+		if (username == null || username.length() == 0) {
+			showLoginScreen();
+		}
+
 		SharedPreferences sharedPreferences = this.getSharedPreferences(
 				AdminPreferencesActivity.ADMIN_PREFERENCES, 0);
 
