@@ -342,4 +342,5 @@
 	<string name="login_error">Cannot login, verify your email and password.</string>
 	<string name="log_out">Log out</string>
 	<string name="error_username_password_empty">Username and password cannot be empty.</string>
+	<string name="get_updated_forms">Updated and new forms</string>
 </resources>

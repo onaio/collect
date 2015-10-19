@@ -27,9 +27,11 @@ import io.ona.collect.android.utilities.DocumentFetchResult;
 import io.ona.collect.android.utilities.WebUtils;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.util.HashMap;
 
@@ -76,6 +78,12 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         // We populate this with available forms from the specified server.
         // <formname, details>
         HashMap<String, FormDetails> formList = new HashMap<String, FormDetails>();
+
+        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
+        Uri u = Uri.parse(downloadListUrl);
+
+        WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
 
         // get shared HttpContext so that authentication and cookies are retained.
         HttpContext localContext = Collect.getInstance().getHttpContext();
