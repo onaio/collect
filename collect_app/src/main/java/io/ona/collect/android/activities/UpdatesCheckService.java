@@ -83,6 +83,11 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
             return;
         }
 
+        if (result.containsKey(DownloadFormListTask.DL_FORMLIST_NOT_MODIFIED)) {
+            Log.e("Info", "Formlist has not been modified");
+            return;
+        }
+
         if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
             // Download failed
             Log.e("Err", "Download failed.");
