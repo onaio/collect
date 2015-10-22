@@ -29,6 +29,7 @@ public class FormDetails implements Serializable {
     public final String manifestUrl;
     public final String formID;
     public final String formVersion;
+    public final String hash;
 
 
     public FormDetails(String error) {
@@ -37,16 +38,18 @@ public class FormDetails implements Serializable {
         formName = null;
         formID = null;
         formVersion = null;
+        hash = null;
         errorStr = error;
     }
 
 
-    public FormDetails(String name, String url, String manifest, String id, String version) {
+    public FormDetails(String name, String url, String manifest, String id, String version, String md5hash) {
         manifestUrl = manifest;
         downloadUrl = url;
         formName = name;
         formID = id;
         formVersion = version;
+        hash = md5hash;
         errorStr = null;
     }
 
