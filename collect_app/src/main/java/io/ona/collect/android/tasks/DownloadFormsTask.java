@@ -564,7 +564,7 @@ public class DownloadFormsTask extends
         HttpClient httpclient = WebUtils.createHttpClient(WebUtils.CONNECTION_TIMEOUT);
 
         DocumentFetchResult result =
-            WebUtils.getXmlDocument(fd.manifestUrl, localContext, httpclient);
+            WebUtils.getXmlDocument(fd.manifestUrl, localContext, httpclient, null);
 
         if (result.errorMessage != null) {
             return result.errorMessage;

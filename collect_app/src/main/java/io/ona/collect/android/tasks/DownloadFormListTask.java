@@ -50,6 +50,8 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     public static final String DL_ERROR_MSG = "dlerrormessage";
     public static final String DL_AUTH_REQUIRED = "dlauthrequired";
     public static final String DL_FORMLIST_NOT_MODIFIED = "dlauthrequired";
+    public static final String PREVIOUS_USERNAME = "previousUsername";
+    public static final String PREVIOUS_PASSWORD = "previousPassword";
 
     private FormListDownloaderListener mStateListener;
 
@@ -80,8 +82,8 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         // <formname, details>
         HashMap<String, FormDetails> formList = new HashMap<String, FormDetails>();
 
-        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
+        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, "");
+        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, "");
         Uri u = Uri.parse(downloadListUrl);
 
         WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
@@ -90,21 +92,22 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         HttpContext localContext = Collect.getInstance().getHttpContext();
         HttpClient httpclient = WebUtils.createHttpClient(WebUtils.CONNECTION_TIMEOUT);
 
+        Log.d("Info", "Fetching formList");
         DocumentFetchResult result =
-            WebUtils.getXmlDocument(downloadListUrl, localContext, httpclient);
+            WebUtils.getXmlDocument(downloadListUrl, localContext, httpclient, settings);
 
         // If we can't get the document, return the error, cancel the task
         if (result.errorMessage != null) {
             if (result.responseCode == 401) {
                 formList.put(DL_AUTH_REQUIRED, new FormDetails(result.errorMessage));
+            } else if (result.responseCode == 304) {
+                formList.put(DL_FORMLIST_NOT_MODIFIED, new FormDetails("NOT_MODIFIED"));
+                Log.d("ETag", "The formList has not changed.");
+                return formList;
             } else {
+                Log.d("Error", ""+result.responseCode);
                 formList.put(DL_ERROR_MSG, new FormDetails(result.errorMessage));
             }
-            return formList;
-        }
-
-        if (result.responseCode == 304) {
-            formList.put(DL_FORMLIST_NOT_MODIFIED, new FormDetails("NOT_MODIFIED"));
             return formList;
         }
 

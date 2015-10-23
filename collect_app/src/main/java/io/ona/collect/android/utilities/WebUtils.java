@@ -88,6 +88,7 @@ public final class WebUtils {
 
 	public static final String ACCEPT_ENCODING_HEADER = "Accept-Encoding";
 	public static final String GZIP_CONTENT_ENCODING = "gzip";
+	public static final String IF_NONE_MATCH = "If-None-Match";
 
 	private static ClientConnectionManager httpConnectionManager = null;
 
@@ -316,7 +317,7 @@ public final class WebUtils {
 	 * @return
 	 */
 	public static DocumentFetchResult getXmlDocument(String urlString,
-			HttpContext localContext, HttpClient httpclient) {
+			HttpContext localContext, HttpClient httpclient, SharedPreferences sharedPreferences) {
 		URI u = null;
 		try {
 			URL url = new URL(urlString);
@@ -341,6 +342,13 @@ public final class WebUtils {
 		HttpGet req = WebUtils.createOpenRosaHttpGet(u);
 		req.addHeader(WebUtils.ACCEPT_ENCODING_HEADER, WebUtils.GZIP_CONTENT_ENCODING);
 
+		if (sharedPreferences != null) {
+			String eTag = sharedPreferences.getString(WebUtils.IF_NONE_MATCH, null);
+			if (eTag != null) {
+				req.addHeader(WebUtils.IF_NONE_MATCH, eTag);
+			}
+		}
+
 		HttpResponse response = null;
 		try {
 			response = httpclient.execute(req, localContext);
@@ -360,6 +368,15 @@ public final class WebUtils {
 				return new DocumentFetchResult(u.toString()
 						+ " responded with: " + webError, statusCode);
 			}
+
+			if (sharedPreferences != null) {
+				String eTag = response.getFirstHeader("ETag").getValue();
+				Log.d("ETag val: ", eTag);
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				editor.putString(WebUtils.IF_NONE_MATCH, eTag);
+				editor.commit();
+			}
+
 
 			if (entity == null) {
 				String error = "No entity body returned from: " + u.toString();

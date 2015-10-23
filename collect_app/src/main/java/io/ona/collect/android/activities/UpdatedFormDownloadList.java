@@ -246,7 +246,6 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
     private void updateListView() {
         mFormList = UpdatesCheckService.getmFormList();
         mFormNamesAndURLs = UpdatesCheckService.getmFormNamesAndURLs();
-        System.out.print("the size of mformlist "+mFormList.size());
         mFormListAdapter =
                 new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
