@@ -335,12 +335,13 @@
     <string name="url_error_whitespace">whitespace is not allowed in urls</string>
     <string name="password_error_whitespace">leading or trailing whitespace not allowed in passwords</string>
     <string name="username_error_whitespace">leading or trailing whitespace not allowed in usernames</string>
-    <string name="google_play_services_error_occured">Unable to access Google Maps. Is Google Play Services installed?
-    </string>
+    <string name="google_play_services_error_occured">Unable to access Google Maps. Is Google Play Services installed?</string>
 	<string name="prompt_username">Username</string>
 	<string name="prompt_password">Password</string>
 	<string name="login_error">Cannot login, verify your email and password.</string>
 	<string name="log_out">Log out</string>
 	<string name="error_username_password_empty">Username and password cannot be empty.</string>
 	<string name="get_updated_forms">Updated and new forms</string>
+	<string name="new_forms">New Forms</string>
+	<string name="new_forms_available">Updated forms are available.</string>
 </resources>

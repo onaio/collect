@@ -25,6 +25,8 @@ import io.ona.collect.android.logic.FormDetails;
 import io.ona.collect.android.tasks.DownloadFormListTask;
 
 /**
+ * Runs a background service for checking new/updated forms.
+ *
  * Created by Isaac Mwongela (imwongela@ona.io) on 10/19/15.
  */
 public class UpdatesCheckService extends Service implements FormListDownloaderListener {
@@ -32,7 +34,7 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
     public static final long NOTIFY_INTERVAL = 10 * 1000; // 10 Minutes.
     NotificationCompat.Builder mBuilder;
     // Sets an ID for the notification
-    int mNotificationId = 001;
+    int mNotificationId = 1;
     // Gets an instance of the NotificationManager service
     NotificationManager mNotificationManager;
     // run on another Thread to avoid crash
@@ -56,8 +58,8 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
         mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.notes)
-                        .setContentTitle("New Form")
-                        .setContentText("Updated forms are available.")
+                        .setContentTitle(getString(R.string.new_forms))
+                        .setContentText(getString(R.string.new_forms_available))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setWhen(0);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

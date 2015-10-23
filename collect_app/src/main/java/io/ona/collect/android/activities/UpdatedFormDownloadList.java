@@ -20,21 +20,16 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -48,10 +43,8 @@ import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.listeners.FormDownloaderListener;
 import io.ona.collect.android.logic.FormDetails;
 import io.ona.collect.android.preferences.PreferencesActivity;
-import io.ona.collect.android.tasks.DownloadFormListTask;
 import io.ona.collect.android.tasks.DownloadFormsTask;
 import io.ona.collect.android.utilities.CompatibilityUtils;
-import io.ona.collect.android.utilities.WebUtils;
 
 /**
  * Responsible for displaying, adding and deleting all the valid forms in the forms directory. One
@@ -71,7 +64,6 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
     private static final String t = "RemoveFileManageList";
 
     private static final int PROGRESS_DIALOG = 1;
-    private static final int AUTH_DIALOG = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST;
 
     private static final String BUNDLE_TOGGLED_KEY = "toggled";
@@ -81,8 +73,6 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
     private static final String DIALOG_MSG = "dialogmsg";
     private static final String DIALOG_SHOWING = "dialogshowing";
     private static final String FORMLIST = "formlist";
-
-    public static final String LIST_URL = "listurl";
 
     public static final String FORMNAME = "formname";
     public static final String FORMDETAIL_KEY = "formdetailkey";
@@ -99,7 +89,6 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
     private ProgressDialog mProgressDialog;
     private Button mDownloadButton;
 
-    private DownloadFormListTask mDownloadFormListTask;
     private DownloadFormsTask mDownloadFormsTask;
     private Button mToggleButton;
     private Button mRefreshButton;
@@ -112,7 +101,6 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
     private int mSelectedCount = 0;
 
     private static final boolean EXIT = true;
-    private static final boolean DO_NOT_EXIT = false;
     private boolean mShouldExit;
     private static final String SHOULD_EXIT = "shouldexit";
 
@@ -218,17 +206,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
             mFormList = new ArrayList<HashMap<String, String>>();
         }
 
-        if (getLastNonConfigurationInstance() instanceof DownloadFormListTask) {
-            mDownloadFormListTask = (DownloadFormListTask) getLastNonConfigurationInstance();
-            if (mDownloadFormListTask.getStatus() == AsyncTask.Status.FINISHED) {
-                try {
-                    dismissDialog(PROGRESS_DIALOG);
-                } catch (IllegalArgumentException e) {
-                    Log.i(t, "Attempting to close a dialog that was not previously opened");
-                }
-                mDownloadFormsTask = null;
-            }
-        } else if (getLastNonConfigurationInstance() instanceof DownloadFormsTask) {
+        if (getLastNonConfigurationInstance() instanceof DownloadFormsTask) {
             mDownloadFormsTask = (DownloadFormsTask) getLastNonConfigurationInstance();
             if (mDownloadFormsTask.getStatus() == AsyncTask.Status.FINISHED) {
                 try {
@@ -366,13 +344,6 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
                             public void onClick(DialogInterface dialog, int which) {
                                 Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.PROGRESS_DIALOG", "OK");
                                 dialog.dismiss();
-                                // we use the same progress dialog for both
-                                // so whatever isn't null is running
-                                if (mDownloadFormListTask != null) {
-                                    mDownloadFormListTask.setDownloaderListener(null);
-                                    mDownloadFormListTask.cancel(true);
-                                    mDownloadFormListTask = null;
-                                }
                                 if (mDownloadFormsTask != null) {
                                     mDownloadFormsTask.setDownloaderListener(null);
                                     mDownloadFormsTask.cancel(true);
@@ -387,63 +358,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.setButton(getString(R.string.cancel), loadingButtonListener);
                 return mProgressDialog;
-            case AUTH_DIALOG:
-                Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "show");
-                AlertDialog.Builder b = new AlertDialog.Builder(this);
 
-                LayoutInflater factory = LayoutInflater.from(this);
-                final View dialogView = factory.inflate(R.layout.server_auth_dialog, null);
-
-                // Get the server, username, and password from the settings
-                SharedPreferences settings =
-                        PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                String server =
-                        settings.getString(PreferencesActivity.KEY_SERVER_URL,
-                                getString(R.string.default_server_url));
-
-                String formListUrl = getString(R.string.default_odk_formlist);
-                final String url =
-                        server + settings.getString(PreferencesActivity.KEY_FORMLIST_URL, formListUrl);
-                Log.i(t, "Trying to get formList from: " + url);
-
-                EditText username = (EditText) dialogView.findViewById(R.id.username_edit);
-                String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-                username.setText(storedUsername);
-
-                EditText password = (EditText) dialogView.findViewById(R.id.password_edit);
-                String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
-                password.setText(storedPassword);
-
-                b.setTitle(getString(R.string.server_requires_auth));
-                b.setMessage(getString(R.string.server_auth_credentials, url));
-                b.setView(dialogView);
-                b.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "OK");
-
-                        EditText username = (EditText) dialogView.findViewById(R.id.username_edit);
-                        EditText password = (EditText) dialogView.findViewById(R.id.password_edit);
-
-                        Uri u = Uri.parse(url);
-
-                        WebUtils.addCredentials(username.getText().toString(), password.getText()
-                                .toString(), u.getHost());
-                        //downloadFormList();
-                    }
-                });
-                b.setNegativeButton(getString(R.string.cancel),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "Cancel");
-                                finish();
-                            }
-                        });
-
-                b.setCancelable(false);
-                mAlertShowing = false;
-                return b.create();
         }
         return null;
     }
@@ -485,19 +400,12 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
 
     @Override
     public Object onRetainNonConfigurationInstance() {
-        if (mDownloadFormsTask != null) {
-            return mDownloadFormsTask;
-        } else {
-            return mDownloadFormListTask;
-        }
+        return mDownloadFormsTask;
     }
 
 
     @Override
     protected void onDestroy() {
-        if (mDownloadFormListTask != null) {
-            mDownloadFormListTask.setDownloaderListener(null);
-        }
         if (mDownloadFormsTask != null) {
             mDownloadFormsTask.setDownloaderListener(null);
         }

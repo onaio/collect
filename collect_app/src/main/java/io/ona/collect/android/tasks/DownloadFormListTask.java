@@ -14,10 +14,19 @@
 
 package io.ona.collect.android.tasks;
 
-import org.opendatakit.httpclientandroidlib.client.HttpClient;
-import org.opendatakit.httpclientandroidlib.protocol.HttpContext;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import org.javarosa.xform.parse.XFormParser;
 import org.kxml2.kdom.Element;
+import org.opendatakit.httpclientandroidlib.client.HttpClient;
+import org.opendatakit.httpclientandroidlib.protocol.HttpContext;
+
+import java.util.HashMap;
+
 import io.ona.collect.android.R;
 import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.listeners.FormListDownloaderListener;
@@ -25,15 +34,6 @@ import io.ona.collect.android.logic.FormDetails;
 import io.ona.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.utilities.DocumentFetchResult;
 import io.ona.collect.android.utilities.WebUtils;
-
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.EditText;
-
-import java.util.HashMap;
 
 /**
  * Background task for downloading forms from urls or a formlist from a url. We overload this task a
@@ -50,8 +50,6 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     public static final String DL_ERROR_MSG = "dlerrormessage";
     public static final String DL_AUTH_REQUIRED = "dlauthrequired";
     public static final String DL_FORMLIST_NOT_MODIFIED = "dlauthrequired";
-    public static final String PREVIOUS_USERNAME = "previousUsername";
-    public static final String PREVIOUS_PASSWORD = "previousPassword";
 
     private FormListDownloaderListener mStateListener;
 
@@ -82,8 +80,8 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         // <formname, details>
         HashMap<String, FormDetails> formList = new HashMap<String, FormDetails>();
 
-        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, "");
-        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, "");
+        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
         Uri u = Uri.parse(downloadListUrl);
 
         WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
