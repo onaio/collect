@@ -159,7 +159,8 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
             @Override
             public void onClick(View v) {
                 Collect.getInstance().getActivityLogger().logAction(this, "refreshForms", "");
-
+                mFormList = UpdatesCheckService.getmFormList();
+                mFormNamesAndURLs  = UpdatesCheckService.getmFormNamesAndURLs();
                 updateListView();
             }
         });

@@ -44,7 +44,8 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
 
     private DownloadFormListTask mDownloadFormListTask;
     private static ArrayList<HashMap<String, String>> mFormList = new ArrayList<HashMap<String, String>>();
-    private static HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String, FormDetails>();
+    private static HashMap<String, FormDetails> mFormNamesAndURLs  = new HashMap<String,FormDetails>();
+    private static boolean firstRun = true;
 
     Intent resultIntent;
 
@@ -63,6 +64,7 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setWhen(0);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
 
         // cancel if already existed
         if (mTimer != null) {
@@ -93,6 +95,7 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
             // Download failed
             Log.e("Err", "Download failed.");
         } else {
+            Log.d("Near", "Not so near..");
             // Everything worked. Clear the list and add the results.
             mFormList.clear();
             mFormNamesAndURLs = result;
@@ -113,7 +116,7 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
                 item.put(UpdatedFormDownloadList.FORM_VERSION_KEY, details.formVersion);
 
 
-                if (FormDownloadList.isLocalFormSuperseded(details.formID, details.formVersion)) {
+                if (FormDownloadList.isLocalFormSuperseded(details.formID, details.formVersion) || firstRun) {
                     // Insert the new form in alphabetical order.
                     if (mFormList.size() == 0) {
                         mFormList.add(item);
@@ -131,6 +134,8 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
                     updatesAvailable = true;
                 }
             }
+
+            firstRun = false;
 
             if (updatesAvailable) {
                 resultIntent = new Intent(this, UpdatedFormDownloadList.class);

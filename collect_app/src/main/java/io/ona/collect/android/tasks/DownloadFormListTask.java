@@ -50,7 +50,10 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     public static final String DL_ERROR_MSG = "dlerrormessage";
     public static final String DL_AUTH_REQUIRED = "dlauthrequired";
     public static final String DL_FORMLIST_NOT_MODIFIED = "dlauthrequired";
+    public static final String PREVIOUS_USERNAME = "previousUsername";
+    public static final String PREVIOUS_PASSWORD = "previousPassword";
 
+    private static boolean setUpLoginCredentials  = false;
     private FormListDownloaderListener mStateListener;
 
     private static final String NAMESPACE_OPENROSA_ORG_XFORMS_XFORMS_LIST =
@@ -66,13 +69,9 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     protected HashMap<String, FormDetails> doInBackground(Void... values) {
         SharedPreferences settings =
             PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-        String downloadListUrl =
-            settings.getString(PreferencesActivity.KEY_SERVER_URL,
-                Collect.getInstance().getString(R.string.default_server_url));
+        String downloadListUrl = Collect.getInstance().getString(R.string.default_server_url);
         // NOTE: /formlist must not be translated! It is the well-known path on the server.
         String formListUrl = Collect.getInstance().getApplicationContext().getString(R.string.default_odk_formlist);
-        String downloadPath = settings.getString(PreferencesActivity.KEY_FORMLIST_URL, formListUrl);
-        downloadListUrl += downloadPath;
 
     	Collect.getInstance().getActivityLogger().logAction(this, formListUrl, downloadListUrl);
 
@@ -80,11 +79,27 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         // <formname, details>
         HashMap<String, FormDetails> formList = new HashMap<String, FormDetails>();
 
-        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
+        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, "");
+        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, "");
+
+        downloadListUrl += "/" + storedUsername + formListUrl;
         Uri u = Uri.parse(downloadListUrl);
 
-        WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
+        String previousUsername = settings.getString(PREVIOUS_USERNAME, "");
+        String previousPassword = settings.getString(PREVIOUS_PASSWORD, "");
+
+        if (!previousUsername.equals(storedUsername) || !previousPassword.equals(storedPassword) ||
+                !setUpLoginCredentials) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(PREVIOUS_USERNAME, storedUsername);
+            editor.putString(WebUtils.IF_NONE_MATCH, null);
+            editor.putString(PREVIOUS_PASSWORD, storedPassword);
+            editor.commit();
+            setUpLoginCredentials = true;
+
+            Log.d("Info", "Updated login details" + downloadListUrl);
+            WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
+        }
 
         // get shared HttpContext so that authentication and cookies are retained.
         HttpContext localContext = Collect.getInstance().getHttpContext();
