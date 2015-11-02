@@ -69,6 +69,12 @@
             android:key="font_size"
             android:title="@string/font_size" />
         <CheckBoxPreference
+            android:id="@+id/show_shared_forms"
+            android:defaultValue="false"
+            android:key="show_shared_forms"
+            android:summary="@string/show_shared_forms_summary"
+            android:title="@string/show_shared_forms" />
+        <CheckBoxPreference
             android:id="@+id/default_completed"
             android:defaultValue="true"
             android:key="default_completed"

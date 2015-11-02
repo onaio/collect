@@ -95,7 +95,6 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
             // Download failed
             Log.e("Err", "Download failed.");
         } else {
-            Log.d("Near", "Not so near..");
             // Everything worked. Clear the list and add the results.
             mFormList.clear();
             mFormNamesAndURLs = result;

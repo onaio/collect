@@ -17,6 +17,7 @@ package io.ona.collect.android.tasks;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -82,7 +83,13 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, "");
         String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, "");
 
-        downloadListUrl += "/" + storedUsername + formListUrl;
+        boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS, false);
+        Log.d("Info", "Show shared forms " + showSharedForms);
+        if (showSharedForms) {
+            downloadListUrl += formListUrl;
+        } else {
+            downloadListUrl += "/" + storedUsername + formListUrl;
+        }
         Uri u = Uri.parse(downloadListUrl);
 
         String previousUsername = settings.getString(PREVIOUS_USERNAME, "");

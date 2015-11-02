@@ -14,16 +14,6 @@
 
 package io.ona.collect.android.preferences;
 
-import java.util.ArrayList;
-
-import org.javarosa.core.services.IPropertyManager;
-import io.ona.collect.android.R;
-import io.ona.collect.android.logic.FormController;
-import io.ona.collect.android.logic.PropertyManager;
-import io.ona.collect.android.utilities.MediaUtils;
-
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +34,13 @@ import android.preference.PreferenceScreen;
 import android.provider.MediaStore.Images;
 import android.text.InputFilter;
 import android.text.Spanned;
+
+import org.javarosa.core.services.IPropertyManager;
+
+import io.ona.collect.android.R;
+import io.ona.collect.android.logic.FormController;
+import io.ona.collect.android.logic.PropertyManager;
+import io.ona.collect.android.utilities.MediaUtils;
 
 /**
  * Handles general preferences.
@@ -91,6 +88,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   public static final String CONSTRAINT_BEHAVIOR_ON_FINALIZE = "on_finalize";
   public static final String CONSTRAINT_BEHAVIOR_DEFAULT = "on_swipe";
 
+  public static final String KEY_SHOW_SHARED_FORMS = "show_shared_forms";
   public static final String KEY_COMPLETED_DEFAULT = "default_completed";
 
   public static final String KEY_HIGH_RESOLUTION = "high_resolution";
@@ -143,6 +141,8 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     PreferenceCategory clientCategory = (PreferenceCategory) findPreference(getString(R.string.client));
     mNavigationPreference = (ListPreference) findPreference(KEY_NAVIGATION);
     mFontSizePreference = (ListPreference) findPreference(KEY_FONT_SIZE);
+
+    Preference showSharedForms = findPreference(KEY_SHOW_SHARED_FORMS);
     Preference defaultFinalized = findPreference(KEY_COMPLETED_DEFAULT);
     Preference deleteAfterSend = findPreference(KEY_DELETE_AFTER_SEND);
     mSplashPathPreference = (PreferenceScreen) findPreference(KEY_SPLASH_PATH);

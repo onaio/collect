@@ -17,10 +17,14 @@ package io.ona.collect.android.activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,8 +45,10 @@ import java.util.Set;
 import io.ona.collect.android.R;
 import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.listeners.FormDownloaderListener;
+import io.ona.collect.android.listeners.FormListDownloaderListener;
 import io.ona.collect.android.logic.FormDetails;
 import io.ona.collect.android.preferences.PreferencesActivity;
+import io.ona.collect.android.tasks.DownloadFormListTask;
 import io.ona.collect.android.tasks.DownloadFormsTask;
 import io.ona.collect.android.utilities.CompatibilityUtils;
 
@@ -60,7 +66,8 @@ import io.ona.collect.android.utilities.CompatibilityUtils;
  *
  * @author Carl Hartung (carlhartung@gmail.com)
  */
-public class UpdatedFormDownloadList extends ListActivity implements FormDownloaderListener {
+public class UpdatedFormDownloadList extends ListActivity implements FormListDownloaderListener,
+        FormDownloaderListener {
     private static final String t = "RemoveFileManageList";
 
     private static final int PROGRESS_DIALOG = 1;
@@ -90,6 +97,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
     private Button mDownloadButton;
 
     private DownloadFormsTask mDownloadFormsTask;
+    private DownloadFormListTask mDownloadFormListTask;
     private Button mToggleButton;
     private Button mRefreshButton;
 
@@ -159,8 +167,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
             @Override
             public void onClick(View v) {
                 Collect.getInstance().getActivityLogger().logAction(this, "refreshForms", "");
-                mFormList = UpdatesCheckService.getmFormList();
-                mFormNamesAndURLs  = UpdatesCheckService.getmFormNamesAndURLs();
+                downloadFormList();
                 updateListView();
             }
         });
@@ -509,4 +516,95 @@ public class UpdatedFormDownloadList extends ListActivity implements FormDownloa
         createAlertDialog(getString(R.string.download_forms_result), b.toString().trim(), EXIT);
     }
 
+    /**
+     * Starts the download task and shows the progress dialog.
+     */
+    private void downloadFormList() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
+
+        if (ni == null || !ni.isConnected()) {
+            Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT).show();
+        } else {
+
+            mFormNamesAndURLs = new HashMap<String, FormDetails>();
+            if (mProgressDialog != null) {
+                // This is needed because onPrepareDialog() is broken in 1.6.
+                mProgressDialog.setMessage(getString(R.string.please_wait));
+            }
+            showDialog(PROGRESS_DIALOG);
+
+            if (mDownloadFormListTask != null &&
+                    mDownloadFormListTask.getStatus() != AsyncTask.Status.FINISHED) {
+                return; // we are already doing the download!!!
+            } else if (mDownloadFormListTask != null) {
+                mDownloadFormListTask.setDownloaderListener(null);
+                mDownloadFormListTask.cancel(true);
+                mDownloadFormListTask = null;
+            }
+
+            mDownloadFormListTask = new DownloadFormListTask();
+            mDownloadFormListTask.setDownloaderListener(this);
+            mDownloadFormListTask.execute();
+        }
+    }
+
+    @Override
+    public void formListDownloadingComplete(HashMap<String, FormDetails> result) {
+        mDownloadFormListTask.setDownloaderListener(null);
+        mDownloadFormListTask = null;
+
+        if (result == null) {
+            Log.e("Err", "Formlist Downloading returned null.  That shouldn't happen");
+            return;
+        }
+
+        if (result.containsKey(DownloadFormListTask.DL_FORMLIST_NOT_MODIFIED)) {
+            return;
+        }
+
+        if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
+            // Download failed
+            Log.e("Err", "Download failed.");
+        } else {
+            // Everything worked. Clear the list and add the results.
+            mFormList.clear();
+            mFormNamesAndURLs = result;
+            boolean updatesAvailable = false;
+
+            ArrayList<String> ids = new ArrayList<String>(mFormNamesAndURLs.keySet());
+
+            for (int i = 0; i < result.size(); i++) {
+                String formDetailsKey = ids.get(i);
+                FormDetails details = mFormNamesAndURLs.get(formDetailsKey);
+                HashMap<String, String> item = new HashMap<String, String>();
+                item.put(UpdatedFormDownloadList.FORMNAME, details.formName);
+                item.put(UpdatedFormDownloadList.FORMID_DISPLAY,
+                        ((details.formVersion == null) ? "" : (getString(R.string.version) + " " + details.formVersion + " ")) +
+                                "ID: " + details.formID);
+                item.put(UpdatedFormDownloadList.FORMDETAIL_KEY, formDetailsKey);
+                item.put(UpdatedFormDownloadList.FORM_ID_KEY, details.formID);
+                item.put(UpdatedFormDownloadList.FORM_VERSION_KEY, details.formVersion);
+
+
+                if (FormDownloadList.isLocalFormSuperseded(details.formID, details.formVersion)) {
+                    // Insert the new form in alphabetical order.
+                    if (mFormList.size() == 0) {
+                        mFormList.add(item);
+                    } else {
+                        int j;
+                        for (j = 0; j < mFormList.size(); j++) {
+                            HashMap<String, String> compareMe = mFormList.get(j);
+                            String name = compareMe.get(UpdatedFormDownloadList.FORMNAME);
+                            if (name.compareTo(mFormNamesAndURLs.get(ids.get(i)).formName) > 0) {
+                                break;
+                            }
+                        }
+                        mFormList.add(j, item);
+                    }
+                }
+            }
+        }
+    }
 }
