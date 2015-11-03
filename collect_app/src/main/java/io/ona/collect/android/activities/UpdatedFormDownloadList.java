@@ -593,7 +593,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
                 item.put(UpdatedFormDownloadList.FORM_VERSION_KEY, details.formVersion);
 
 
-                if (FormDownloadList.isLocalFormSuperseded(details.formID, details.formVersion)) {
+                if (FormDownloadList.isLocalFormSuperseded(details.formID, details.formVersion, details.hash)) {
                     // Insert the new form in alphabetical order.
                     if (mFormList.size() == 0) {
                         mFormList.add(item);

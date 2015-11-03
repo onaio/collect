@@ -582,7 +582,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
         String[] selectionArgs = { formId };
         String selection = FormsColumns.JR_FORM_ID + "=?";
-        String[] fields = { FormsColumns.JR_VERSION };
+        String[] fields = { FormsColumns.JR_VERSION, FormsColumns.MD5_HASH };
 
         Cursor formCursor = null;
         try {
@@ -593,11 +593,88 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             }
             formCursor.moveToFirst();
             int idxJrVersion = formCursor.getColumnIndex(fields[0]);
+            int idxMd5Hash = formCursor.getColumnIndex(fields[1]);
             if ( formCursor.isNull(idxJrVersion) ) {
                 // any non-null version on server is newer
                 return (latestVersion != null);
             }
             String jr_version = formCursor.getString(idxJrVersion);
+            String md5Hash = formCursor.getString(idxMd5Hash);
+            Log.d("Form md5Hash ", md5Hash);
+            // apparently, the isNull() predicate above is not respected on all Android OSes???
+            if ( jr_version == null && latestVersion == null ) {
+                return false;
+            }
+            if ( jr_version == null ) {
+                return true;
+            }
+            if ( latestVersion == null ) {
+                return false;
+            }
+            // if what we have is less, then the server is newer
+            return ( jr_version.compareTo(latestVersion) < 0 );
+        } finally {
+            if (formCursor != null) {
+                formCursor.close();
+            }
+        }
+    }
+
+    /**
+     * Determines if a local form on the device is superseded by a given version (of the same form presumably available
+     * on the server).
+     *
+     * @param formId the form to be checked. A form with this ID may or may not reside on the local device.
+     * @param latestVersion the version against which the local form (if any) is tested.
+     * @return true if a form with id <code>formId</code> exists on the local device and its version is less than
+     *         <code>latestVersion</code>.
+     */
+    public static boolean isLocalFormSuperseded(String formId, String latestVersion, String md5Hash) {
+
+        if ( formId == null ) {
+            Log.e(t, "isLocalFormSuperseded: server is not OpenRosa-compliant. <formID> is null!");
+            return true;
+        }
+
+        String[] selectionArgs = { formId };
+        String selection = FormsColumns.JR_FORM_ID + "=?";
+        String[] fields = { FormsColumns.JR_VERSION, FormsColumns.MD5_HASH };
+
+        Cursor formCursor = null;
+        try {
+            formCursor = Collect.getInstance().getContentResolver().query(FormsColumns.CONTENT_URI, fields, selection, selectionArgs, null);
+            if ( formCursor.getCount() == 0 ) {
+                // form does not already exist locally
+                return true;
+            }
+            formCursor.moveToFirst();
+            int idxJrVersion = formCursor.getColumnIndex(fields[0]);
+            int idxMd5Hash = formCursor.getColumnIndex(fields[1]);
+            String jr_version = formCursor.getString(idxJrVersion);
+            String formMd5Hash = "md5:" + formCursor.getString(idxMd5Hash);
+            Log.d("Form md5Hash ", md5Hash);
+            Log.d("Form formmd5Hash ", formMd5Hash);
+            if ( formCursor.isNull(idxMd5Hash) ) {
+                // any non-null md5Hash on server is newer
+                return (md5Hash != null);
+            }
+            if ( formMd5Hash == null && md5Hash == null ) {
+                return false;
+            }
+            if ( formMd5Hash == null ) {
+                return true;
+            }
+            if ( formMd5Hash == null ) {
+                return false;
+            }
+            if (!md5Hash.equals(formMd5Hash)) {
+                return true;
+            }
+
+            if ( formCursor.isNull(idxJrVersion) ) {
+                // any non-null version on server is newer
+                return (latestVersion != null);
+            }
             // apparently, the isNull() predicate above is not respected on all Android OSes???
             if ( jr_version == null && latestVersion == null ) {
                 return false;
