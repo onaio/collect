@@ -88,7 +88,7 @@ public class UpdatesCheckService extends Service implements FormListDownloaderLi
         }
 
         if (result.containsKey(DownloadFormListTask.DL_FORMLIST_NOT_MODIFIED)) {
-            return;
+            result = DownloadFormListTask.getCurrentFormlist();
         }
 
         if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {

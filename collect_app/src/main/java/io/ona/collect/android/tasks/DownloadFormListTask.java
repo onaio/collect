@@ -54,6 +54,9 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     public static final String PREVIOUS_USERNAME = "previousUsername";
     public static final String PREVIOUS_PASSWORD = "previousPassword";
 
+    // Keeps the latest formList.
+    private static HashMap<String, FormDetails> currentFormlist  = new HashMap<String,FormDetails>();
+
     private static boolean setUpLoginCredentials  = false;
     private FormListDownloaderListener mStateListener;
 
@@ -302,6 +305,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                 }
             }
         }
+        currentFormlist = formList;
         return formList;
     }
 
@@ -322,4 +326,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         }
     }
 
+    public static HashMap<String, FormDetails> getCurrentFormlist() {
+        return currentFormlist;
+    }
 }

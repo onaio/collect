@@ -168,7 +168,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
             public void onClick(View v) {
                 Collect.getInstance().getActivityLogger().logAction(this, "refreshForms", "");
                 downloadFormList();
-                updateListView();
+                UpdatedFormDownloadList.this.getListView().clearChoices();
             }
         });
 
@@ -226,12 +226,16 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
             }
         }
 
+        getFormlistFromBackgroundService();
         updateListView();
     }
 
-    private void updateListView() {
+    private void getFormlistFromBackgroundService() {
         mFormList = UpdatesCheckService.getmFormList();
         mFormNamesAndURLs = UpdatesCheckService.getmFormNamesAndURLs();
+    }
+
+    private void updateListView() {
         mFormListAdapter =
                 new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -552,6 +556,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
 
     @Override
     public void formListDownloadingComplete(HashMap<String, FormDetails> result) {
+        dismissDialog(PROGRESS_DIALOG);
         mDownloadFormListTask.setDownloaderListener(null);
         mDownloadFormListTask = null;
 
@@ -561,7 +566,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
         }
 
         if (result.containsKey(DownloadFormListTask.DL_FORMLIST_NOT_MODIFIED)) {
-            return;
+            result = DownloadFormListTask.getCurrentFormlist();
         }
 
         if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
@@ -605,6 +610,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
                     }
                 }
             }
+            updateListView();
         }
     }
 }
