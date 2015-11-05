@@ -124,7 +124,11 @@ public class MainMenuActivity extends Activity {
 					.getVersionedAppName());
 		}
 
+		SharedPreferences settings =
+				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
+
 		setTitle(getString(R.string.app_name) + " > "
+				+ settings.getString(PreferencesActivity.KEY_USERNAME, "") + " > "
 				+ getString(R.string.main_menu));
 
 		File f = new File(Collect.ODK_ROOT + "/collect.settings");

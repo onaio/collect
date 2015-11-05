@@ -78,7 +78,6 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private static final String t = "RemoveFileManageList";
 
     private static final int PROGRESS_DIALOG = 1;
-    private static final int AUTH_DIALOG = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST;
 
     private static final String BUNDLE_TOGGLED_KEY = "toggled";
@@ -423,63 +422,6 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.setButton(getString(R.string.cancel), loadingButtonListener);
                 return mProgressDialog;
-            case AUTH_DIALOG:
-                Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "show");
-                AlertDialog.Builder b = new AlertDialog.Builder(this);
-
-                LayoutInflater factory = LayoutInflater.from(this);
-                final View dialogView = factory.inflate(R.layout.server_auth_dialog, null);
-
-                // Get the server, username, and password from the settings
-                SharedPreferences settings =
-                    PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                String server =
-                    settings.getString(PreferencesActivity.KEY_SERVER_URL,
-                        getString(R.string.default_server_url));
-
-                String formListUrl = getString(R.string.default_odk_formlist);
-                final String url =
-                    server + settings.getString(PreferencesActivity.KEY_FORMLIST_URL, formListUrl);
-                Log.i(t, "Trying to get formList from: " + url);
-
-                EditText username = (EditText) dialogView.findViewById(R.id.username_edit);
-                String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-                username.setText(storedUsername);
-
-                EditText password = (EditText) dialogView.findViewById(R.id.password_edit);
-                String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
-                password.setText(storedPassword);
-
-                b.setTitle(getString(R.string.server_requires_auth));
-                b.setMessage(getString(R.string.server_auth_credentials, url));
-                b.setView(dialogView);
-                b.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "OK");
-
-                        EditText username = (EditText) dialogView.findViewById(R.id.username_edit);
-                        EditText password = (EditText) dialogView.findViewById(R.id.password_edit);
-
-                        Uri u = Uri.parse(url);
-
-                        WebUtils.addCredentials(username.getText().toString(), password.getText()
-                                .toString(), u.getHost());
-                        downloadFormList();
-                    }
-                });
-                b.setNegativeButton(getString(R.string.cancel),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "Cancel");
-                            finish();
-                        }
-                    });
-
-                b.setCancelable(false);
-                mAlertShowing = false;
-                return b.create();
         }
         return null;
     }
@@ -639,10 +581,11 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         String[] selectionArgs = { formId };
         String selection = FormsColumns.JR_FORM_ID + "=?";
         String[] fields = { FormsColumns.JR_VERSION, FormsColumns.MD5_HASH };
+        String sortOrder = FormsColumns.JR_VERSION + " DESC";
 
         Cursor formCursor = null;
         try {
-            formCursor = Collect.getInstance().getContentResolver().query(FormsColumns.CONTENT_URI, fields, selection, selectionArgs, null);
+            formCursor = Collect.getInstance().getContentResolver().query(FormsColumns.CONTENT_URI, fields, selection, selectionArgs, sortOrder);
             if ( formCursor.getCount() == 0 ) {
                 // form does not already exist locally
                 return true;
@@ -652,8 +595,12 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             int idxMd5Hash = formCursor.getColumnIndex(fields[1]);
             String jr_version = formCursor.getString(idxJrVersion);
             String formMd5Hash = "md5:" + formCursor.getString(idxMd5Hash);
+
             Log.d("Form md5Hash ", md5Hash);
             Log.d("Form formmd5Hash ", formMd5Hash);
+            Log.d("Form version ", ""+latestVersion);
+            Log.d("Form formversion ", jr_version);
+
             if ( formCursor.isNull(idxMd5Hash) ) {
                 // any non-null md5Hash on server is newer
                 return (md5Hash != null);
@@ -728,10 +675,12 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             return;
         }
 
-        if (result.containsKey(DownloadFormListTask.DL_AUTH_REQUIRED)) {
-            // need authorization
-            showDialog(AUTH_DIALOG);
-        } else if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
+        if (result.containsKey(DownloadFormListTask.DL_FORMLIST_NOT_MODIFIED)) {
+            // Formlist has not changed use the latest.
+            result = DownloadFormListTask.getCurrentFormlist();
+        }
+
+        if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
             // Download failed
             String dialogMessage =
                 getString(R.string.list_failed_with_error,

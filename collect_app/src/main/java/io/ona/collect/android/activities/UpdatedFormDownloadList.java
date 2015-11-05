@@ -370,7 +370,6 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.setButton(getString(R.string.cancel), loadingButtonListener);
                 return mProgressDialog;
-
         }
         return null;
     }
