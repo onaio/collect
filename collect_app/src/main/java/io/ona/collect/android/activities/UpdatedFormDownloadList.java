@@ -29,6 +29,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -36,6 +38,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -102,6 +105,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
     private DownloadFormListTask mDownloadFormListTask;
     private Button mToggleButton;
     private Button mRefreshButton;
+    private EditText searchFormField;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
     private SimpleAdapter mFormListAdapter;
@@ -177,6 +181,20 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
             }
         });
 
+        searchFormField = (EditText) findViewById(R.id.search_form);
+        searchFormField.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                displayFilteredFormList(s.toString());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
         if (savedInstanceState != null) {
             // If the screen has rotated, the hashmap with the form ids and urls is passed here.
             if (savedInstanceState.containsKey(BUNDLE_FORM_MAP)) {
@@ -232,7 +250,17 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
         }
 
         getFormlistFromBackgroundService();
-        updateListView();
+        updateListView(mFormList);
+    }
+
+    private void displayFilteredFormList(String s) {
+        ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<HashMap<String, String>>();
+        for (HashMap<String, String> formItem : mFormList) {
+            if (formItem.get(FORMNAME).toLowerCase().contains(s.toLowerCase())) {
+                filteredFormList.add(formItem);
+            }
+        }
+        updateListView(filteredFormList);
     }
 
     private void getFormlistFromBackgroundService() {
@@ -240,9 +268,9 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
         mFormNamesAndURLs = UpdatesCheckService.getmFormNamesAndURLs();
     }
 
-    private void updateListView() {
+    private void updateListView(ArrayList<HashMap<String, String>> formList) {
         mFormListAdapter =
-                new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
+                new SimpleAdapter(this, formList, R.layout.two_item_multiple_choice, data, view);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         getListView().setItemsCanFocus(false);
         setListAdapter(mFormListAdapter);
@@ -614,7 +642,7 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
                     }
                 }
             }
-            updateListView();
+            updateListView(mFormList);
         }
     }
 }

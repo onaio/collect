@@ -346,4 +346,5 @@
 	<string name="new_forms_available">Updated forms are available.</string>
 	<string name="show_shared_forms">Show forms shared with you</string>
 	<string name="show_shared_forms_summary">Select to show shared forms</string>
+	<string name="search_form">Search using form names</string>
 </resources>

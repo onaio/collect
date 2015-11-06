@@ -29,7 +29,6 @@ import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 import io.ona.collect.android.tasks.DownloadFormListTask;
 import io.ona.collect.android.tasks.DownloadFormsTask;
 import io.ona.collect.android.utilities.CompatibilityUtils;
-import io.ona.collect.android.utilities.WebUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -42,13 +41,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -109,6 +108,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private DownloadFormsTask mDownloadFormsTask;
     private Button mToggleButton;
     private Button mRefreshButton;
+    private EditText searchFormField;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
     private SimpleAdapter mFormListAdapter;
@@ -142,8 +142,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         mDownloadButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	// this is callled in downloadSelectedFiles():
-            	//    Collect.getInstance().getActivityLogger().logAction(this, "downloadSelectedFiles", ...);
+                // this is callled in downloadSelectedFiles():
+                //    Collect.getInstance().getActivityLogger().logAction(this, "downloadSelectedFiles", ...);
                 downloadSelectedFiles();
                 mToggled = false;
                 clearChoices();
@@ -179,6 +179,18 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 FormDownloadList.this.getListView().clearChoices();
                 clearChoices();
             }
+        });
+
+        searchFormField = (EditText) findViewById(R.id.search_form);
+        searchFormField.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                displayFilteredFormList(s.toString());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
         if (savedInstanceState != null) {
@@ -247,7 +259,20 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             // first time, so get the formlist
             downloadFormList();
         }
+        displayFormList(mFormList);
+    }
 
+    private void displayFilteredFormList(String s) {
+        ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<HashMap<String, String>>();
+        for (HashMap<String, String> formItem : mFormList) {
+            if (formItem.get(FORMNAME).toLowerCase().contains(s.toLowerCase())) {
+                filteredFormList.add(formItem);
+            }
+        }
+        displayFormList(filteredFormList);
+    }
+
+    private void displayFormList(ArrayList<HashMap<String, String>> formList) {
         String[] data = new String[] {
                 FORMNAME, FORMID_DISPLAY, FORMDETAIL_KEY
         };
@@ -256,12 +281,11 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         };
 
         mFormListAdapter =
-            new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
+                new SimpleAdapter(this, formList, R.layout.two_item_multiple_choice, data, view);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         getListView().setItemsCanFocus(false);
         setListAdapter(mFormListAdapter);
     }
-
 
     @Override
     protected void onStart() {
