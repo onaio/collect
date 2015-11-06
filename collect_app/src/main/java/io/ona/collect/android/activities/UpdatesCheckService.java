@@ -31,7 +31,7 @@ import io.ona.collect.android.tasks.DownloadFormListTask;
  */
 public class UpdatesCheckService extends Service implements FormListDownloaderListener {
     // constant
-    public static final long NOTIFY_INTERVAL = 10 * 1000; // 10 Minutes.
+    public static final long NOTIFY_INTERVAL = 10 * 60 * 1000; // 10 Minutes.
     NotificationCompat.Builder mBuilder;
     // Sets an ID for the notification
     int mNotificationId = 1;

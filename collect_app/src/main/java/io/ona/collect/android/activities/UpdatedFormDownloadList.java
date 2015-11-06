@@ -22,11 +22,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -125,7 +127,10 @@ public class UpdatedFormDownloadList extends ListActivity implements FormListDow
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remote_file_manage_list);
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.get_updated_forms));
+        SharedPreferences settings =
+                PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.get_updated_forms)
+                + " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
         mAlertMsg = getString(R.string.please_wait);
 
         // need white background before load

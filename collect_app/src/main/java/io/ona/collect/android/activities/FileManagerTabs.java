@@ -16,11 +16,14 @@ package io.ona.collect.android.activities;
 
 import io.ona.collect.android.R;
 import io.ona.collect.android.application.Collect;
+import io.ona.collect.android.preferences.PreferencesActivity;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -44,8 +47,11 @@ public class FileManagerTabs extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		SharedPreferences settings =
+				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
 		setTitle(getString(R.string.app_name) + " > "
-				+ getString(R.string.manage_files));
+				+ getString(R.string.manage_files)
+				+ " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
 
 		final TabHost tabHost = getTabHost();
 		tabHost.setBackgroundColor(Color.WHITE);

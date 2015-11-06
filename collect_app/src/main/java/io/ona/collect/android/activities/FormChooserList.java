@@ -17,6 +17,7 @@ package io.ona.collect.android.activities;
 import io.ona.collect.android.R;
 import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.listeners.DiskSyncListener;
+import io.ona.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 import io.ona.collect.android.tasks.DiskSyncTask;
 import io.ona.collect.android.utilities.VersionHidingCursorAdapter;
@@ -26,10 +27,12 @@ import android.app.ListActivity;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -66,7 +69,9 @@ public class FormChooserList extends ListActivity implements DiskSyncListener {
         }
 
         setContentView(R.layout.chooser_list_layout);
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.enter_data));
+        SharedPreferences settings =
+                PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.enter_data)+ " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
 
         String sortOrder = FormsColumns.DISPLAY_NAME + " ASC, " + FormsColumns.JR_VERSION + " DESC";
         Cursor c = managedQuery(FormsColumns.CONTENT_URI, null, null, null, sortOrder);

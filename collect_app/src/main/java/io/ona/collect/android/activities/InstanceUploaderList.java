@@ -192,9 +192,12 @@ public class InstanceUploaderList extends ListActivity implements
 		getListView().setItemsCanFocus(false);
 		mUploadButton.setEnabled(!(mSelected.size() == 0));
 
+		SharedPreferences settings =
+				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
 		// set title
 		setTitle(getString(R.string.app_name) + " > "
-				+ getString(R.string.send_data));
+				+ getString(R.string.send_data)
+				+ " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
 
 		// if current activity is being reinitialized due to changing
 		// orientation restore all check
