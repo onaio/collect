@@ -623,10 +623,10 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             String jr_version = formCursor.getString(idxJrVersion);
             String formMd5Hash = "md5:" + formCursor.getString(idxMd5Hash);
 
-            Log.d("Form md5Hash ", md5Hash);
-            Log.d("Form formmd5Hash ", formMd5Hash);
+            Log.d("Form md5Hash ", ""+md5Hash);
+            Log.d("Form formmd5Hash ", ""+formMd5Hash);
             Log.d("Form version ", ""+latestVersion);
-            Log.d("Form formversion ", jr_version);
+            Log.d("Form formversion ", ""+jr_version);
 
             if ( formCursor.isNull(idxMd5Hash) ) {
                 // any non-null md5Hash on server is newer
