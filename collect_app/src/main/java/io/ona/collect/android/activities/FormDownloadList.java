@@ -181,18 +181,6 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             }
         });
 
-        searchFormField = (EditText) findViewById(R.id.search_form);
-        searchFormField.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                displayFilteredFormList(s.toString());
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        });
-
         if (savedInstanceState != null) {
             // If the screen has rotated, the hashmap with the form ids and urls is passed here.
             if (savedInstanceState.containsKey(BUNDLE_FORM_MAP)) {

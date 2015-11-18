@@ -86,7 +86,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, "");
         String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, "");
 
-        boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS, false);
+        boolean showSharedForms = false;
         Log.d("Info", "Show shared forms " + showSharedForms);
         if (showSharedForms) {
             downloadListUrl += formListUrl;

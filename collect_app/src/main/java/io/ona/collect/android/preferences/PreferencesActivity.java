@@ -63,7 +63,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   public static final String KEY_SPLASH_PATH = "splashPath";
   public static final String KEY_FONT_SIZE = "font_size";
   public static final String KEY_DELETE_AFTER_SEND = "delete_send";
-  public static final String KEY_SHOW_SHARED_FORMS = "show_shared_forms";
 
   public static final String KEY_PROTOCOL = "protocol";
   public static final String KEY_PROTOCOL_SETTINGS = "protocol_settings";
@@ -135,7 +134,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     // assign all the preferences in advance because changing one often
     // affects another
     // also avoids npe
-    Preference showSharedForms = findPreference(KEY_SHOW_SHARED_FORMS);
     PreferenceCategory autosendCategory = (PreferenceCategory) findPreference(getString(R.string.autosend));
     mAutosendWifiPreference = (CheckBoxPreference) findPreference(KEY_AUTOSEND_WIFI);
     mAutosendNetworkPreference = (CheckBoxPreference) findPreference(KEY_AUTOSEND_NETWORK);
