@@ -192,12 +192,9 @@ public class InstanceUploaderList extends ListActivity implements
 		getListView().setItemsCanFocus(false);
 		mUploadButton.setEnabled(!(mSelected.size() == 0));
 
-		SharedPreferences settings =
-				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
 		// set title
 		setTitle(getString(R.string.app_name) + " > "
-				+ getString(R.string.send_data)
-				+ " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+				+ getString(R.string.send_data));
 
 		// if current activity is being reinitialized due to changing
 		// orientation restore all check
@@ -236,11 +233,28 @@ public class InstanceUploaderList extends ListActivity implements
             instanceIDs[i] = mSelected.get(i);
         }
 
-		// otherwise, do the normal agregate/other thing.
-		Intent i = new Intent(this, InstanceUploaderActivity.class);
-		i.putExtra(FormEntryActivity.KEY_INSTANCES, instanceIDs);
-		startActivityForResult(i, INSTANCE_UPLOADER);
-	}
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String server = prefs.getString(PreferencesActivity.KEY_PROTOCOL, null);
+        if (server.equalsIgnoreCase(getString(R.string.protocol_google_sheets))) {
+            // if it's Sheets, start the Sheets uploader
+            // first make sure we have a google account selected
+
+            String googleUsername = prefs.getString(
+                    PreferencesActivity.KEY_SELECTED_GOOGLE_ACCOUNT, null);
+            if (googleUsername == null || googleUsername.equals("")) {
+                showDialog(GOOGLE_USER_DIALOG);
+                return;
+            }
+            Intent i = new Intent(this, GoogleSheetsUploaderActivity.class);
+            i.putExtra(FormEntryActivity.KEY_INSTANCES, instanceIDs);
+            startActivityForResult(i, INSTANCE_UPLOADER);
+        } else {
+            // otherwise, do the normal agregate/other thing.
+            Intent i = new Intent(this, InstanceUploaderActivity.class);
+            i.putExtra(FormEntryActivity.KEY_INSTANCES, instanceIDs);
+            startActivityForResult(i, INSTANCE_UPLOADER);
+        }
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

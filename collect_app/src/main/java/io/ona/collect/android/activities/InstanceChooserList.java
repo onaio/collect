@@ -16,7 +16,6 @@ package io.ona.collect.android.activities;
 
 import io.ona.collect.android.R;
 import io.ona.collect.android.application.Collect;
-import io.ona.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.provider.InstanceProviderAPI;
 import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 
@@ -25,11 +24,9 @@ import android.app.ListActivity;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -58,12 +55,9 @@ public class InstanceChooserList extends ListActivity {
             createErrorDialog(e.getMessage(), EXIT);
             return;
         }
-        SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
 
         setContentView(R.layout.chooser_list_layout);
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.review_data)
-                + " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.review_data));
         TextView tv = (TextView) findViewById(R.id.status_text);
         tv.setVisibility(View.GONE);
 

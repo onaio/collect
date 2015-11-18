@@ -123,12 +123,8 @@ public class MainMenuActivity extends Activity {
 					.getVersionedAppName());
 		}
 
-		SharedPreferences settings =
-				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-
 		setTitle(getString(R.string.app_name) + " > "
-				+ getString(R.string.main_menu)
-				+ " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+				+ getString(R.string.main_menu));
 
 		File f = new File(Collect.ODK_ROOT + "/collect.settings");
 		if (f.exists()) {
@@ -202,9 +198,20 @@ public class MainMenuActivity extends Activity {
 			public void onClick(View v) {
 				Collect.getInstance().getActivityLogger()
 						.logAction(this, "downloadBlankForms", "click");
-				Intent i = new Intent(getApplicationContext(),
+				SharedPreferences sharedPreferences = PreferenceManager
+						.getDefaultSharedPreferences(MainMenuActivity.this);
+				String protocol = sharedPreferences.getString(
+						PreferencesActivity.KEY_PROTOCOL, getString(R.string.protocol_odk_default));
+				Intent i = null;
+				if (protocol.equalsIgnoreCase(getString(R.string.protocol_google_sheets))) {
+					i = new Intent(getApplicationContext(),
+							GoogleDriveActivity.class);
+				} else {
+					i = new Intent(getApplicationContext(),
 							FormDownloadList.class);
+				}
 				startActivity(i);
+				
 			}
 		});
 
@@ -263,29 +270,11 @@ public class MainMenuActivity extends Activity {
 		// background
 
 		updateButtons();
-
-		// Start service to listen for updates.
-		startService(new Intent(this, UpdatesCheckService.class));
-	}
-
-	private void showLoginScreen() {
-
-		// Redirect to login screen.
-		startActivity(new Intent(MainMenuActivity.this, LoginActivity.class));
-		finish();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		// Redirect to login screen if not signed in
-		SharedPreferences mSharedPreferences  = PreferenceManager.getDefaultSharedPreferences(this);
-		String username = mSharedPreferences.getString(PreferencesActivity.KEY_USERNAME, null);
-		if (username == null || username.length() == 0) {
-			showLoginScreen();
-		}
-
 		SharedPreferences sharedPreferences = this.getSharedPreferences(
 				AdminPreferencesActivity.ADMIN_PREFERENCES, 0);
 

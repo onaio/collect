@@ -56,11 +56,13 @@ android:layout_weight="1"      />
 
   </LinearLayout>
 
+
 	<ListView
 		android:id="@android:id/list"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:layout_above="@+id/buttonholder" />
+		android:layout_above="@+id/buttonholder"
+		android:layout_alignParentTop="true" />
 
    <TextView
       android:id="@android:id/empty"

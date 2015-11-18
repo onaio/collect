@@ -29,6 +29,7 @@ import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 import io.ona.collect.android.tasks.DownloadFormListTask;
 import io.ona.collect.android.tasks.DownloadFormsTask;
 import io.ona.collect.android.utilities.CompatibilityUtils;
+import io.ona.collect.android.utilities.WebUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -41,13 +42,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +78,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private static final String t = "RemoveFileManageList";
 
     private static final int PROGRESS_DIALOG = 1;
+    private static final int AUTH_DIALOG = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST;
 
     private static final String BUNDLE_TOGGLED_KEY = "toggled";
@@ -108,7 +110,6 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private DownloadFormsTask mDownloadFormsTask;
     private Button mToggleButton;
     private Button mRefreshButton;
-    private EditText searchFormField;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
     private SimpleAdapter mFormListAdapter;
@@ -128,10 +129,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remote_file_manage_list);
-        SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.get_forms)
-                + " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.get_forms));
         mAlertMsg = getString(R.string.please_wait);
 
         // need white background before load
@@ -142,8 +140,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         mDownloadButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // this is callled in downloadSelectedFiles():
-                //    Collect.getInstance().getActivityLogger().logAction(this, "downloadSelectedFiles", ...);
+            	// this is callled in downloadSelectedFiles():
+            	//    Collect.getInstance().getActivityLogger().logAction(this, "downloadSelectedFiles", ...);
                 downloadSelectedFiles();
                 mToggled = false;
                 clearChoices();
@@ -247,20 +245,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             // first time, so get the formlist
             downloadFormList();
         }
-        displayFormList(mFormList);
-    }
 
-    private void displayFilteredFormList(String s) {
-        ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<HashMap<String, String>>();
-        for (HashMap<String, String> formItem : mFormList) {
-            if (formItem.get(FORMNAME).toLowerCase().contains(s.toLowerCase())) {
-                filteredFormList.add(formItem);
-            }
-        }
-        displayFormList(filteredFormList);
-    }
-
-    private void displayFormList(ArrayList<HashMap<String, String>> formList) {
         String[] data = new String[] {
                 FORMNAME, FORMID_DISPLAY, FORMDETAIL_KEY
         };
@@ -269,11 +254,12 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         };
 
         mFormListAdapter =
-                new SimpleAdapter(this, formList, R.layout.two_item_multiple_choice, data, view);
+            new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         getListView().setItemsCanFocus(false);
         setListAdapter(mFormListAdapter);
     }
+
 
     @Override
     protected void onStart() {
@@ -437,6 +423,63 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.setButton(getString(R.string.cancel), loadingButtonListener);
                 return mProgressDialog;
+            case AUTH_DIALOG:
+                Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "show");
+                AlertDialog.Builder b = new AlertDialog.Builder(this);
+
+                LayoutInflater factory = LayoutInflater.from(this);
+                final View dialogView = factory.inflate(R.layout.server_auth_dialog, null);
+
+                // Get the server, username, and password from the settings
+                SharedPreferences settings =
+                    PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                String server =
+                    settings.getString(PreferencesActivity.KEY_SERVER_URL,
+                        getString(R.string.default_server_url));
+
+                String formListUrl = getString(R.string.default_odk_formlist);
+                final String url =
+                    server + settings.getString(PreferencesActivity.KEY_FORMLIST_URL, formListUrl);
+                Log.i(t, "Trying to get formList from: " + url);
+
+                EditText username = (EditText) dialogView.findViewById(R.id.username_edit);
+                String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+                username.setText(storedUsername);
+
+                EditText password = (EditText) dialogView.findViewById(R.id.password_edit);
+                String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
+                password.setText(storedPassword);
+
+                b.setTitle(getString(R.string.server_requires_auth));
+                b.setMessage(getString(R.string.server_auth_credentials, url));
+                b.setView(dialogView);
+                b.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "OK");
+
+                        EditText username = (EditText) dialogView.findViewById(R.id.username_edit);
+                        EditText password = (EditText) dialogView.findViewById(R.id.password_edit);
+
+                        Uri u = Uri.parse(url);
+
+                        WebUtils.addCredentials(username.getText().toString(), password.getText()
+                                .toString(), u.getHost());
+                        downloadFormList();
+                    }
+                });
+                b.setNegativeButton(getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Collect.getInstance().getActivityLogger().logAction(this, "onCreateDialog.AUTH_DIALOG", "Cancel");
+                            finish();
+                        }
+                    });
+
+                b.setCancelable(false);
+                mAlertShowing = false;
+                return b.create();
         }
         return null;
     }
@@ -539,7 +582,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
         String[] selectionArgs = { formId };
         String selection = FormsColumns.JR_FORM_ID + "=?";
-        String[] fields = { FormsColumns.JR_VERSION, FormsColumns.MD5_HASH };
+        String[] fields = { FormsColumns.JR_VERSION };
 
         Cursor formCursor = null;
         try {
@@ -550,93 +593,11 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             }
             formCursor.moveToFirst();
             int idxJrVersion = formCursor.getColumnIndex(fields[0]);
-            int idxMd5Hash = formCursor.getColumnIndex(fields[1]);
             if ( formCursor.isNull(idxJrVersion) ) {
                 // any non-null version on server is newer
                 return (latestVersion != null);
             }
             String jr_version = formCursor.getString(idxJrVersion);
-            String md5Hash = formCursor.getString(idxMd5Hash);
-            Log.d("Form md5Hash ", md5Hash);
-            // apparently, the isNull() predicate above is not respected on all Android OSes???
-            if ( jr_version == null && latestVersion == null ) {
-                return false;
-            }
-            if ( jr_version == null ) {
-                return true;
-            }
-            if ( latestVersion == null ) {
-                return false;
-            }
-            // if what we have is less, then the server is newer
-            return ( jr_version.compareTo(latestVersion) < 0 );
-        } finally {
-            if (formCursor != null) {
-                formCursor.close();
-            }
-        }
-    }
-
-    /**
-     * Determines if a local form on the device is superseded by a given version (of the same form presumably available
-     * on the server).
-     *
-     * @param formId the form to be checked. A form with this ID may or may not reside on the local device.
-     * @param latestVersion the version against which the local form (if any) is tested.
-     * @return true if a form with id <code>formId</code> exists on the local device and its version is less than
-     *         <code>latestVersion</code>.
-     */
-    public static boolean isLocalFormSuperseded(String formId, String latestVersion, String md5Hash) {
-
-        if ( formId == null ) {
-            Log.e(t, "isLocalFormSuperseded: server is not OpenRosa-compliant. <formID> is null!");
-            return true;
-        }
-
-        String[] selectionArgs = { formId };
-        String selection = FormsColumns.JR_FORM_ID + "=?";
-        String[] fields = { FormsColumns.JR_VERSION, FormsColumns.MD5_HASH };
-        String sortOrder = FormsColumns.JR_VERSION + " DESC";
-
-        Cursor formCursor = null;
-        try {
-            formCursor = Collect.getInstance().getContentResolver().query(FormsColumns.CONTENT_URI, fields, selection, selectionArgs, sortOrder);
-            if ( formCursor.getCount() == 0 ) {
-                // form does not already exist locally
-                return true;
-            }
-            formCursor.moveToFirst();
-            int idxJrVersion = formCursor.getColumnIndex(fields[0]);
-            int idxMd5Hash = formCursor.getColumnIndex(fields[1]);
-            String jr_version = formCursor.getString(idxJrVersion);
-            String formMd5Hash = "md5:" + formCursor.getString(idxMd5Hash);
-
-            Log.d("Form md5Hash ", "New form hash" + md5Hash);
-            Log.d("Form formmd5Hash ", "Old file hash" + formMd5Hash);
-            Log.d("Form version ", "New form version" + latestVersion);
-            Log.d("Form formversion ", "Old file version" + jr_version);
-
-            if ( formCursor.isNull(idxMd5Hash) ) {
-                // any non-null md5Hash on server is newer
-                return (md5Hash != null);
-            }
-            if ( formMd5Hash == null && md5Hash == null ) {
-                return false;
-            }
-            if ( formMd5Hash == null ) {
-                return true;
-            }
-            if ( formMd5Hash == null ) {
-                return false;
-            }
-            if (!md5Hash.equals(formMd5Hash)) {
-                return true;
-            }
-
-            if ( formCursor.isNull(idxJrVersion) ) {
-                // any non-null version on server is newer
-                return (latestVersion != null);
-            }
             // apparently, the isNull() predicate above is not respected on all Android OSes???
             if ( jr_version == null && latestVersion == null ) {
                 return false;
@@ -690,12 +651,10 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             return;
         }
 
-        if (result.containsKey(DownloadFormListTask.DL_FORMLIST_NOT_MODIFIED)) {
-            // Formlist has not changed use the latest.
-            result = DownloadFormListTask.getCurrentFormlist();
-        }
-
-        if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
+        if (result.containsKey(DownloadFormListTask.DL_AUTH_REQUIRED)) {
+            // need authorization
+            showDialog(AUTH_DIALOG);
+        } else if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
             // Download failed
             String dialogMessage =
                 getString(R.string.list_failed_with_error,

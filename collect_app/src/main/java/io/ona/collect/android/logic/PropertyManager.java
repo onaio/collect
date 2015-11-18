@@ -136,6 +136,11 @@ public class PropertyManager implements IPropertyManager {
         	mProperties.put(USERNAME, value);
         	mProperties.put(OR_USERNAME, "username:" + value);
         }
+        value = settings.getString(PreferencesActivity.KEY_SELECTED_GOOGLE_ACCOUNT, null);
+        if ( value != null ) {
+        	mProperties.put(EMAIL, value);
+        	mProperties.put(OR_EMAIL, "mailto:" + value);
+        }
     }
 
     @Override

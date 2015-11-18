@@ -14,20 +14,10 @@
 
 package io.ona.collect.android.tasks;
 
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.preference.CheckBoxPreference;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
-import org.javarosa.xform.parse.XFormParser;
-import org.kxml2.kdom.Element;
 import org.opendatakit.httpclientandroidlib.client.HttpClient;
 import org.opendatakit.httpclientandroidlib.protocol.HttpContext;
-
-import java.util.HashMap;
-
+import org.javarosa.xform.parse.XFormParser;
+import org.kxml2.kdom.Element;
 import io.ona.collect.android.R;
 import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.listeners.FormListDownloaderListener;
@@ -35,6 +25,13 @@ import io.ona.collect.android.logic.FormDetails;
 import io.ona.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.utilities.DocumentFetchResult;
 import io.ona.collect.android.utilities.WebUtils;
+
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import java.util.HashMap;
 
 /**
  * Background task for downloading forms from urls or a formlist from a url. We overload this task a
@@ -50,14 +47,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     // used to store error message if one occurs
     public static final String DL_ERROR_MSG = "dlerrormessage";
     public static final String DL_AUTH_REQUIRED = "dlauthrequired";
-    public static final String DL_FORMLIST_NOT_MODIFIED = "dlauthrequired";
-    public static final String PREVIOUS_USERNAME = "previousUsername";
-    public static final String PREVIOUS_PASSWORD = "previousPassword";
 
-    // Keeps the latest formList.
-    private static HashMap<String, FormDetails> currentFormlist  = new HashMap<String,FormDetails>();
-
-    private static boolean setUpLoginCredentials  = false;
     private FormListDownloaderListener mStateListener;
 
     private static final String NAMESPACE_OPENROSA_ORG_XFORMS_XFORMS_LIST =
@@ -73,9 +63,13 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     protected HashMap<String, FormDetails> doInBackground(Void... values) {
         SharedPreferences settings =
             PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-        String downloadListUrl = Collect.getInstance().getString(R.string.default_server_url);
+        String downloadListUrl =
+            settings.getString(PreferencesActivity.KEY_SERVER_URL,
+                Collect.getInstance().getString(R.string.default_server_url));
         // NOTE: /formlist must not be translated! It is the well-known path on the server.
         String formListUrl = Collect.getInstance().getApplicationContext().getString(R.string.default_odk_formlist);
+        String downloadPath = settings.getString(PreferencesActivity.KEY_FORMLIST_URL, formListUrl);
+        downloadListUrl += downloadPath;
 
     	Collect.getInstance().getActivityLogger().logAction(this, formListUrl, downloadListUrl);
 
@@ -83,52 +77,18 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         // <formname, details>
         HashMap<String, FormDetails> formList = new HashMap<String, FormDetails>();
 
-        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, "");
-        String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, "");
-
-        boolean showSharedForms = false;
-        Log.d("Info", "Show shared forms " + showSharedForms);
-        if (showSharedForms) {
-            downloadListUrl += formListUrl;
-        } else {
-            downloadListUrl += "/" + storedUsername + formListUrl;
-        }
-        Uri u = Uri.parse(downloadListUrl);
-
-        String previousUsername = settings.getString(PREVIOUS_USERNAME, "");
-        String previousPassword = settings.getString(PREVIOUS_PASSWORD, "");
-
-        if (!previousUsername.equals(storedUsername) || !previousPassword.equals(storedPassword) ||
-                !setUpLoginCredentials) {
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString(PREVIOUS_USERNAME, storedUsername);
-            editor.putString(WebUtils.IF_NONE_MATCH, null);
-            editor.putString(PREVIOUS_PASSWORD, storedPassword);
-            editor.commit();
-            setUpLoginCredentials = true;
-
-            Log.d("Info", "Updated login details" + downloadListUrl);
-            WebUtils.addCredentials(storedUsername, storedPassword, u.getHost());
-        }
-
         // get shared HttpContext so that authentication and cookies are retained.
         HttpContext localContext = Collect.getInstance().getHttpContext();
         HttpClient httpclient = WebUtils.createHttpClient(WebUtils.CONNECTION_TIMEOUT);
 
-        Log.d("Info", "Fetching formList");
         DocumentFetchResult result =
-            WebUtils.getXmlDocument(downloadListUrl, localContext, httpclient, settings);
+            WebUtils.getXmlDocument(downloadListUrl, localContext, httpclient);
 
         // If we can't get the document, return the error, cancel the task
         if (result.errorMessage != null) {
             if (result.responseCode == 401) {
                 formList.put(DL_AUTH_REQUIRED, new FormDetails(result.errorMessage));
-            } else if (result.responseCode == 304) {
-                formList.put(DL_FORMLIST_NOT_MODIFIED, new FormDetails("NOT_MODIFIED"));
-                Log.d("ETag", "The formList has not changed.");
-                return formList;
             } else {
-                Log.d("Error", ""+result.responseCode);
                 formList.put(DL_ERROR_MSG, new FormDetails(result.errorMessage));
             }
             return formList;
@@ -181,7 +141,6 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                 String description = null;
                 String downloadUrl = null;
                 String manifestUrl = null;
-                String hash = null;
                 // don't process descriptionUrl
                 int fieldCount = xformElement.getChildCount();
                 for (int j = 0; j < fieldCount; ++j) {
@@ -230,11 +189,6 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                         if (manifestUrl != null && manifestUrl.length() == 0) {
                             manifestUrl = null;
                         }
-                    } else if (tag.equals("hash")) {
-                        hash = XFormParser.getXMLText(child, true);
-                        if (hash != null && hash.length() == 0) {
-                            hash = null;
-                        }
                     }
                 }
                 if (formId == null || downloadUrl == null || formName == null) {
@@ -249,7 +203,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                             R.string.parse_openrosa_formlist_failed, error)));
                     return formList;
                 }
-                formList.put(formId, new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion, hash));
+                formList.put(formId, new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion));
             }
         } else {
             // Aggregate 0.9.x mode...
@@ -257,7 +211,6 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
             Element formsElement = result.doc.getRootElement();
             int formsCount = formsElement.getChildCount();
             String formId = null;
-            String hash = null;
             for (int i = 0; i < formsCount; ++i) {
                 if (formsElement.getType(i) != Element.ELEMENT) {
                     // whitespace
@@ -269,12 +222,6 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                     formId = XFormParser.getXMLText(child, true);
                     if (formId != null && formId.length() == 0) {
                         formId = null;
-                    }
-                }
-                if (tag.equals("hash")) {
-                    hash = XFormParser.getXMLText(child, true);
-                    if (hash != null && hash.length() == 0) {
-                        hash = null;
                     }
                 }
                 if (tag.equalsIgnoreCase("form")) {
@@ -299,13 +246,12 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                                 R.string.parse_legacy_formlist_failed, error)));
                         return formList;
                     }
-                    formList.put(formName, new FormDetails(formName, downloadUrl, null, formId, null, hash));
+                    formList.put(formName, new FormDetails(formName, downloadUrl, null, formId, null));
 
                     formId = null;
                 }
             }
         }
-        currentFormlist = formList;
         return formList;
     }
 
@@ -326,7 +272,4 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         }
     }
 
-    public static HashMap<String, FormDetails> getCurrentFormlist() {
-        return currentFormlist;
-    }
 }
