@@ -165,6 +165,9 @@
             android:name=".preferences.AggregatePreferencesActivity"
             android:label="@string/app_name" />
         <activity
+            android:name=".preferences.GooglePreferencesActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name=".preferences.AdminPreferencesActivity"
             android:label="@string/app_name" />
         <activity

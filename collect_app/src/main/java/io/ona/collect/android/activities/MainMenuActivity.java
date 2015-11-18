@@ -80,7 +80,6 @@ public class MainMenuActivity extends Activity {
 	private Button mSendDataButton;
 	private Button mReviewDataButton;
 	private Button mGetFormsButton;
-	private Button mGetUpdatedFormsButton;
 
 	private View mReviewSpacer;
 	private View mGetFormsSpacer;
@@ -219,20 +218,6 @@ public class MainMenuActivity extends Activity {
 						.logAction(this, "deleteSavedForms", "click");
 				Intent i = new Intent(getApplicationContext(),
 						FileManagerTabs.class);
-				startActivity(i);
-			}
-		});
-
-		// manage forms button. no result expected.
-		mGetUpdatedFormsButton = (Button) findViewById(R.id.get_updated_forms);
-		mGetUpdatedFormsButton.setText(getString(R.string.get_updated_forms));
-		mGetUpdatedFormsButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Collect.getInstance().getActivityLogger()
-						.logAction(this, "downloadBlankForms", "click");
-				Intent i = new Intent(getApplicationContext(),
-						UpdatedFormDownloadList.class);
 				startActivity(i);
 			}
 		});

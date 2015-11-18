@@ -14,6 +14,16 @@
 
 package io.ona.collect.android.preferences;
 
+import java.util.ArrayList;
+
+import org.javarosa.core.services.IPropertyManager;
+import io.ona.collect.android.R;
+import io.ona.collect.android.logic.FormController;
+import io.ona.collect.android.logic.PropertyManager;
+import io.ona.collect.android.utilities.MediaUtils;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,13 +45,6 @@ import android.provider.MediaStore.Images;
 import android.text.InputFilter;
 import android.text.Spanned;
 
-import org.javarosa.core.services.IPropertyManager;
-
-import io.ona.collect.android.R;
-import io.ona.collect.android.logic.FormController;
-import io.ona.collect.android.logic.PropertyManager;
-import io.ona.collect.android.utilities.MediaUtils;
-
 /**
  * Handles general preferences.
  *
@@ -60,21 +63,23 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   public static final String KEY_SPLASH_PATH = "splashPath";
   public static final String KEY_FONT_SIZE = "font_size";
   public static final String KEY_DELETE_AFTER_SEND = "delete_send";
+  public static final String KEY_SHOW_SHARED_FORMS = "show_shared_forms";
 
+  public static final String KEY_PROTOCOL = "protocol";
   public static final String KEY_PROTOCOL_SETTINGS = "protocol_settings";
 
   // leaving these in the main screen because username can be used as a
   // pre-fill
   // value in a form
+  public static final String KEY_SELECTED_GOOGLE_ACCOUNT = "selected_google_account";
   public static final String KEY_USERNAME = "username";
   public static final String KEY_PASSWORD = "password";
 
   // AGGREGATE SPECIFIC
   public static final String KEY_SERVER_URL = "server_url";
 
-  // GME SPECIFIC
-  public static final String KEY_GME_PROJECT_ID = "gme_project_id";
-  public static final String KEY_GME_ID_HASHMAP = "gme_id_hashmap";
+  // GOOGLE SPECIFIC
+  public static final String KEY_GOOGLE_SHEETS_URL = "google_sheets_url";
 
   // OTHER SPECIFIC
   public static final String KEY_FORMLIST_URL = "formlist_url";
@@ -82,18 +87,13 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
   public static final String NAVIGATION_SWIPE = "swipe";
   public static final String NAVIGATION_BUTTONS = "buttons";
-  public static final String NAVIGATION_SWIPE_BUTTONS = "swipe_buttons";
 
   public static final String CONSTRAINT_BEHAVIOR_ON_SWIPE = "on_swipe";
-  public static final String CONSTRAINT_BEHAVIOR_ON_FINALIZE = "on_finalize";
   public static final String CONSTRAINT_BEHAVIOR_DEFAULT = "on_swipe";
 
-  public static final String KEY_SHOW_SHARED_FORMS = "show_shared_forms";
   public static final String KEY_COMPLETED_DEFAULT = "default_completed";
 
   public static final String KEY_HIGH_RESOLUTION = "high_resolution";
-
-  public static final String KEY_AUTH = "auth";
 
   public static final String KEY_AUTOSEND_WIFI = "autosend_wifi";
   public static final String KEY_AUTOSEND_NETWORK = "autosend_network";
@@ -103,12 +103,14 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
   private PreferenceScreen mSplashPathPreference;
 
+  private ListPreference mSelectedGoogleAccountPreference;
   private ListPreference mFontSizePreference;
   private ListPreference mNavigationPreference;
   private ListPreference mConstraintBehaviorPreference;
 
   private CheckBoxPreference mAutosendWifiPreference;
   private CheckBoxPreference mAutosendNetworkPreference;
+  private ListPreference mProtocolPreference;
 
   private PreferenceScreen mProtocolSettings;
 
@@ -133,16 +135,18 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     // assign all the preferences in advance because changing one often
     // affects another
     // also avoids npe
+    Preference showSharedForms = findPreference(KEY_SHOW_SHARED_FORMS);
     PreferenceCategory autosendCategory = (PreferenceCategory) findPreference(getString(R.string.autosend));
     mAutosendWifiPreference = (CheckBoxPreference) findPreference(KEY_AUTOSEND_WIFI);
     mAutosendNetworkPreference = (CheckBoxPreference) findPreference(KEY_AUTOSEND_NETWORK);
     PreferenceCategory serverCategory = (PreferenceCategory) findPreference(getString(R.string.server_preferences));
 
+    mProtocolPreference = (ListPreference) findPreference(KEY_PROTOCOL);
+
+    mSelectedGoogleAccountPreference = (ListPreference) findPreference(KEY_SELECTED_GOOGLE_ACCOUNT);
     PreferenceCategory clientCategory = (PreferenceCategory) findPreference(getString(R.string.client));
     mNavigationPreference = (ListPreference) findPreference(KEY_NAVIGATION);
     mFontSizePreference = (ListPreference) findPreference(KEY_FONT_SIZE);
-
-    Preference showSharedForms = findPreference(KEY_SHOW_SHARED_FORMS);
     Preference defaultFinalized = findPreference(KEY_COMPLETED_DEFAULT);
     Preference deleteAfterSend = findPreference(KEY_DELETE_AFTER_SEND);
     mSplashPathPreference = (PreferenceScreen) findPreference(KEY_SPLASH_PATH);
@@ -169,9 +173,100 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
       getPreferenceScreen().removePreference(autosendCategory);
     }
 
-    // other
-    Intent prefIntent = new Intent(this, OtherPreferencesActivity.class);
+    mProtocolPreference = (ListPreference) findPreference(KEY_PROTOCOL);
+    mProtocolPreference.setSummary(mProtocolPreference.getEntry());
+    Intent prefIntent = null;
 
+    if (mProtocolPreference.getValue().equals(getString(R.string.protocol_odk_default))) {
+      setDefaultAggregatePaths();
+      prefIntent = new Intent(this, AggregatePreferencesActivity.class);
+    } else if (mProtocolPreference.getValue().equals(
+        getString(R.string.protocol_google_sheets))) {
+      prefIntent = new Intent(this, GooglePreferencesActivity.class);
+    } else {
+      // other
+      prefIntent = new Intent(this, OtherPreferencesActivity.class);
+    }
+    prefIntent.putExtra(INTENT_KEY_ADMIN_MODE, adminMode);
+    mProtocolSettings.setIntent(prefIntent);
+
+    mProtocolPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+      @Override
+      public boolean onPreferenceChange(Preference preference, Object newValue) {
+        String oldValue = ((ListPreference) preference).getValue();
+        int index = ((ListPreference) preference).findIndexOfValue(newValue.toString());
+        String entry = (String) ((ListPreference) preference).getEntries()[index];
+        String value = (String) ((ListPreference) preference).getEntryValues()[index];
+        ((ListPreference) preference).setSummary(entry);
+
+        Intent prefIntent = null;
+        if (value.equals(getString(R.string.protocol_odk_default))) {
+          setDefaultAggregatePaths();
+          prefIntent = new Intent(PreferencesActivity.this, AggregatePreferencesActivity.class);
+        } else if (value.equals(getString(R.string.protocol_google_sheets))) {
+          prefIntent = new Intent(PreferencesActivity.this, GooglePreferencesActivity.class);
+        } else {
+          // other
+          prefIntent = new Intent(PreferencesActivity.this, OtherPreferencesActivity.class);
+        }
+        prefIntent.putExtra(INTENT_KEY_ADMIN_MODE, adminMode);
+        mProtocolSettings.setIntent(prefIntent);
+
+        if (!((String) newValue).equals(oldValue)) {
+          startActivity(prefIntent);
+        }
+
+        return true;
+      }
+    });
+
+    boolean changeProtocol = adminPreferences.getBoolean(
+        AdminPreferencesActivity.KEY_CHANGE_SERVER, true);
+    if (!(changeProtocol || adminMode)) {
+      serverCategory.removePreference(mProtocolPreference);
+    }
+    boolean changeProtocolSettings = adminPreferences.getBoolean(
+        AdminPreferencesActivity.KEY_CHANGE_PROTOCOL_SETTINGS, true);
+    if (!(changeProtocolSettings || adminMode)) {
+      serverCategory.removePreference(mProtocolSettings);
+    }
+
+    // get list of google accounts
+    final Account[] accounts = AccountManager.get(getApplicationContext()).getAccountsByType(
+        "com.google");
+    ArrayList<String> accountEntries = new ArrayList<String>();
+    ArrayList<String> accountValues = new ArrayList<String>();
+
+    for (int i = 0; i < accounts.length; i++) {
+      accountEntries.add(accounts[i].name);
+      accountValues.add(accounts[i].name);
+    }
+    accountEntries.add(getString(R.string.no_account));
+    accountValues.add("");
+
+    mSelectedGoogleAccountPreference.setEntries(accountEntries.toArray(new String[accountEntries
+        .size()]));
+    mSelectedGoogleAccountPreference.setEntryValues(accountValues.toArray(new String[accountValues
+        .size()]));
+    mSelectedGoogleAccountPreference
+        .setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+          @Override
+          public boolean onPreferenceChange(Preference preference, Object newValue) {
+            int index = ((ListPreference) preference).findIndexOfValue(newValue.toString());
+            String value = (String) ((ListPreference) preference).getEntryValues()[index];
+            ((ListPreference) preference).setSummary(value);
+            return true;
+          }
+        });
+    mSelectedGoogleAccountPreference.setSummary(mSelectedGoogleAccountPreference.getValue());
+
+    boolean googleAccountAvailable = adminPreferences.getBoolean(
+        AdminPreferencesActivity.KEY_CHANGE_GOOGLE_ACCOUNT, true);
+    if (!(googleAccountAvailable || adminMode)) {
+      serverCategory.removePreference(mSelectedGoogleAccountPreference);
+    }
 
     mUsernamePreference.setOnPreferenceChangeListener(this);
     mUsernamePreference.setSummary(mUsernamePreference.getText());
@@ -364,6 +459,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     // a sub-preference screen
     // this just keeps the widgets in sync
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+    String account = sp.getString(KEY_SELECTED_GOOGLE_ACCOUNT, "");
+    mSelectedGoogleAccountPreference.setSummary(account);
+    mSelectedGoogleAccountPreference.setValue(account);
+
     String user = sp.getString(KEY_USERNAME, "");
     String pw = sp.getString(KEY_PASSWORD, "");
     mUsernamePreference.setSummary(user);
