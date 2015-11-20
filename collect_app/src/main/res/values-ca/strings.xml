@@ -129,7 +129,7 @@
   <string name="username">Nom d\'usuari</string>
   <string name="view_hierarchy">Ves a entrada de dades</string>
   <string name="general_preferences">Configuració general</string>
-  <string name="click_to_web">Toca per visitar http://odk.ona.io</string>
+  <string name="click_to_web">Toca per visitar http://help.ona.io/guides/data-collection</string>
   <string name="client">Interfície d\'usuari</string>
   <string name="show_splash">Mostrar pantalla de benvinguda</string>
   <string name="show_splash_summary">Mostrar quan inicia l\'aplicació</string>

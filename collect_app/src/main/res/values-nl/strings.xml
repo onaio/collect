@@ -127,7 +127,7 @@
   <string name="username">Gebruikersnaam</string>
   <string name="view_hierarchy">Ga naar vraag</string>
   <string name="general_preferences">Instellingen</string>
-  <string name="click_to_web">Ga naar http://odk.ona.io</string>
+  <string name="click_to_web">Ga naar http://help.ona.io/guides/data-collection</string>
   <string name="client">Client</string>
   <string name="show_splash">Toon welkomstscherm</string>
   <string name="show_splash_summary">Toon welkomstscherm bij opstarten van de applicatie</string>

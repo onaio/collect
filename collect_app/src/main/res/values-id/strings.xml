@@ -129,7 +129,7 @@
   <string name="username">Nama pengguna</string>
   <string name="view_hierarchy">Risalah</string>
   <string name="general_preferences">Pengaturan Umum</string>
-  <string name="click_to_web">Tap untuk berkunjung ke http://odk.ona.io</string>
+  <string name="click_to_web">Tap untuk berkunjung ke http://help.ona.io/guides/data-collection</string>
   <string name="client">Klien</string>
   <string name="show_splash">Perlihatkan tampilan pembuka</string>
   <string name="show_splash_summary">Tampilkan pada awal aplikasi berjalan</string>

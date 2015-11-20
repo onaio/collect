@@ -131,7 +131,7 @@
   <string name="username">Gebruikersnaam</string>
   <string name="view_hierarchy">Gaan Na Vraag</string>
   <string name="general_preferences">Algemene Verstellings</string>
-  <string name="click_to_web">Raak hier om http://odk.ona.io te besoek</string>
+  <string name="click_to_web">Raak hier om http://help.ona.io/guides/data-collection te besoek</string>
   <string name="client">Gebruikers koppelvlak</string>
   <string name="show_splash">Vertoon splash skerm</string>
   <string name="show_splash_summary">Vertoon wanneer program begin</string>

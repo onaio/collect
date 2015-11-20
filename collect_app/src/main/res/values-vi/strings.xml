@@ -121,7 +121,7 @@
   <string name="username">Tên truy cập</string>
   <string name="view_hierarchy">Di chuyển đến</string>
   <string name="general_preferences">Thay đổi thiết lập</string>
-  <string name="click_to_web">Nhấn đề xem http://odk.ona.io</string>
+  <string name="click_to_web">Nhấn đề xem http://help.ona.io/guides/data-collection</string>
   <string name="client">Máy khách</string>
   <string name="show_splash">Hiển thị màn hình chào</string>
   <string name="show_splash_summary">Hiển thị khi chương trình khởi động</string>

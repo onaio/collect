@@ -131,7 +131,7 @@
   <string name="username">إسم المستخدم</string>
   <string name="view_hierarchy">الذهاب الى الموجه</string>
   <string name="general_preferences">الإعدادات العامة</string>
-  <string name="click_to_web">انقر لزيارة http://odk.ona.io</string>
+  <string name="click_to_web">انقر لزيارة http://help.ona.io/guides/data-collection</string>
   <string name="client">واجهة المستخدم</string>
   <string name="show_splash">عرض شاشة البداية</string>
   <string name="show_splash_summary">اظهار عند بدء التطبيق</string>

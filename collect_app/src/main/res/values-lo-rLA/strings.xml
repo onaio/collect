@@ -129,7 +129,7 @@
   <string name="username">ບັນຊີຜູ້ໃຊ້ງານ</string>
   <string name="view_hierarchy">ຂ້າມໄປທີ່</string>
   <string name="general_preferences">ການ​ຕັ້ງ​ຄ່າ​ທົ່ວ​ໄປ</string>
-  <string name="click_to_web">ກົດເອັນເຕີ ເພື່ອ​ເຂົ້າ​ສູ້​ເວັບ​ໄຊ http://odk.ona.io</string>
+  <string name="click_to_web">ກົດເອັນເຕີ ເພື່ອ​ເຂົ້າ​ສູ້​ເວັບ​ໄຊ http://help.ona.io/guides/data-collection</string>
   <string name="client">ຂໍ້ມູນສ່ວນຕົວ ຂອງ​ຜູ້​ໃຊ້ງານ</string>
   <string name="show_splash">ສະແດງພາບເລີ່ມຕົ້ນ</string>
   <string name="show_splash_summary">ສະແ​ດງເມື່ອໂປແກຼມ ເລີ່ມຕົ້ນໃຊ້ງານ</string>

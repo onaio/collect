@@ -131,7 +131,7 @@
   <string name="username">Nombre del Usuario</string>
   <string name="view_hierarchy">Ir a la Pregunta</string>
   <string name="general_preferences">Cambiar la configuración</string>
-  <string name="click_to_web">Toque para visitar http://odk.ona.io</string>
+  <string name="click_to_web">Toque para visitar http://help.ona.io/guides/data-collection</string>
   <string name="client">Interfaz de usuario</string>
   <string name="show_splash">Mostar la pantalla inicial</string>
   <string name="show_splash_summary">Muestra cuando la aplicacion empieza</string>

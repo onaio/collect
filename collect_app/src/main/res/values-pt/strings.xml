@@ -123,7 +123,7 @@
   <string name="username">Nome do usuário</string>
   <string name="view_hierarchy">Ir para atual</string>
   <string name="general_preferences">Alterar configuração</string>
-  <string name="click_to_web">Toque para visitar http://odk.ona.io</string>
+  <string name="click_to_web">Toque para visitar http://help.ona.io/guides/data-collection</string>
   <string name="client">Cliente</string>
   <string name="show_splash">Mostrar Splash Screen</string>
   <string name="show_splash_summary">Mostrar quando a aplicação iniciar</string>

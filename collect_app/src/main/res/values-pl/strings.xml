@@ -131,7 +131,7 @@
   <string name="username">Identyfikator użytkownika</string>
   <string name="view_hierarchy">Idź Do Pytania</string>
   <string name="general_preferences">Ustawienia Ogólne</string>
-  <string name="click_to_web">Naciśnij aby odwiedzić http://odk.ona.io</string>
+  <string name="click_to_web">Naciśnij aby odwiedzić http://help.ona.io/guides/data-collection</string>
   <string name="client">Interfejs Użytkownika</string>
   <string name="show_splash">Pokaż ekran powitalny</string>
   <string name="show_splash_summary">Pokazuje się, gdy aplikacja startuje</string>

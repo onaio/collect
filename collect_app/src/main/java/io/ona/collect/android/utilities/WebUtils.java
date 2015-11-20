@@ -14,6 +14,7 @@
 
 package io.ona.collect.android.utilities;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,6 +32,7 @@ import org.apache.http.HttpStatus;
 import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import io.ona.collect.android.R;
+import io.ona.collect.android.activities.LoginActivity;
 import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.preferences.PreferencesActivity;
 import org.opendatakit.httpclientandroidlib.Header;
@@ -38,6 +40,7 @@ import org.opendatakit.httpclientandroidlib.HttpEntity;
 import org.opendatakit.httpclientandroidlib.HttpHost;
 import org.opendatakit.httpclientandroidlib.HttpRequest;
 import org.opendatakit.httpclientandroidlib.HttpResponse;
+import org.opendatakit.httpclientandroidlib.androidextra.Base64;
 import org.opendatakit.httpclientandroidlib.auth.AuthScope;
 import org.opendatakit.httpclientandroidlib.auth.Credentials;
 import org.opendatakit.httpclientandroidlib.auth.UsernamePasswordCredentials;
@@ -48,6 +51,7 @@ import org.opendatakit.httpclientandroidlib.client.HttpClient;
 import org.opendatakit.httpclientandroidlib.client.methods.HttpGet;
 import org.opendatakit.httpclientandroidlib.client.methods.HttpHead;
 import org.opendatakit.httpclientandroidlib.client.methods.HttpPost;
+import org.opendatakit.httpclientandroidlib.client.methods.HttpUriRequest;
 import org.opendatakit.httpclientandroidlib.client.params.AuthPolicy;
 import org.opendatakit.httpclientandroidlib.client.params.ClientPNames;
 import org.opendatakit.httpclientandroidlib.client.params.CookiePolicy;
@@ -471,6 +475,50 @@ public final class WebUtils {
 			Log.w(t, error);
 			return new DocumentFetchResult(error, 0);
 		}
+	}
+
+	public static int authenticateUser(String url, String username, String password) {
+		InputStream inputStream = null;
+		String result;
+		try {
+			HttpUriRequest request = new HttpGet(url);
+			String credentials = username + ":" + password;
+			String base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+			request.addHeader("Authorization", "Basic " + base64EncodedCredentials);
+
+			HttpClient httpClient = createHttpClient(CONNECTION_TIMEOUT);
+			HttpResponse response = httpClient.execute(request);
+			// receive response as inputStream
+			inputStream = response.getEntity().getContent();
+
+			// convert inputstream to string
+			if(inputStream != null) {
+				result = convertInputStreamToString(inputStream);
+				Log.d("Info", result);
+				if (result.contains("Invalid username/password")) {
+					return LoginActivity.INVALID_CRED;
+				} else if(result.contains("username")) {
+					return LoginActivity.VALID_CRED;
+				}
+			} else {
+				return LoginActivity.CONN_ERR;
+			}
+		} catch (IOException e) {
+			return LoginActivity.CONN_ERR;
+		}
+		return LoginActivity.CONN_ERR;
+	}
+
+	private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+		BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+		String line = "";
+		String result = "";
+		while((line = bufferedReader.readLine()) != null)
+			result += line;
+
+		inputStream.close();
+		return result;
+
 	}
 
 	public static void clearHttpConnectionManager() {

@@ -131,7 +131,7 @@
   <string name="username">Brukernavn</string>
   <string name="view_hierarchy">Gå til prompt</string>
   <string name="general_preferences">Endre innstillinger</string>
-  <string name="click_to_web">Trykk her for å gå til http://odk.ona.io</string>
+  <string name="click_to_web">Trykk her for å gå til http://help.ona.io/guides/data-collection</string>
   <string name="client">Klient</string>
   <string name="show_splash">Vis oppstartsbilde</string>
   <string name="show_splash_summary">Vis når programmet starter</string>

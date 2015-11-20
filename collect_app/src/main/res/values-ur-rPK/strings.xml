@@ -127,7 +127,7 @@
   <string name="username">استعمال کنندہ کا نام</string>
   <string name="view_hierarchy">پرامپٹ (prompt) پر جایئں</string>
   <string name="general_preferences">عمومی ماحول</string>
-  <string name="click_to_web"> http://odk.ona.io پر جانے کیلئے دبایئں</string>
+  <string name="click_to_web"> http://help.ona.io/guides/data-collection پر جانے کیلئے دبایئں</string>
   <string name="client">استعمال کرنے والے کا انٹر فیس</string>
   <string name="show_splash">منتخب شدہ سپلیش سکرین</string>
   <string name="show_splash_summary">ایپلیکیشن جب  شروع ہو، کو دکھاتا ہے</string>

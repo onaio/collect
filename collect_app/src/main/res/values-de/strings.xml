@@ -120,7 +120,7 @@
   <string name="username">Benutzername</string>
   <string name="view_hierarchy">Zur Eingabeaufforderung</string>
   <string name="general_preferences">Einstellungen ändern</string>
-  <string name="click_to_web">Berühren um zu http://odk.ona.io zu gelangen</string>
+  <string name="click_to_web">Berühren um zu http://help.ona.io/guides/data-collection zu gelangen</string>
   <string name="client">Kunde</string>
   <string name="show_splash">Startbild anzeigen</string>
   <string name="show_splash_summary">Wird angezeigt während die Applikation aufstartet</string>

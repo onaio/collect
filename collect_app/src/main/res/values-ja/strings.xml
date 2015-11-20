@@ -131,7 +131,7 @@
   <string name="username">ユーザー名</string>
   <string name="view_hierarchy">プロンプトへ移動</string>
   <string name="general_preferences">全般設定</string>
-  <string name="click_to_web">タップして表示 http://odk.ona.io</string>
+  <string name="click_to_web">タップして表示 http://help.ona.io/guides/data-collection</string>
   <string name="client">ユーザー インターフェイス</string>
   <string name="show_splash">スプラッシュスクリーンを表示</string>
   <string name="show_splash_summary">アプリケーションの起動時に表示します</string>
