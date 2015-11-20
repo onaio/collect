@@ -3,6 +3,7 @@ package io.ona.collect.android.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
@@ -23,6 +24,8 @@ public class LoginActivity extends Activity {
     // UI references.
     private EditText m_usernameView;
     private EditText m_passwordView;
+    private Button mCreateAccount;
+    private Button mRecoverPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,20 @@ public class LoginActivity extends Activity {
         // Set up the login form.
         m_usernameView = (EditText) findViewById(R.id.username);
         m_passwordView = (EditText) findViewById(R.id.password);
+        mCreateAccount = (Button) findViewById(R.id.need_account);
+        mCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToOnaSite();
+            }
+        });
+        mRecoverPassword = (Button) findViewById(R.id.forgot_password);
+        mRecoverPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToOnaSite();
+            }
+        });
 
         Button emailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         emailSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +58,11 @@ public class LoginActivity extends Activity {
                 setLoginCredentials();
             }
         });
+    }
+
+    private void goToOnaSite() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.ona_site)));
+        startActivity(browserIntent);
     }
 
     private void setLoginCredentials() {

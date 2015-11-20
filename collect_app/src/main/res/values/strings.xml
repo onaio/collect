@@ -347,4 +347,8 @@
 	<string name="show_shared_forms">Show forms shared with you</string>
 	<string name="show_shared_forms_summary">Select to show shared forms</string>
 	<string name="search_form">Search using form names</string>
+	<string name="login_label">Welcome to Ona Collect.\nSign in with your Ona account.</string>
+	<string name="need_account">Need an account?</string>
+	<string name="forgot_password">Forgot your password?</string>
+	<string name="ona_site">http://ona.io</string>
 </resources>

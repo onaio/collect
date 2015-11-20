@@ -18,5 +18,10 @@ the License.
 
     <drawable name="white">#ffffffff</drawable>
     <drawable name="black">#ff000000</drawable>
+    <drawable name="orange">#ff6000</drawable>
+    <drawable name="dodger_blue">#1174d2</drawable>
+    <drawable name="marble_blue">#447884</drawable>
+    <drawable name="light_grey">#eeeeee</drawable>
+    <drawable name="grey">#9c9c9c</drawable>
 
 </resources>

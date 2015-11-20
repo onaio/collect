@@ -7,4 +7,13 @@
 	    <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
 	    <item name="android:fadeScrollbars">false</item>
 	</style>
+	<style name="Collect.NoActionBar" parent="android:Theme.Holo.Light">
+		<item name="android:scrollbarThumbHorizontal">@+drawable/thumb</item>
+		<item name="android:scrollbarThumbVertical">@+drawable/thumb</item>
+		<item name="android:scrollbarSize">1.75mm</item>
+		<item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+		<item name="android:fadeScrollbars">false</item>
+		<item name="android:windowActionBar">false</item>
+		<item name="android:windowNoTitle">true</item>
+	</style>
 </resources>
