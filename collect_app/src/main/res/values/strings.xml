@@ -351,6 +351,8 @@
 	<string name="need_account">Need an account?</string>
 	<string name="forgot_password">Forgot your password?</string>
 	<string name="ona_site">http://ona.io</string>
+	<string name="ona_site_join">http://ona.io/join</string>
+	<string name="ona_site_password">http://ona.io/request-password-reset</string>
 	<string name="ona_collect_guide">Ona Collect Guide</string>
 	<string name="ona_collect_guide_url">http://help.ona.io/guides/data-collection/</string>
 	<string name="invalid_login_credentials">Invalid username/password.</string>

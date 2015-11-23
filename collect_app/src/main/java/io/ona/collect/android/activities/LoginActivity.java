@@ -51,14 +51,14 @@ public class LoginActivity extends Activity {
         mCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToOnaSite();
+                goToSite(R.string.ona_site_join);
             }
         });
         mRecoverPassword = (Button) findViewById(R.id.forgot_password);
         mRecoverPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToOnaSite();
+                goToSite(R.string.ona_site_password);
             }
         });
 
@@ -71,8 +71,8 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private void goToOnaSite() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.ona_site)));
+    private void goToSite(int location) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(location)));
         startActivity(browserIntent);
     }
 

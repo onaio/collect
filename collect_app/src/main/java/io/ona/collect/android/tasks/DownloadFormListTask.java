@@ -68,8 +68,16 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                 Collect.getInstance().getString(R.string.default_server_url));
         // NOTE: /formlist must not be translated! It is the well-known path on the server.
         String formListUrl = Collect.getInstance().getApplicationContext().getString(R.string.default_odk_formlist);
-        String downloadPath = settings.getString(PreferencesActivity.KEY_FORMLIST_URL, formListUrl);
-        downloadListUrl += downloadPath;
+        formListUrl = settings.getString(PreferencesActivity.KEY_FORMLIST_URL, formListUrl);
+
+        String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, "");
+        boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS, false);
+        Log.d("Info", "Show shared forms " + showSharedForms);
+        if (showSharedForms) {
+            downloadListUrl += formListUrl;
+        } else {
+            downloadListUrl += "/" + storedUsername + formListUrl;
+        }
 
     	Collect.getInstance().getActivityLogger().logAction(this, formListUrl, downloadListUrl);
 
