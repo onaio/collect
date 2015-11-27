@@ -84,6 +84,9 @@ public class MainMenuActivity extends Activity {
 	private View mReviewSpacer;
 	private View mGetFormsSpacer;
 
+	// TextView
+	TextView loggedUser;
+
 	private AlertDialog mAlertDialog;
 	private SharedPreferences mAdminPreferences;
 
@@ -122,11 +125,8 @@ public class MainMenuActivity extends Activity {
 			mainMenuMessageLabel.setText(Collect.getInstance()
 					.getVersionedAppName());
 		}
-
-		SharedPreferences settings =
-				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
 		setTitle(getString(R.string.app_name) + " > "
-				+ getString(R.string.main_menu)+ " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+				+ getString(R.string.main_menu));
 
 		File f = new File(Collect.ODK_ROOT + "/collect.settings");
 		if (f.exists()) {
@@ -143,6 +143,12 @@ public class MainMenuActivity extends Activity {
 						Toast.LENGTH_LONG).show();
 			}
 		}
+
+		SharedPreferences settings =
+				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
+		String username = settings.getString(PreferencesActivity.KEY_USERNAME, "");
+		loggedUser = (TextView) findViewById(R.id.logged_user);
+		loggedUser.setText(getString(R.string.logged_in)+username);
 
 		mReviewSpacer = findViewById(R.id.review_spacer);
 		mGetFormsSpacer = findViewById(R.id.get_forms_spacer);

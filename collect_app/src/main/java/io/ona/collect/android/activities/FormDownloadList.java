@@ -129,10 +129,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remote_file_manage_list);
-        SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.get_forms)
-                + " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.get_forms));
         mAlertMsg = getString(R.string.please_wait);
 
         // need white background before load

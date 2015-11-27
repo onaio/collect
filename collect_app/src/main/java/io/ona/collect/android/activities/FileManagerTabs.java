@@ -47,11 +47,8 @@ public class FileManagerTabs extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		SharedPreferences settings =
-				PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
 		setTitle(getString(R.string.app_name) + " > "
-				+ getString(R.string.manage_files)
-				+ " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+				+ getString(R.string.manage_files));
 
 		final TabHost tabHost = getTabHost();
 		tabHost.setBackgroundColor(Color.WHITE);

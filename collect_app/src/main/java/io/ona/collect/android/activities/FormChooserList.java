@@ -69,10 +69,7 @@ public class FormChooserList extends ListActivity implements DiskSyncListener {
         }
 
         setContentView(R.layout.chooser_list_layout);
-        SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.enter_data)
-                + " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.enter_data));
 
         String sortOrder = FormsColumns.DISPLAY_NAME + " ASC, " + FormsColumns.JR_VERSION + " DESC";
         Cursor c = managedQuery(FormsColumns.CONTENT_URI, null, null, null, sortOrder);

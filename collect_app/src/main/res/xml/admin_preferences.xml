@@ -81,12 +81,12 @@
             android:key="change_password"
             android:summary="@string/found_in_settings"
             android:title="@string/password" />
-        <CheckBoxPreference
+        <!--CheckBoxPreference
             android:id="@+id/change_google_account"
             android:defaultValue="true"
             android:key="change_google_account"
             android:summary="@string/found_in_settings"
-            android:title="@string/selected_google_account_text" />
+            android:title="@string/selected_google_account_text" /-->
         <CheckBoxPreference
             android:id="@+id/autosend_wifi"
             android:defaultValue="true"

@@ -86,8 +86,7 @@ public class InstanceUploaderActivity extends Activity implements InstanceUpload
 
         SharedPreferences settings =
                 PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.send_data)
-                + " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.send_data));
 
         // get any simple saved state...
         if (savedInstanceState != null) {

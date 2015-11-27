@@ -103,7 +103,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
   private PreferenceScreen mSplashPathPreference;
 
-  private ListPreference mSelectedGoogleAccountPreference;
+  //private ListPreference mSelectedGoogleAccountPreference;
   private ListPreference mFontSizePreference;
   private ListPreference mNavigationPreference;
   private ListPreference mConstraintBehaviorPreference;
@@ -142,7 +142,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
     mProtocolPreference = (ListPreference) findPreference(KEY_PROTOCOL);
 
-    mSelectedGoogleAccountPreference = (ListPreference) findPreference(KEY_SELECTED_GOOGLE_ACCOUNT);
+    //mSelectedGoogleAccountPreference = (ListPreference) findPreference(KEY_SELECTED_GOOGLE_ACCOUNT);
     PreferenceCategory clientCategory = (PreferenceCategory) findPreference(getString(R.string.client));
     mNavigationPreference = (ListPreference) findPreference(KEY_NAVIGATION);
     mFontSizePreference = (ListPreference) findPreference(KEY_FONT_SIZE);
@@ -244,7 +244,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     }
     accountEntries.add(getString(R.string.no_account));
     accountValues.add("");
-
+/**
     mSelectedGoogleAccountPreference.setEntries(accountEntries.toArray(new String[accountEntries
         .size()]));
     mSelectedGoogleAccountPreference.setEntryValues(accountValues.toArray(new String[accountValues
@@ -267,7 +267,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     if (!(googleAccountAvailable || adminMode)) {
       serverCategory.removePreference(mSelectedGoogleAccountPreference);
     }
-
+*/
     mUsernamePreference.setOnPreferenceChangeListener(this);
     mUsernamePreference.setSummary(mUsernamePreference.getText());
     mUsernamePreference.getEditText().setFilters(new InputFilter[] { getReturnFilter() });
@@ -458,6 +458,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     // has to go in onResume because it may get updated by
     // a sub-preference screen
     // this just keeps the widgets in sync
+    /**
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
     String account = sp.getString(KEY_SELECTED_GOOGLE_ACCOUNT, "");
     mSelectedGoogleAccountPreference.setSummary(account);
@@ -471,7 +472,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
       mPasswordPreference.setSummary("********");
       mPasswordPreference.setText(pw);
     }
-
+    */
   }
 
   private void setSplashPath(String path) {

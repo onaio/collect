@@ -60,10 +60,7 @@ public class InstanceChooserList extends ListActivity {
         }
 
         setContentView(R.layout.chooser_list_layout);
-        SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
-        setTitle(getString(R.string.app_name) + " > " + getString(R.string.review_data)
-                + " ("+settings.getString(PreferencesActivity.KEY_USERNAME, "") + ")");
+        setTitle(getString(R.string.app_name) + " > " + getString(R.string.review_data));
         TextView tv = (TextView) findViewById(R.id.status_text);
         tv.setVisibility(View.GONE);
 

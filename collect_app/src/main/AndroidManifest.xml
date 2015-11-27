@@ -74,13 +74,13 @@
         <activity
             android:name=".activities.MainMenuActivity"
             android:configChanges="orientation"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".activities.FormEntryActivity"
             android:configChanges="orientation"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
@@ -95,7 +95,7 @@
         </activity>
         <activity 
             android:name=".activities.NotificationActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name"
             android:taskAffinity=""
             android:launchMode="singleTask"
@@ -103,11 +103,11 @@
             />
         <activity
             android:name=".activities.DrawActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.InstanceChooserList"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
 
         <intent-filter>
@@ -121,11 +121,11 @@
 
         <activity
             android:name=".activities.InstanceChooserTabs"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.FormChooserList"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -139,23 +139,23 @@
         </activity>
         <activity
             android:name=".activities.FormManagerList"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.FormDownloadList"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.DataManagerList"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.FileManagerTabs"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.InstanceUploaderList"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name">
 	        <intent-filter>
 	            <action android:name="android.intent.action.VIEW" />
@@ -166,47 +166,47 @@
         </activity>
         <activity
             android:name=".activities.InstanceUploaderActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".preferences.PreferencesActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".preferences.OtherPreferencesActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".preferences.AggregatePreferencesActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".preferences.GooglePreferencesActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".preferences.AdminPreferencesActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.FormHierarchyActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.GeoPointActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.GeoPointMapActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.GeoPointMapActivitySdk7"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.BearingActivity"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
             android:name=".activities.SplashScreenActivity"
@@ -233,7 +233,7 @@
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/Collect.NoActionBar"
-            android:icon="@android:color/transparent"
+            android:icon="@drawable/transparent"
             android:label="@string/app_name" />
 
         <receiver
