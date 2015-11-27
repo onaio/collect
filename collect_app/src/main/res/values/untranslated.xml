@@ -16,5 +16,29 @@
 	<string translatable="false" name="default_server_url">https://odk.ona.io</string>
 	<string translatable="false" name="default_odk_formlist">/formList</string>
 	<string translatable="false" name="default_odk_submission">/submission</string>
+	<string translatable="false" name="prompt_username">Username</string>
+	<string translatable="false" name="prompt_password">Password</string>
+	<string translatable="false" name="login_error">Cannot login, verify your email and password.</string>
+	<string translatable="false" name="log_out">Log out</string>
+	<string translatable="false" name="error_username_password_empty">Username and password cannot be empty.</string>
+	<string translatable="false" name="get_updated_forms">Updated and new forms</string>
+	<string translatable="false" name="new_forms">New Forms</string>
+	<string translatable="false" name="new_forms_available">Updated forms are available.</string>
+	<string translatable="false" name="show_shared_forms">Show forms shared with you</string>
+	<string translatable="false" name="show_shared_forms_summary">Select to show shared forms</string>
+	<string translatable="false" name="search_form">Search using form names</string>
+	<string translatable="false" name="login_label">Welcome to Ona Collect.\nSign in with your Ona account.</string>
+	<string translatable="false" name="need_account">Need an account?</string>
+	<string translatable="false" name="forgot_password">Forgot your password?</string>
+	<string translatable="false" name="server_ona">Ona</string>
+	<string translatable="false" name="ona_site">http://ona.io</string>
+	<string translatable="false" name="ona_site_join">http://ona.io/join</string>
+	<string translatable="false" name="ona_site_password">http://ona.io/request-password-reset</string>
+	<string translatable="false" name="ona_collect_guide">Ona Collect Guide</string>
+	<string translatable="false" name="ona_collect_guide_url">http://help.ona.io/guides/data-collection/</string>
+	<string translatable="false" name="invalid_login_credentials">Invalid username/password.</string>
+	<string translatable="false" name="connection_error">Connection error. Please try again later.</string>
+	<string translatable="false" name="shared_forms">Shared forms</string>
+	<string translatable="false" name="logged_in">"Logged in as "</string>
     <item name="mapview" type="id"/>
 </resources>
