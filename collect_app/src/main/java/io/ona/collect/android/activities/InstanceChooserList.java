@@ -122,7 +122,10 @@ public class InstanceChooserList extends ListActivity {
             	return;
             }
             // caller wants to view/edit a form, so launch formentryactivity
-            startActivity(new Intent(Intent.ACTION_EDIT, instanceUri));
+            Intent intent = new Intent(this, FormEntryActivity.class);
+            intent.setData(instanceUri);
+            intent.setAction(Intent.ACTION_EDIT);
+            startActivity(intent);
         }
         finish();
     }

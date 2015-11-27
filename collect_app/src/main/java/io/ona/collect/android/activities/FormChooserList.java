@@ -135,7 +135,10 @@ public class FormChooserList extends ListActivity implements DiskSyncListener {
             setResult(RESULT_OK, new Intent().setData(formUri));
         } else {
             // caller wants to view/edit a form, so launch formentryactivity
-            startActivity(new Intent(Intent.ACTION_EDIT, formUri));
+            Intent editFormIntent = new Intent(this, FormEntryActivity.class);
+            editFormIntent.setData(formUri);
+            editFormIntent.setAction(Intent.ACTION_EDIT);
+            startActivity(editFormIntent);
         }
 
         finish();

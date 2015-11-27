@@ -23,6 +23,5 @@ the License.
     <drawable name="marble_blue">#447884</drawable>
     <drawable name="light_grey">#eeeeee</drawable>
     <drawable name="grey">#9c9c9c</drawable>
-    <drawable name="transparent">#00ffffff</drawable>
 
 </resources>
