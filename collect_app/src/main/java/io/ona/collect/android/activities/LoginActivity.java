@@ -1,6 +1,7 @@
 package io.ona.collect.android.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -30,6 +32,7 @@ public class LoginActivity extends Activity {
     private EditText m_passwordView;
     private Button mCreateAccount;
     private Button mRecoverPassword;
+    protected Dialog dialog;
 
     public static final int VALID_CRED = 1;
     public static final int INVALID_CRED = 2;
@@ -62,6 +65,9 @@ public class LoginActivity extends Activity {
             }
         });
 
+        // Set up progress dialog
+        setUpProgressDialog();
+
         Button emailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         emailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +83,7 @@ public class LoginActivity extends Activity {
     }
 
     private void setLoginCredentials() {
+        dialog.show();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
         String username = m_usernameView.getText().toString().trim();
@@ -89,6 +96,7 @@ public class LoginActivity extends Activity {
             authenticateUser(username, password);
         } else {
             setErrorMessage(getResources().getString(R.string.error_username_password_empty));
+            dialog.dismiss();
         }
     }
 
@@ -113,6 +121,7 @@ public class LoginActivity extends Activity {
                     break;
             }
         }
+        dialog.dismiss();
     }
 
     private boolean validateNotEmpty(String value) {
@@ -136,6 +145,14 @@ public class LoginActivity extends Activity {
         // launch new activity and close login activity
         startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
         finish();
+    }
+
+    private void setUpProgressDialog() {
+        // custom dialog
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.login_progress);
+        dialog.setTitle(getResources().getString(R.string.login_authentication));
+        dialog.setCancelable(false);
     }
 
     private void setAuthenticated() {
