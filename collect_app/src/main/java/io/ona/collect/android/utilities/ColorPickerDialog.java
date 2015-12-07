@@ -397,11 +397,11 @@ public class ColorPickerDialog extends Dialog {
 			}
 		};
 
-/*BIDIRECTIOnaL SCROLLVIEW*/
+/*BIDIRECTIONAL SCROLLVIEW*/
         ScrollView sv = new ScrollView(this.getContext());
         WScrollView hsv = new WScrollView(this.getContext());
         hsv.sv = sv;
-/*END OF BIDIRECTIOnaL SCROLLVIEW*/
+/*END OF BIDIRECTIONAL SCROLLVIEW*/
 
         sv.addView(new ColorPickerView(getContext(), l, mInitialColor,
 				mDefaultColor), new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));

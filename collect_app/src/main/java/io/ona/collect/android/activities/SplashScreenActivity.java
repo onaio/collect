@@ -76,17 +76,17 @@ public class SplashScreenActivity extends Activity {
         PackageInfo packageInfo = null;
         try {
             packageInfo =
-                    getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
+                getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
 
         boolean firstRun = mSharedPreferences.getBoolean(PreferencesActivity.KEY_FIRST_RUN, true);
         boolean showSplash =
-                mSharedPreferences.getBoolean(PreferencesActivity.KEY_SHOW_SPLASH, false);
+            mSharedPreferences.getBoolean(PreferencesActivity.KEY_SHOW_SPLASH, false);
         String splashPath =
-                mSharedPreferences.getString(PreferencesActivity.KEY_SPLASH_PATH,
-                        getString(R.string.default_splash_path));
+            mSharedPreferences.getString(PreferencesActivity.KEY_SPLASH_PATH,
+                getString(R.string.default_splash_path));
 
         // if you've increased version code, then update the version number and set firstRun to true
         if (mSharedPreferences.getLong(PreferencesActivity.KEY_LAST_VERSION, 0) < packageInfo.versionCode) {
@@ -149,11 +149,11 @@ public class SplashScreenActivity extends Activity {
             int scale = 1;
             if (o.outHeight > mImageMaxWidth || o.outWidth > mImageMaxWidth) {
                 scale =
-                        (int) Math.pow(
-                                2,
-                                (int) Math.round(Math.log(mImageMaxWidth
-                                        / (double) Math.max(o.outHeight, o.outWidth))
-                                        / Math.log(0.5)));
+                    (int) Math.pow(
+                        2,
+                        (int) Math.round(Math.log(mImageMaxWidth
+                                / (double) Math.max(o.outHeight, o.outWidth))
+                                / Math.log(0.5)));
             }
 
             // Decode with inSampleSize
