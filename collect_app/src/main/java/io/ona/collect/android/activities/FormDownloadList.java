@@ -46,6 +46,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -110,6 +112,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private DownloadFormsTask mDownloadFormsTask;
     private Button mToggleButton;
     private Button mRefreshButton;
+    private EditText searchFormField;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
     private SimpleAdapter mFormListAdapter;
@@ -176,6 +179,24 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 downloadFormList();
                 FormDownloadList.this.getListView().clearChoices();
                 clearChoices();
+            }
+        });
+
+        searchFormField = (EditText) findViewById(R.id.search_form);
+        searchFormField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                displayFilteredFormList(s.toString());
             }
         });
 
@@ -278,6 +299,30 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         mDownloadButton.setEnabled(false);
     }
 
+    private void displayFilteredFormList(String s) {
+        ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<HashMap<String, String>>();
+        for (HashMap<String, String> formItem : mFormList) {
+            if (formItem.get(FORMNAME).toLowerCase().contains(s.toLowerCase())) {
+                filteredFormList.add(formItem);
+            }
+        }
+        populateListView(filteredFormList);
+    }
+
+    public void populateListView(ArrayList<HashMap<String, String>> mFormList) {
+        String[] data = new String[] {
+                FORMNAME, FORMID_DISPLAY, FORMDETAIL_KEY
+        };
+        int[] view = new int[] {
+                R.id.text1, R.id.text2
+        };
+
+        mFormListAdapter =
+                new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
+        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        getListView().setItemsCanFocus(false);
+        setListAdapter(mFormListAdapter);
+    }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
