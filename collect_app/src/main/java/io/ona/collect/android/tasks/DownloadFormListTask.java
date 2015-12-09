@@ -76,7 +76,12 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         if (showSharedForms) {
             downloadListUrl += formListUrl;
         } else {
-            downloadListUrl += "/" + storedUsername + formListUrl;
+            // User already has filtered url.
+            if (downloadListUrl.endsWith(storedUsername)) {
+                downloadListUrl += formListUrl;
+            } else {
+                downloadListUrl += "/" + storedUsername + formListUrl;
+            }
         }
 
     	Collect.getInstance().getActivityLogger().logAction(this, formListUrl, downloadListUrl);
