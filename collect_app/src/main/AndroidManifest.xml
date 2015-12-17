@@ -146,6 +146,10 @@
             android:icon="@drawable/transparent"
             android:label="@string/app_name" />
         <activity
+            android:name=".activities.NewFormDownloadList"
+            android:icon="@drawable/transparent"
+            android:label="@string/app_name" />
+        <activity
             android:name=".activities.DataManagerList"
             android:icon="@drawable/transparent"
             android:label="@string/app_name" />

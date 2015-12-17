@@ -338,4 +338,5 @@
     <string name="google_play_services_error_occured">Unable to access Google Maps. Is Google Play Services installed?</string>
 	<string name="login_authentication">Authenticating...</string>
 	<string name="login_wait">Please wait.</string>
+	<string name="get_new_forms">Get New/Updated Form</string>
 </resources>

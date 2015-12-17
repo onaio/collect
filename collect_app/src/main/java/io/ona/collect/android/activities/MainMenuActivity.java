@@ -79,6 +79,7 @@ public class MainMenuActivity extends Activity {
 	private Button mManageFilesButton;
 	private Button mSendDataButton;
 	private Button mReviewDataButton;
+	private Button mGetNewFormsButton;
 	private Button mGetFormsButton;
 
 	private View mReviewSpacer;
@@ -195,6 +196,31 @@ public class MainMenuActivity extends Activity {
 				Intent i = new Intent(getApplicationContext(),
 						InstanceUploaderList.class);
 				startActivity(i);
+			}
+		});
+
+		// manage forms button. no result expected.
+		mGetNewFormsButton = (Button) findViewById(R.id.get_new_forms);
+		mGetNewFormsButton.setText(getString(R.string.get_new_forms));
+		mGetNewFormsButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Collect.getInstance().getActivityLogger()
+						.logAction(this, "downloadBlankForms", "click");
+				SharedPreferences sharedPreferences = PreferenceManager
+						.getDefaultSharedPreferences(MainMenuActivity.this);
+				String protocol = sharedPreferences.getString(
+						PreferencesActivity.KEY_PROTOCOL, getString(R.string.protocol_odk_default));
+				Intent i = null;
+				if (protocol.equalsIgnoreCase(getString(R.string.protocol_google_sheets))) {
+					i = new Intent(getApplicationContext(),
+							GoogleDriveActivity.class);
+				} else {
+					i = new Intent(getApplicationContext(),
+							NewFormDownloadList.class);
+				}
+				startActivity(i);
+
 			}
 		});
 
