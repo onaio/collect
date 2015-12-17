@@ -10,10 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,8 +25,8 @@ import io.ona.collect.android.utilities.WebUtils;
  */
 public class LoginActivity extends Activity {
     // UI references.
-    private EditText m_usernameView;
-    private EditText m_passwordView;
+    private EditText mUsernameView;
+    private EditText mPasswordView;
     private Button mCreateAccount;
     private Button mRecoverPassword;
     protected Dialog dialog;
@@ -48,8 +45,8 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login_activity);
 
         // Set up the login form.
-        m_usernameView = (EditText) findViewById(R.id.username);
-        m_passwordView = (EditText) findViewById(R.id.password);
+        mUsernameView = (EditText) findViewById(R.id.username);
+        mPasswordView = (EditText) findViewById(R.id.password);
         mCreateAccount = (Button) findViewById(R.id.need_account);
         mCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +83,8 @@ public class LoginActivity extends Activity {
         dialog.show();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sp.edit();
-        String username = m_usernameView.getText().toString().trim();
-        String password = m_passwordView.getText().toString().trim();
+        String username = mUsernameView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
 
         if (validateNotEmpty(username) && validateNotEmpty(password)) {
             editor.putString(PreferencesActivity.KEY_USERNAME, username);

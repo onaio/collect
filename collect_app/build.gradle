@@ -23,7 +23,7 @@ android {
         applicationId("io.ona.collect.android")
         minSdkVersion(8)
         targetSdkVersion(8)
-        versionCode(1059)
+        versionCode(1060)
         versionName("1.4.8")
     }
 
