@@ -67,12 +67,12 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
 
     public static final String LIST_URL = "listurl";
 
-    private static final String FORMNAME = "formname";
-    private static final String FORMDETAIL_KEY = "formdetailkey";
-    private static final String FORMID_DISPLAY = "formiddisplay";
+    public static final String FORMNAME = "formname";
+    public static final String FORMDETAIL_KEY = "formdetailkey";
+    public static final String FORMID_DISPLAY = "formiddisplay";
 
-    private static final String FORM_ID_KEY = "formid";
-    private static final String FORM_VERSION_KEY = "formversion";
+    public static final String FORM_ID_KEY = "formid";
+    public static final String FORM_VERSION_KEY = "formversion";
 
     private String mAlertMsg;
     private boolean mAlertShowing = false;
@@ -592,7 +592,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
      * @return true if a form with id <code>formId</code> exists on the local device and its version is less than
      *         <code>latestVersion</code>.
      */
-    public static boolean isLocalFormSuperseded(String formId, String latestVersion) {
+    public static boolean isLocalFormSuperseded(String formId, String latestVersion, String md5Hash) {
 
         if ( formId == null ) {
             Log.e(t, "isLocalFormSuperseded: server is not OpenRosa-compliant. <formID> is null!");
@@ -645,7 +645,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         ListView ls = getListView();
         for (int idx = 0; idx < mFormList.size(); idx++) {
             HashMap<String, String> item = mFormList.get(idx);
-            if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY))) {
+            if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY, item.get()))) {
                 ls.setItemChecked(idx, true);
             }
         }
