@@ -157,6 +157,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                 String description = null;
                 String downloadUrl = null;
                 String manifestUrl = null;
+                String md5Hash = null;
                 // don't process descriptionUrl
                 int fieldCount = xformElement.getChildCount();
                 for (int j = 0; j < fieldCount; ++j) {
@@ -205,6 +206,11 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                         if (manifestUrl != null && manifestUrl.length() == 0) {
                             manifestUrl = null;
                         }
+                    } else if (tag.equals("hash")) {
+                        md5Hash = XFormParser.getXMLText(child, true);
+                        if (md5Hash != null && md5Hash.length() == 0) {
+                            md5Hash = null;
+                        }
                     }
                 }
                 if (formId == null || downloadUrl == null || formName == null) {
@@ -219,7 +225,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                             R.string.parse_openrosa_formlist_failed, error)));
                     return formList;
                 }
-                formList.put(formId, new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion));
+                formList.put(formId, new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion, md5Hash));
             }
         } else {
             // Aggregate 0.9.x mode...
@@ -227,6 +233,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
             Element formsElement = result.doc.getRootElement();
             int formsCount = formsElement.getChildCount();
             String formId = null;
+            String md5Hash = null;
             for (int i = 0; i < formsCount; ++i) {
                 if (formsElement.getType(i) != Element.ELEMENT) {
                     // whitespace
@@ -238,6 +245,11 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                     formId = XFormParser.getXMLText(child, true);
                     if (formId != null && formId.length() == 0) {
                         formId = null;
+                    }
+                } else if (tag.equals("hash")) {
+                    md5Hash = XFormParser.getXMLText(child, true);
+                    if (md5Hash != null && md5Hash.length() == 0) {
+                        md5Hash = null;
                     }
                 }
                 if (tag.equalsIgnoreCase("form")) {
@@ -262,7 +274,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                                 R.string.parse_legacy_formlist_failed, error)));
                         return formList;
                     }
-                    formList.put(formName, new FormDetails(formName, downloadUrl, null, formId, null));
+                    formList.put(formName, new FormDetails(formName, downloadUrl, null, formId, null, md5Hash));
 
                     formId = null;
                 }
