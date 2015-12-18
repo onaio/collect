@@ -47,6 +47,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     // used to store error message if one occurs
     public static final String DL_ERROR_MSG = "dlerrormessage";
     public static final String DL_AUTH_REQUIRED = "dlauthrequired";
+    public static final String DL_FORMLIST_NOT_MODIFIED = "dlnotmodified";
 
     private FormListDownloaderListener mStateListener;
 
@@ -101,6 +102,8 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         if (result.errorMessage != null) {
             if (result.responseCode == 401) {
                 formList.put(DL_AUTH_REQUIRED, new FormDetails(result.errorMessage));
+            } else if (result.responseCode == 304) {
+                formList.put(DL_FORMLIST_NOT_MODIFIED, new FormDetails("NOT_MODIFIED"));
             } else {
                 formList.put(DL_ERROR_MSG, new FormDetails(result.errorMessage));
             }
