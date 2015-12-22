@@ -250,7 +250,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         };
 
         mFormListAdapter =
-                new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
+                new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice_new, data, view);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         getListView().setItemsCanFocus(false);
         setListAdapter(mFormListAdapter);
