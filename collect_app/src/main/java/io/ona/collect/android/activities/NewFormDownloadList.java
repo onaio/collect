@@ -73,6 +73,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
 
     public static final String FORM_ID_KEY = "formid";
     public static final String FORM_VERSION_KEY = "formversion";
+    public static final String FORM_MD5_HASH = "formmd5hash";
 
     private String mAlertMsg;
     private boolean mAlertShowing = false;
@@ -592,7 +593,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
      * @return true if a form with id <code>formId</code> exists on the local device and its version is less than
      *         <code>latestVersion</code>.
      */
-    public static boolean isLocalFormSuperseded(String formId, String latestVersion, String md5Hash) {
+    public static boolean isLocalFormSuperseded(String formId, String latestVersion) {
 
         if ( formId == null ) {
             Log.e(t, "isLocalFormSuperseded: server is not OpenRosa-compliant. <formID> is null!");
@@ -637,6 +638,85 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     }
 
     /**
+     * Determines if a local form on the device is superseded by a given version (of the same form presumably available
+     * on the server).
+     *
+     * @param formId the form to be checked. A form with this ID may or may not reside on the local device.
+     * @param latestVersion the version against which the local form (if any) is tested.
+     * @return true if a form with id <code>formId</code> exists on the local device and its version is less than
+     *         <code>latestVersion</code>.
+     */
+    public static boolean isLocalFormSuperseded(String formId, String latestVersion, String md5Hash) {
+
+        if ( formId == null ) {
+            Log.e(t, "isLocalFormSuperseded: server is not OpenRosa-compliant. <formID> is null!");
+            return true;
+        }
+
+        String[] selectionArgs = { formId };
+        String selection = FormsProviderAPI.FormsColumns.JR_FORM_ID + "=?";
+        String[] fields = { FormsProviderAPI.FormsColumns.JR_VERSION, FormsProviderAPI.FormsColumns.MD5_HASH };
+        String sortOrder = FormsProviderAPI.FormsColumns.JR_VERSION + " DESC";
+
+        Cursor formCursor = null;
+        try {
+            formCursor = Collect.getInstance().getContentResolver().query(FormsProviderAPI.FormsColumns.CONTENT_URI, fields, selection, selectionArgs, sortOrder);
+            if ( formCursor.getCount() == 0 ) {
+                // form does not already exist locally
+                return true;
+            }
+            formCursor.moveToFirst();
+            int idxJrVersion = formCursor.getColumnIndex(fields[0]);
+            int idxMd5Hash = formCursor.getColumnIndex(fields[1]);
+            String jr_version = formCursor.getString(idxJrVersion);
+            String formMd5Hash = "md5:" + formCursor.getString(idxMd5Hash);
+
+            Log.d("Form md5Hash ", "New form hash" + md5Hash);
+            Log.d("Form formmd5Hash ", "Old file hash" + formMd5Hash);
+            Log.d("Form version ", "New form version" + latestVersion);
+            Log.d("Form formversion ", "Old file version" + jr_version);
+
+            if ( formCursor.isNull(idxMd5Hash) ) {
+                // any non-null md5Hash on server is newer
+                return (md5Hash != null);
+            }
+            if ( formMd5Hash == null && md5Hash == null ) {
+                return false;
+            }
+            if ( formMd5Hash == null ) {
+                return true;
+            }
+            if ( md5Hash == null ) {
+                return false;
+            }
+            if (!md5Hash.equals(formMd5Hash)) {
+                return true;
+            }
+
+            if ( formCursor.isNull(idxJrVersion) ) {
+                // any non-null version on server is newer
+                return (latestVersion != null);
+            }
+            // apparently, the isNull() predicate above is not respected on all Android OSes???
+            if ( jr_version == null && latestVersion == null ) {
+                return false;
+            }
+            if ( jr_version == null ) {
+                return true;
+            }
+            if ( latestVersion == null ) {
+                return false;
+            }
+            // if what we have is less, then the server is newer
+            return ( jr_version.compareTo(latestVersion) < 0 );
+        } finally {
+            if (formCursor != null) {
+                formCursor.close();
+            }
+        }
+    }
+
+    /**
      * Causes any local forms that have been updated on the server to become checked in the list. This is a prompt and a
      * convenience to users to download the latest version of those forms from the server.
      */
@@ -645,8 +725,10 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         ListView ls = getListView();
         for (int idx = 0; idx < mFormList.size(); idx++) {
             HashMap<String, String> item = mFormList.get(idx);
-            if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY, item.get()))) {
+            if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY), item.get(FORM_MD5_HASH))) {
                 ls.setItemChecked(idx, true);
+            } else {
+                mFormList.remove(item);
             }
         }
     }

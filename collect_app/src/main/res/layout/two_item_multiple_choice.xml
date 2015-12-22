@@ -36,6 +36,23 @@
             android:layout_alignParentLeft="true"
             android:text="text2"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
+	<TextView
+		android:id="@+id/updateLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/orange"
+		android:layout_toLeftOf="@+id/checkbox"
+		android:text="Update available" />
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/black"
+		android:layout_toLeftOf="@+id/checkbox"
+		android:layout_below="@+id/updateLabel"
+		android:layout_centerVertical="true"
+		android:text="Dismiss" />
+
 	<CheckBox
 		android:id="@+id/checkbox"
 		android:layout_width="wrap_content"
