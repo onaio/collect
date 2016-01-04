@@ -26,7 +26,9 @@
 	<string translatable="false" name="new_forms_available">Updated forms are available.</string>
 	<string translatable="false" name="show_shared_forms">Show forms shared with you</string>
 	<string translatable="false" name="show_shared_forms_summary">Select to show shared forms</string>
-	<string translatable="false" name="search_form">Search using form names</string>
+	<string translatable="false" name="search_form_name">Search using form names</string>
+	<string translatable="false" name="search_form_project">Search using project</string>
+	<string translatable="false" name="search_form_organization">Search using organization</string>
 	<string translatable="false" name="login_label">Welcome to Ona Collect.\nSign in with your Ona account.</string>
 	<string translatable="false" name="need_account">Need an account?</string>
 	<string translatable="false" name="forgot_password">Forgot your password?</string>

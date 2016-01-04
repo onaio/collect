@@ -74,4 +74,9 @@
 		<item>@string/form_processing_logic_2</item>
 		<item>@string/form_processing_logic_3</item>
 	</string-array>
+	<string-array name="search_categories">
+		<item>@string/form_name</item>
+		<item>@string/project</item>
+		<item>@string/organization</item>
+	</string-array>
 </resources>

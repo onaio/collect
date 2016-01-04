@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import io.ona.collect.android.R;
+import io.ona.collect.android.adapters.FormListAdapter;
 import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.listeners.FormDownloaderListener;
 import io.ona.collect.android.listeners.FormListDownloaderListener;
@@ -90,7 +91,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     private EditText searchFormField;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
-    private SimpleAdapter mFormListAdapter;
+    private FormListAdapter mFormListAdapter;
     private ArrayList<HashMap<String, String>> mFormList;
 
     private boolean mToggled = false;
@@ -101,6 +102,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     private boolean mShouldExit;
     private static final String SHOULD_EXIT = "shouldexit";
 
+    static HashMap<String, String> dismissedForms;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -249,8 +251,10 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
                 R.id.text1, R.id.text2
         };
 
+        /**mFormListAdapter =
+                new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice_new, data, view);**/
         mFormListAdapter =
-                new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice_new, data, view);
+                new FormListAdapter(this, R.layout.two_item_multiple_choice_new, mFormList);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         getListView().setItemsCanFocus(false);
         setListAdapter(mFormListAdapter);
@@ -293,7 +297,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         };
 
         mFormListAdapter =
-                new SimpleAdapter(this, mFormList, R.layout.two_item_multiple_choice, data, view);
+                new FormListAdapter(this, R.layout.two_item_multiple_choice, mFormList);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         getListView().setItemsCanFocus(false);
         setListAdapter(mFormListAdapter);

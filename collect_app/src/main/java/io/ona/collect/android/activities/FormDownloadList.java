@@ -55,10 +55,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
@@ -76,12 +79,16 @@ import android.widget.Toast;
  * @author Carl Hartung (carlhartung@gmail.com)
  */
 public class FormDownloadList extends ListActivity implements FormListDownloaderListener,
-        FormDownloaderListener {
+        FormDownloaderListener, AdapterView.OnItemSelectedListener {
     private static final String t = "RemoveFileManageList";
 
     private static final int PROGRESS_DIALOG = 1;
     private static final int AUTH_DIALOG = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST;
+
+    private static final int SEARCH_FORM_NAME = 0;
+    private static final int SEARCH_PROJECT = 1;
+    private static final int SEARCH_ORGANIZATION = 2;
 
     private static final String BUNDLE_TOGGLED_KEY = "toggled";
     private static final String BUNDLE_SELECTED_COUNT = "selectedcount";
@@ -94,6 +101,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     public static final String LIST_URL = "listurl";
 
     private static final String FORMNAME = "formname";
+    private static final String PROJECT = "project";
+    private static final String ORGANIZATION = "organization";
     private static final String FORMDETAIL_KEY = "formdetailkey";
     private static final String FORMID_DISPLAY = "formiddisplay";
 
@@ -125,6 +134,9 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private static final boolean DO_NOT_EXIT = false;
     private boolean mShouldExit;
     private static final String SHOULD_EXIT = "shouldexit";
+
+    private int searchCategory = SEARCH_FORM_NAME;
+    private String searchAttribute = FORMNAME;
 
 
     @SuppressWarnings("unchecked")
@@ -196,9 +208,17 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
             @Override
             public void afterTextChanged(Editable s) {
-                displayFilteredFormList(s.toString());
+                displayFilteredFormList(s.toString(), searchAttribute);
             }
         });
+
+        Spinner spinner = (Spinner) findViewById(R.id.search_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.search_categories, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         if (savedInstanceState != null) {
             // If the screen has rotated, the hashmap with the form ids and urls is passed here.
@@ -299,10 +319,10 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         mDownloadButton.setEnabled(false);
     }
 
-    private void displayFilteredFormList(String s) {
+    private void displayFilteredFormList(String s, String att) {
         ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<HashMap<String, String>>();
         for (HashMap<String, String> formItem : mFormList) {
-            if (formItem.get(FORMNAME).toLowerCase().contains(s.toLowerCase())) {
+            if (formItem.containsKey(att) && formItem.get(att).toLowerCase().contains(s.toLowerCase())) {
                 filteredFormList.add(formItem);
             }
         }
@@ -821,4 +841,30 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         createAlertDialog(getString(R.string.download_forms_result), b.toString().trim(), EXIT);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                searchFormField.setHint(R.string.search_form_name);
+                searchCategory = SEARCH_FORM_NAME;
+                searchAttribute = FORMNAME;
+                break;
+            case 1:
+                searchFormField.setHint(R.string.search_form_project);
+                searchCategory = SEARCH_PROJECT;
+                searchAttribute = PROJECT;
+                break;
+            case 2:
+                searchFormField.setHint(R.string.search_form_organization);
+                searchCategory = SEARCH_ORGANIZATION;
+                searchAttribute = ORGANIZATION;
+                break;
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

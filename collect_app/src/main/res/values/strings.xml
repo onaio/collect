@@ -339,4 +339,7 @@
 	<string name="login_authentication">Authenticating...</string>
 	<string name="login_wait">Please wait.</string>
 	<string name="get_new_forms">Get New/Updated Form</string>
+	<string name="form_name">Form Name</string>
+	<string name="project">Project</string>
+	<string name="organization">Organization</string>
 </resources>

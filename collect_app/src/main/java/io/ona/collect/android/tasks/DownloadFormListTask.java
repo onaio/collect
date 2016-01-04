@@ -49,6 +49,9 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
     public static final String DL_AUTH_REQUIRED = "dlauthrequired";
     public static final String DL_FORMLIST_NOT_MODIFIED = "dlnotmodified";
 
+    // Keeps the latest formList.
+    private static HashMap<String, FormDetails> currentFormlist  = new HashMap<String,FormDetails>();
+
     private FormListDownloaderListener mStateListener;
 
     private static final String NAMESPACE_OPENROSA_ORG_XFORMS_XFORMS_LIST =
@@ -280,6 +283,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                 }
             }
         }
+        currentFormlist = formList;
         return formList;
     }
 
@@ -300,4 +304,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         }
     }
 
+    public static HashMap<String, FormDetails> getCurrentFormlist() {
+        return currentFormlist;
+    }
 }
