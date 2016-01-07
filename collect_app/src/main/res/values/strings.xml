@@ -342,4 +342,5 @@
 	<string name="form_name">Form Name</string>
 	<string name="project">Project</string>
 	<string name="organization">Organization</string>
+	<string name="dismiss_selected">Dismiss selected</string>
 </resources>

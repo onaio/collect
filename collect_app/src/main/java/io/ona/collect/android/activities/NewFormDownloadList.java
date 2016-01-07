@@ -24,14 +24,18 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import io.ona.collect.android.R;
@@ -44,6 +48,7 @@ import io.ona.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.provider.FormsProviderAPI;
 import io.ona.collect.android.tasks.DownloadFormListTask;
 import io.ona.collect.android.tasks.DownloadFormsTask;
+import io.ona.collect.android.tasks.FileStorageTask;
 import io.ona.collect.android.utilities.CompatibilityUtils;
 import io.ona.collect.android.utilities.WebUtils;
 
@@ -51,12 +56,16 @@ import io.ona.collect.android.utilities.WebUtils;
  * Created by onamacuser on 17/12/2015.
  */
 public class NewFormDownloadList extends ListActivity implements FormListDownloaderListener,
-        FormDownloaderListener {
+        FormDownloaderListener, AdapterView.OnItemSelectedListener {
     private static final String t = "RemoveFileManageList";
 
     private static final int PROGRESS_DIALOG = 1;
     private static final int AUTH_DIALOG = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST;
+
+    private static final int SEARCH_FORM_NAME = 0;
+    private static final int SEARCH_PROJECT = 1;
+    private static final int SEARCH_ORGANIZATION = 2;
 
     private static final String BUNDLE_TOGGLED_KEY = "toggled";
     private static final String BUNDLE_SELECTED_COUNT = "selectedcount";
@@ -69,6 +78,8 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     public static final String LIST_URL = "listurl";
 
     public static final String FORMNAME = "formname";
+    private static final String PROJECT = "project";
+    private static final String ORGANIZATION = "organization";
     public static final String FORMDETAIL_KEY = "formdetailkey";
     public static final String FORMID_DISPLAY = "formiddisplay";
 
@@ -88,6 +99,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     private DownloadFormsTask mDownloadFormsTask;
     private Button mToggleButton;
     private Button mRefreshButton;
+    private Button mDismissButton;
     private EditText searchFormField;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
@@ -102,15 +114,21 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     private boolean mShouldExit;
     private static final String SHOULD_EXIT = "shouldexit";
 
-    static HashMap<String, String> dismissedForms;
+    static HashSet<HashMap<String, String>> filesToDismiss;
+
+    private int searchCategory = SEARCH_FORM_NAME;
+    private String searchAttribute = FORMNAME;
 
     @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.remote_file_manage_list);
+        setContentView(R.layout.remote_file_manage_list_new);
         setTitle(getString(R.string.app_name) + " > " + getString(R.string.get_forms));
         mAlertMsg = getString(R.string.please_wait);
+
+        FileStorageTask task = new FileStorageTask(this);
+        filesToDismiss = task.getDismissedForms();
 
         // need white background before load
         getListView().setBackgroundColor(Color.WHITE);
@@ -159,6 +177,19 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
             }
         });
 
+        mDismissButton = (Button) findViewById(R.id.dismiss_button);
+        mDismissButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collect.getInstance().getActivityLogger().logAction(this, "dismissForms", "");
+
+                mToggled = false;
+                dismissFormList();
+                NewFormDownloadList.this.getListView().clearChoices();
+                clearChoices();
+            }
+        });
+
         searchFormField = (EditText) findViewById(R.id.search_form);
         searchFormField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -176,6 +207,14 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
                 displayFilteredFormList(s.toString());
             }
         });
+
+        Spinner spinner = (Spinner) findViewById(R.id.search_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.search_categories, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         if (savedInstanceState != null) {
             // If the screen has rotated, the hashmap with the form ids and urls is passed here.
@@ -258,6 +297,21 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         getListView().setItemsCanFocus(false);
         setListAdapter(mFormListAdapter);
+    }
+
+    private void dismissFormList() {
+        SparseBooleanArray sba = getListView().getCheckedItemPositions();
+        for (int i = 0; i < getListView().getCount(); i++) {
+            if (sba.get(i, false)) {
+                HashMap<String, String> item =
+                        (HashMap<String, String>) getListAdapter().getItem(i);
+                filesToDismiss.add(item);
+            }
+        }
+        FileStorageTask task = new FileStorageTask(this);
+        task.saveDismissedForms(filesToDismiss);
+        int totalCount = filesToDismiss.size();
+        Collect.getInstance().getActivityLogger().logAction(this, "dismissSelectedFiles", Integer.toString(totalCount));
     }
 
 
@@ -797,7 +851,9 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
                             break;
                         }
                     }
-                    mFormList.add(j, item);
+                    if (!filesToDismiss.contains(item)) {
+                        mFormList.add(j, item);
+                    }
                 }
             }
             selectSupersededForms();
@@ -881,4 +937,30 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         createAlertDialog(getString(R.string.download_forms_result), b.toString().trim(), EXIT);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                searchFormField.setHint(R.string.search_form_name);
+                searchCategory = SEARCH_FORM_NAME;
+                searchAttribute = FORMNAME;
+                break;
+            case 1:
+                searchFormField.setHint(R.string.search_form_project);
+                searchCategory = SEARCH_PROJECT;
+                searchAttribute = PROJECT;
+                break;
+            case 2:
+                searchFormField.setHint(R.string.search_form_organization);
+                searchCategory = SEARCH_ORGANIZATION;
+                searchAttribute = ORGANIZATION;
+                break;
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

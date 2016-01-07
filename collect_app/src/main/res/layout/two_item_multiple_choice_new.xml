@@ -41,18 +41,9 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:background="@drawable/orange"
-		android:layout_toLeftOf="@+id/dismissButton"
+		android:layout_toLeftOf="@+id/checkbox"
 		android:layout_centerVertical="true"
 		android:text="Update available" />
-
-	<Button
-		android:id="@+id/dismissButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toLeftOf="@+id/checkbox"
-		android:layout_marginLeft="5dp"
-		android:layout_centerVertical="true"
-		android:text="Dismiss" />
 
 	<CheckBox
 		android:id="@+id/checkbox"

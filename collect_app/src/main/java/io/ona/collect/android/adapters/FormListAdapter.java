@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.ona.collect.android.R;
+import io.ona.collect.android.activities.NewFormDownloadList;
 
 /**
  * Created by onamacuser on 23/12/2015.
@@ -40,14 +41,6 @@ public class FormListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         holder = new FormHolder();
         holder.formDetails = items.get(position);
-        holder.dismiss = (Button)row.findViewById(R.id.dismissButton);
-        holder.dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add form to dismissed form and remove from formList
-            }
-        });
-
         holder.text1 = (TextView)row.findViewById(R.id.text1);
         holder.text2 = (TextView)row.findViewById(R.id.text2);
 
@@ -58,14 +51,13 @@ public class FormListAdapter extends ArrayAdapter<HashMap<String, String>> {
     }
 
     private void setupItem(FormHolder holder) {
-        holder.text1.setText(holder.formDetails.get(""));
-        holder.text2.setText(String.valueOf(holder.formDetails.get("")));
+        holder.text1.setText(holder.formDetails.get(NewFormDownloadList.FORMNAME));
+        holder.text2.setText(String.valueOf(holder.formDetails.get(NewFormDownloadList.FORMID_DISPLAY)));
     }
 
     public static class FormHolder {
         HashMap<String, String> formDetails;
         TextView text1;
         TextView text2;
-        Button dismiss;
     }
 }
