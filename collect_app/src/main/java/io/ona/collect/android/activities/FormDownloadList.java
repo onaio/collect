@@ -744,6 +744,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 item.put(FORMDETAIL_KEY, formDetailsKey);
                 item.put(FORM_ID_KEY, details.formID);
                 item.put(FORM_VERSION_KEY, details.formVersion);
+                item.put(PROJECT, details.project);
+                item.put(ORGANIZATION, details.organization);
 
                 // Insert the new form in alphabetical order.
                 if (mFormList.size() == 0) {

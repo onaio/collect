@@ -846,6 +846,8 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
                 item.put(FORM_ID_KEY, details.formID);
                 item.put(FORM_VERSION_KEY, details.formVersion);
                 item.put(FORM_MD5_HASH, details.md5Hash);
+                item.put(PROJECT, details.project);
+                item.put(ORGANIZATION, details.organization);
 
                 // Add the date form is shown for first time.
                 if (!dateOfDownload.containsKey(item)) {
