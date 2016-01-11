@@ -166,6 +166,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
                 }
 
                 mDownloadButton.setEnabled(!(selectedItemCount() == 0));
+                mDismissButton.setEnabled(!(selectedItemCount() == 0));
             }
         });
 
@@ -183,6 +184,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         });
 
         mDismissButton = (Button) findViewById(R.id.dismiss_button);
+        mDismissButton.setEnabled(selectedItemCount() > 0);
         mDismissButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -368,6 +370,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         mDownloadButton.setEnabled(!(selectedItemCount() == 0));
+        mDismissButton.setEnabled(!(selectedItemCount() == 0));
 
         Object o = getListAdapter().getItem(position);
         @SuppressWarnings("unchecked")
@@ -885,6 +888,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
             selectSupersededForms();
             mFormListAdapter.notifyDataSetChanged();
             mDownloadButton.setEnabled(!(selectedItemCount() == 0));
+            mDismissButton.setEnabled(!(selectedItemCount() == 0));
             new FileStorageTask(this).saveDatesOfDownload(dateOfDownload);
         }
     }
