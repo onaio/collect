@@ -70,6 +70,16 @@
             android:title="@string/show_shared_forms" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:key="@string/check_updates"
+        android:title="@string/check_updates">
+        <CheckBoxPreference
+            android:id="@+id/run_check_updates"
+            android:defaultValue="true"
+            android:key="run_check_updates"
+            android:summary="@string/run_check_updates_summary"
+            android:title="@string/run_check_updates" />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:key="@string/client"
         android:title="@string/client" >
        <ListPreference android:id="@+id/constraint_behavior"

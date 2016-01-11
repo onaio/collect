@@ -29,6 +29,7 @@ import io.ona.collect.android.preferences.AdminPreferencesActivity;
 import io.ona.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.provider.InstanceProviderAPI;
 import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import io.ona.collect.android.tasks.CheckUpdatesTask;
 import io.ona.collect.android.utilities.CompatibilityUtils;
 
 import android.app.Activity;
@@ -304,6 +305,14 @@ public class MainMenuActivity extends Activity {
 		// background
 
 		updateButtons();
+
+		boolean runCheckUpdates = settings.getBoolean(PreferencesActivity.KEY_RUN_CHECK_UPDATES, false);
+		// Start service to listen for updates.
+		if (runCheckUpdates) {
+			Collect.getInstance().getActivityLogger()
+					.logAction(this, "Background Service", "Starting check updates");
+			startService(new Intent(this, CheckUpdatesTask.class));
+		}
 	}
 
 	@Override
@@ -553,6 +562,10 @@ public class MainMenuActivity extends Activity {
       mReviewDataButton.setText(getString(R.string.review_data));
       Log.w(t, "Cannot update \"Edit Form\" button label since the database is closed. Perhaps the app is running in the background?");
     }
+	SharedPreferences settings =
+			PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
+	int newForms = settings.getInt(NewFormDownloadList.KEY_NEW_FORMS, 0);
+	mGetNewFormsButton.setText(getString(R.string.get_new_forms_count, newForms));
   }
 
 	/**

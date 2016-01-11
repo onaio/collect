@@ -54,6 +54,7 @@ public class FileUtils {
     public static final String FORMID = "formid";
     public static final String VERSION = "version"; // arbitrary string in OpenRosa 1.0
     public static final String TITLE = "title";
+    public static final String HASH = "hash";
     public static final String SUBMISSIONURI = "submission";
     public static final String BASE64_RSA_PUBLIC_KEY = "base64RsaPublicKey";
 
@@ -325,6 +326,7 @@ public class FileUtils {
 
                 String version = cur.getAttributeValue(null, "version");
                 String uiVersion = cur.getAttributeValue(null, "uiVersion");
+                String hash = cur.getAttributeValue(null, "hash");
                 if ( uiVersion != null ) {
                 	// pre-OpenRosa 1.0 variant of spec
                 	Log.e(t, "Obsolete use of uiVersion -- IGNORED -- only using version: " + version);
@@ -332,6 +334,7 @@ public class FileUtils {
 
                 fields.put(FORMID, (id == null) ? xmlns : id);
                 fields.put(VERSION, (version == null) ? null : version);
+                fields.put(HASH, (hash == null) ? null : hash);
             } else {
                 throw new IllegalStateException(xmlFile.getAbsolutePath() + " could not be parsed");
             }

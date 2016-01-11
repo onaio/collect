@@ -5,23 +5,28 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import io.ona.collect.android.R;
 import io.ona.collect.android.activities.FormDownloadList;
 import io.ona.collect.android.activities.NewFormDownloadList;
+import io.ona.collect.android.application.Collect;
 import io.ona.collect.android.listeners.FormListDownloaderListener;
 import io.ona.collect.android.logic.FormDetails;
 
@@ -43,7 +48,7 @@ public class CheckUpdatesTask extends Service implements FormListDownloaderListe
 
     private DownloadFormListTask mDownloadFormListTask;
     private static ArrayList<HashMap<String, String>> mFormList = new ArrayList<HashMap<String, String>>();
-    private static HashMap<String, FormDetails> mFormNamesAndURLs  = new HashMap<String,FormDetails>();
+    private static HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String, FormDetails>();
 
     Intent resultIntent;
 
@@ -88,7 +93,7 @@ public class CheckUpdatesTask extends Service implements FormListDownloaderListe
 
         if (result.containsKey(DownloadFormListTask.DL_FORMLIST_NOT_MODIFIED)) {
             // Do we really need to do anything?
-            //result = DownloadFormListTask.getCurrentFormlist();
+            result = DownloadFormListTask.getCurrentFormlist();
         }
 
         if (result.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
@@ -113,9 +118,15 @@ public class CheckUpdatesTask extends Service implements FormListDownloaderListe
                 item.put(NewFormDownloadList.FORMDETAIL_KEY, formDetailsKey);
                 item.put(NewFormDownloadList.FORM_ID_KEY, details.formID);
                 item.put(NewFormDownloadList.FORM_VERSION_KEY, details.formVersion);
+                item.put(NewFormDownloadList.FORM_MD5_HASH, details.md5Hash);
 
+                HashMap<HashMap<String, String>, Date> dateOfDownload = new FileStorageTask(this).getDatesOfDownload();
+                HashSet<HashMap<String, String>> filesToDismiss = new FileStorageTask(this).getDismissedForms();
+                boolean notDismissed = !filesToDismiss.contains(item);
+                boolean notOlderThan30 = NewFormDownloadList.olderThan30Days(dateOfDownload.get(item));
 
-                if (NewFormDownloadList.isLocalFormSuperseded(details.formID, details.formVersion, details.md5Hash)) {
+                if (notDismissed && notOlderThan30 &&
+                        NewFormDownloadList.isLocalFormSuperseded(details.formID, details.formVersion, details.md5Hash)) {
                     // Insert the new form in alphabetical order.
                     if (mFormList.size() == 0) {
                         mFormList.add(item);
@@ -146,6 +157,12 @@ public class CheckUpdatesTask extends Service implements FormListDownloaderListe
                 mBuilder.setContentIntent(resultPendingIntent);
                 // Builds the notification and issues it.
                 mNotificationManager.notify(mNotificationId, mBuilder.build());
+                SharedPreferences settings =
+                        PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putInt(NewFormDownloadList.KEY_NEW_FORMS, mFormList.size());
+                editor.commit();
+                this.stopSelf();
             }
         }
     }
@@ -179,6 +196,7 @@ public class CheckUpdatesTask extends Service implements FormListDownloaderListe
      * Starts the download task.
      */
     private void downloadFormList() {
+        Log.d("BService", "Downloading Formlist");
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = connectivityManager.getActiveNetworkInfo();

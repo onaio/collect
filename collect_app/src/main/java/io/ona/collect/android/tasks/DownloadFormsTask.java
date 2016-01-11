@@ -259,6 +259,7 @@ public class DownloadFormsTask extends
                 v.put(FormsColumns.JR_FORM_ID, formInfo.get(FileUtils.FORMID));
                 v.put(FormsColumns.SUBMISSION_URI, formInfo.get(FileUtils.SUBMISSIONURI));
                 v.put(FormsColumns.BASE64_RSA_PUBLIC_KEY, formInfo.get(FileUtils.BASE64_RSA_PUBLIC_KEY));
+                v.put(FormsColumns.MD5_HASH, formInfo.get(FileUtils.HASH));
                 uri =
                         Collect.getInstance().getContentResolver()
                                 .insert(FormsColumns.CONTENT_URI, v);

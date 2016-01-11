@@ -64,6 +64,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   public static final String KEY_FONT_SIZE = "font_size";
   public static final String KEY_DELETE_AFTER_SEND = "delete_send";
   public static final String KEY_SHOW_SHARED_FORMS = "show_shared_forms";
+  public static final String KEY_RUN_CHECK_UPDATES = "run_check_updates";
 
   public static final String KEY_PROTOCOL = "protocol";
   public static final String KEY_PROTOCOL_SETTINGS = "protocol_settings";
@@ -147,6 +148,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     mNavigationPreference = (ListPreference) findPreference(KEY_NAVIGATION);
     mFontSizePreference = (ListPreference) findPreference(KEY_FONT_SIZE);
     Preference showSharedForms = findPreference(KEY_SHOW_SHARED_FORMS);
+    Preference runCheckUpdates = findPreference(KEY_RUN_CHECK_UPDATES);
     Preference defaultFinalized = findPreference(KEY_COMPLETED_DEFAULT);
     Preference deleteAfterSend = findPreference(KEY_DELETE_AFTER_SEND);
     mSplashPathPreference = (PreferenceScreen) findPreference(KEY_SPLASH_PATH);

@@ -34,6 +34,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -78,10 +79,12 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     public static final String LIST_URL = "listurl";
 
     public static final String FORMNAME = "formname";
-    private static final String PROJECT = "project";
-    private static final String ORGANIZATION = "organization";
+    public static final String PROJECT = "project";
+    public static final String ORGANIZATION = "organization";
     public static final String FORMDETAIL_KEY = "formdetailkey";
     public static final String FORMID_DISPLAY = "formiddisplay";
+
+    public static final String KEY_NEW_FORMS = "newforms";
 
     public static final String FORM_ID_KEY = "formid";
     public static final String FORM_VERSION_KEY = "formversion";
@@ -114,7 +117,8 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     private boolean mShouldExit;
     private static final String SHOULD_EXIT = "shouldexit";
 
-    static HashSet<HashMap<String, String>> filesToDismiss;
+    public static HashSet<HashMap<String, String>> filesToDismiss;
+    public static HashMap<HashMap<String, String>, Date> dateOfDownload;
 
     private int searchCategory = SEARCH_FORM_NAME;
     private String searchAttribute = FORMNAME;
@@ -129,6 +133,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
 
         FileStorageTask task = new FileStorageTask(this);
         filesToDismiss = task.getDismissedForms();
+        dateOfDownload = task.getDatesOfDownload();
 
         // need white background before load
         getListView().setBackgroundColor(Color.WHITE);
@@ -234,6 +239,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
             if (savedInstanceState.containsKey(BUNDLE_SELECTED_COUNT)) {
                 mSelectedCount = savedInstanceState.getInt(BUNDLE_SELECTED_COUNT);
                 mDownloadButton.setEnabled(!(mSelectedCount == 0));
+                mDismissButton.setEnabled(!(mSelectedCount == 0));
             }
 
             // to restore alert dialog.
@@ -330,6 +336,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     private void clearChoices() {
         NewFormDownloadList.this.getListView().clearChoices();
         mDownloadButton.setEnabled(false);
+        mDismissButton.setEnabled(false);
     }
 
     private void displayFilteredFormList(String s) {
@@ -729,6 +736,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
             String jr_version = formCursor.getString(idxJrVersion);
             String formMd5Hash = "md5:" + formCursor.getString(idxMd5Hash);
 
+            Log.d("Form Id ", "Form id" + formId);
             Log.d("Form md5Hash ", "New form hash" + md5Hash);
             Log.d("Form formmd5Hash ", "Old file hash" + formMd5Hash);
             Log.d("Form version ", "New form version" + latestVersion);
@@ -783,11 +791,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         ListView ls = getListView();
         for (int idx = 0; idx < mFormList.size(); idx++) {
             HashMap<String, String> item = mFormList.get(idx);
-            if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY), item.get(FORM_MD5_HASH))) {
-                ls.setItemChecked(idx, true);
-            } else {
-                mFormList.remove(item);
-            }
+            ls.setItemChecked(idx, true);
         }
     }
 
@@ -838,10 +842,22 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
                 item.put(FORMDETAIL_KEY, formDetailsKey);
                 item.put(FORM_ID_KEY, details.formID);
                 item.put(FORM_VERSION_KEY, details.formVersion);
+                item.put(FORM_MD5_HASH, details.md5Hash);
+
+                // Add the date form is shown for first time.
+                if (!dateOfDownload.containsKey(item)) {
+                    dateOfDownload.put(item, new Date());
+                }
+
+                boolean notDismissed = !filesToDismiss.contains(item);
+                boolean notOlderThan30 = olderThan30Days(dateOfDownload.get(item));
 
                 // Insert the new form in alphabetical order.
                 if (mFormList.size() == 0) {
-                    mFormList.add(item);
+                    if (notDismissed && notOlderThan30 &&
+                            isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY), item.get(FORM_MD5_HASH))) {
+                        mFormList.add(item);
+                    }
                 } else {
                     int j;
                     for (j = 0; j < mFormList.size(); j++) {
@@ -852,13 +868,24 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
                         }
                     }
                     if (!filesToDismiss.contains(item)) {
-                        mFormList.add(j, item);
+                        if (notDismissed && notOlderThan30 &&
+                                isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY), item.get(FORM_MD5_HASH))) {
+                            mFormList.add(j, item);
+                        }
                     }
                 }
             }
+            // Update number of new forms.
+            SharedPreferences settings =
+                    PreferenceManager.getDefaultSharedPreferences(Collect.getInstance().getBaseContext());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt(NewFormDownloadList.KEY_NEW_FORMS, mFormList.size());
+            editor.commit();
+
             selectSupersededForms();
             mFormListAdapter.notifyDataSetChanged();
             mDownloadButton.setEnabled(!(selectedItemCount() == 0));
+            new FileStorageTask(this).saveDatesOfDownload(dateOfDownload);
         }
     }
 
@@ -962,5 +989,11 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public static boolean olderThan30Days(Date itemDate) {
+        Date currentDate = new Date();
+        long day30 = 30l * 24 * 60 * 60 * 1000;
+        return currentDate.before(new Date((itemDate.getTime() + day30)));
     }
 }

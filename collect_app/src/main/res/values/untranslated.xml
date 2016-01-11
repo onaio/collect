@@ -42,5 +42,8 @@
 	<string translatable="false" name="connection_error">Connection error. Please try again later.</string>
 	<string translatable="false" name="shared_forms">Shared forms</string>
 	<string translatable="false" name="logged_in">"Logged in as "</string>
+	<string translatable="false" name="check_updates">Check for updates</string>
+	<string translatable="false" name="run_check_updates">Run background service to check for new and updated forms</string>
+	<string translatable="false" name="run_check_updates_summary">Select to run service to check for new and updated forms</string>
     <item name="mapview" type="id"/>
 </resources>

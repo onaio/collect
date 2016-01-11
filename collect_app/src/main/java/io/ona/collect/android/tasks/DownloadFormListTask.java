@@ -161,6 +161,8 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                 String downloadUrl = null;
                 String manifestUrl = null;
                 String md5Hash = null;
+                String project = null;
+                String organization = null;
                 // don't process descriptionUrl
                 int fieldCount = xformElement.getChildCount();
                 for (int j = 0; j < fieldCount; ++j) {
@@ -214,6 +216,16 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                         if (md5Hash != null && md5Hash.length() == 0) {
                             md5Hash = null;
                         }
+                    } else if (tag.equals("project")) {
+                        project = XFormParser.getXMLText(child, true);
+                        if (project != null && project.length() == 0) {
+                            project = null;
+                        }
+                    } else if (tag.equals("organization")) {
+                        organization = XFormParser.getXMLText(child, true);
+                        if (organization != null && organization.length() == 0) {
+                            organization = null;
+                        }
                     }
                 }
                 if (formId == null || downloadUrl == null || formName == null) {
@@ -228,7 +240,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                             R.string.parse_openrosa_formlist_failed, error)));
                     return formList;
                 }
-                formList.put(formId, new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion, md5Hash));
+                formList.put(formId, new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion, md5Hash, project, organization));
             }
         } else {
             // Aggregate 0.9.x mode...
@@ -237,6 +249,8 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
             int formsCount = formsElement.getChildCount();
             String formId = null;
             String md5Hash = null;
+            String project = null;
+            String organization = null;
             for (int i = 0; i < formsCount; ++i) {
                 if (formsElement.getType(i) != Element.ELEMENT) {
                     // whitespace
@@ -254,7 +268,18 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                     if (md5Hash != null && md5Hash.length() == 0) {
                         md5Hash = null;
                     }
+                } else if (tag.equals("project")) {
+                    project = XFormParser.getXMLText(child, true);
+                    if (project != null && project.length() == 0) {
+                        project = null;
+                    }
+                } else if (tag.equals("organization")) {
+                    organization = XFormParser.getXMLText(child, true);
+                    if (organization != null && organization.length() == 0) {
+                        organization = null;
+                    }
                 }
+
                 if (tag.equalsIgnoreCase("form")) {
                     String formName = XFormParser.getXMLText(child, true);
                     if (formName != null && formName.length() == 0) {
@@ -277,7 +302,7 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                                 R.string.parse_legacy_formlist_failed, error)));
                         return formList;
                     }
-                    formList.put(formName, new FormDetails(formName, downloadUrl, null, formId, null, md5Hash));
+                    formList.put(formName, new FormDetails(formName, downloadUrl, null, formId, null, md5Hash, project, organization));
 
                     formId = null;
                 }
