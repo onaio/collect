@@ -1000,8 +1000,6 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
     public static boolean olderThan30Days(Date itemDate) {
         Date currentDate = new Date();
         long day30 = 30l * 24 * 60 * 60 * 1000;
-        if (itemDate != null) {
-            return currentDate.before(new Date((itemDate.getTime() + day30)));
-        } else return true;
+        return currentDate.before(new Date((itemDate.getTime() + day30)));
     }
 }

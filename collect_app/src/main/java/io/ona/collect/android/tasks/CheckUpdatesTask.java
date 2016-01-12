@@ -124,6 +124,12 @@ public class CheckUpdatesTask extends Service implements FormListDownloaderListe
 
                 HashMap<HashMap<String, String>, Date> dateOfDownload = new FileStorageTask(this).getDatesOfDownload();
                 HashSet<HashMap<String, String>> filesToDismiss = new FileStorageTask(this).getDismissedForms();
+
+                // Add the date form is shown for first time.
+                if (!dateOfDownload.containsKey(item)) {
+                    dateOfDownload.put(item, new Date());
+                }
+
                 boolean notDismissed = !filesToDismiss.contains(item);
                 boolean notOlderThan30 = NewFormDownloadList.olderThan30Days(dateOfDownload.get(item));
 
