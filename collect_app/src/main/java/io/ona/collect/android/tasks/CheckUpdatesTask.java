@@ -119,6 +119,8 @@ public class CheckUpdatesTask extends Service implements FormListDownloaderListe
                 item.put(NewFormDownloadList.FORM_ID_KEY, details.formID);
                 item.put(NewFormDownloadList.FORM_VERSION_KEY, details.formVersion);
                 item.put(NewFormDownloadList.FORM_MD5_HASH, details.md5Hash);
+                item.put(NewFormDownloadList.PROJECT, details.project);
+                item.put(NewFormDownloadList.ORGANIZATION, details.organization);
 
                 HashMap<HashMap<String, String>, Date> dateOfDownload = new FileStorageTask(this).getDatesOfDownload();
                 HashSet<HashMap<String, String>> filesToDismiss = new FileStorageTask(this).getDismissedForms();
