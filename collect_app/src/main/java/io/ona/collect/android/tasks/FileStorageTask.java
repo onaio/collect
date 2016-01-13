@@ -33,7 +33,7 @@ public class FileStorageTask {
             ois.close();
             return dismissedForms;
         }catch(Exception ex){
-            ex.printStackTrace();
+            //ex.printStackTrace();
             return new HashSet<HashMap<String, String>>();
         }
     }
@@ -46,7 +46,7 @@ public class FileStorageTask {
             oos.close();
             return true;
         }catch(Exception ex){
-            ex.printStackTrace();
+            //ex.printStackTrace();
             return false;
         }
     }
@@ -59,7 +59,7 @@ public class FileStorageTask {
             ois.close();
             return datesOfDownloadMap;
         }catch(Exception ex){
-            ex.printStackTrace();
+            //ex.printStackTrace();
             return new HashMap<HashMap<String, String>, Date>();
         }
     }
@@ -72,7 +72,7 @@ public class FileStorageTask {
             oos.close();
             return true;
         }catch(Exception ex){
-            ex.printStackTrace();
+            //ex.printStackTrace();
             return false;
         }
     }
