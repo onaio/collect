@@ -211,7 +211,7 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
 
             @Override
             public void afterTextChanged(Editable s) {
-                displayFilteredFormList(s.toString());
+                displayFilteredFormList(s.toString(), searchAttribute);
             }
         });
 
@@ -341,10 +341,11 @@ public class NewFormDownloadList extends ListActivity implements FormListDownloa
         mDismissButton.setEnabled(false);
     }
 
-    private void displayFilteredFormList(String s) {
+    private void displayFilteredFormList(String s, String att) {
         ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<HashMap<String, String>>();
         for (HashMap<String, String> formItem : mFormList) {
-            if (formItem.get(FORMNAME).toLowerCase().contains(s.toLowerCase())) {
+            String value = formItem.get(att);
+            if (value != null && value.toLowerCase().contains(s.toLowerCase())) {
                 filteredFormList.add(formItem);
             }
         }

@@ -322,7 +322,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private void displayFilteredFormList(String s, String att) {
         ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<HashMap<String, String>>();
         for (HashMap<String, String> formItem : mFormList) {
-            if (formItem.containsKey(att) && formItem.get(att).toLowerCase().contains(s.toLowerCase())) {
+            String value = formItem.get(att);
+            if (value != null && value.toLowerCase().contains(s.toLowerCase())) {
                 filteredFormList.add(formItem);
             }
         }
