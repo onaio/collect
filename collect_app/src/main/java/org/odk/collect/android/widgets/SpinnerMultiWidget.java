@@ -26,7 +26,7 @@ import org.javarosa.core.model.data.SelectMultiData;
 import org.javarosa.core.model.data.helper.Selection;
 import org.javarosa.form.api.FormEntryPrompt;
 import org.javarosa.xpath.expr.XPathFuncExpr;
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.external.ExternalDataUtil;
 
 import android.app.AlertDialog;

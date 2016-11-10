@@ -16,7 +16,7 @@ package org.odk.collect.android.preferences;
 
 import java.util.ArrayList;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.utilities.UrlUtils;
 
 import android.accounts.Account;

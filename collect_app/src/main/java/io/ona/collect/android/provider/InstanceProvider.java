@@ -12,12 +12,12 @@
  * the License.
  */
 
-package org.odk.collect.android.provider;
+package io.ona.collect.android.provider;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.database.ODKSQLiteOpenHelper;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 import org.odk.collect.android.utilities.MediaUtils;
 
 import android.content.ContentProvider;
@@ -390,8 +390,8 @@ public class InstanceProvider extends ContentProvider {
 
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        sUriMatcher.addURI(InstanceProviderAPI.AUTHORITY, "instances", INSTANCES);
-        sUriMatcher.addURI(InstanceProviderAPI.AUTHORITY, "instances/#", INSTANCE_ID);
+        sUriMatcher.addURI(io.ona.collect.android.provider.InstanceProviderAPI.AUTHORITY, "instances", INSTANCES);
+        sUriMatcher.addURI(io.ona.collect.android.provider.InstanceProviderAPI.AUTHORITY, "instances/#", INSTANCE_ID);
 
         sInstancesProjectionMap = new HashMap<String, String>();
         sInstancesProjectionMap.put(InstanceColumns._ID, InstanceColumns._ID);

@@ -38,7 +38,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 
 import org.javarosa.core.services.IPropertyManager;
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.logic.FormController;
 import org.odk.collect.android.logic.PropertyManager;
 import org.odk.collect.android.utilities.MediaUtils;

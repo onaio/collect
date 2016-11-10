@@ -14,10 +14,10 @@
 
 package org.odk.collect.android.activities;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import io.ona.collect.android.provider.InstanceProviderAPI;
+import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;

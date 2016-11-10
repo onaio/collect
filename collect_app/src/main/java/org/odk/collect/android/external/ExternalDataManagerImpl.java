@@ -19,7 +19,7 @@
 package org.odk.collect.android.external;
 
 import android.util.Log;
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.ExternalDataException;
 

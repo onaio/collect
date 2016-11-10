@@ -14,7 +14,7 @@
 
 package org.odk.collect.android.preferences;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 
 import android.os.Bundle;
 import android.preference.EditTextPreference;
