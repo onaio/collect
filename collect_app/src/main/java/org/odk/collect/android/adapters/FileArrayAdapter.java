@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.logic.DriveListItem;
 
 import android.content.Context;

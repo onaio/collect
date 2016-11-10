@@ -14,7 +14,7 @@
 
 package org.odk.collect.android.utilities;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 
 import android.app.Dialog;
 import android.content.Context;

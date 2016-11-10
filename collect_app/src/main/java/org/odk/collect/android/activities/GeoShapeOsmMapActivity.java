@@ -30,7 +30,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.spatial.MapHelper;
 import org.odk.collect.android.widgets.GeoShapeWidget;
 import org.osmdroid.DefaultResourceProxyImpl;

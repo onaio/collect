@@ -35,7 +35,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.spatial.MapHelper;
 import org.odk.collect.android.utilities.InfoLogger;

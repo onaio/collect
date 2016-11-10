@@ -50,7 +50,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.spatial.MapHelper;
 import org.odk.collect.android.widgets.GeoTraceWidget;

@@ -16,10 +16,10 @@ package org.odk.collect.android.activities;
 
 import java.util.ArrayList;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.listeners.DeleteInstancesListener;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 import org.odk.collect.android.tasks.DeleteInstancesTask;
 
 import android.app.AlertDialog;
