@@ -36,6 +36,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
@@ -104,118 +105,122 @@ public class GeoShapeGoogleMapActivity extends FragmentActivity implements Locat
 
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.gmap)).getMap();
-        mHelper = new MapHelper(this,mMap);
-        mMap.setMyLocationEnabled(true);
-        mMap.setOnMapLongClickListener(this);
-        mMap.setOnMarkerDragListener(this);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mMap.getUiSettings().setCompassEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(false);
-        polygonOptions = new PolygonOptions();
-        polygonOptions.strokeColor(Color.RED);
-
-        List<String> providers = mLocationManager.getProviders(true);
-        for (String provider : providers) {
-            if (provider.equalsIgnoreCase(LocationManager.GPS_PROVIDER)) {
-                mGPSOn = true;
-                curLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            }
-            if (provider.equalsIgnoreCase(LocationManager.NETWORK_PROVIDER)) {
-                mNetworkOn = true;
-                curLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }
-        }
-
-        if(!mGPSOn & !mNetworkOn){
-            showGPSDisabledAlertToUser();
-        }
-
-        gps_button = (Button)findViewById(R.id.gps);
-        gps_button.setEnabled(false);
-        gps_button.setOnClickListener(new View.OnClickListener() {
+        ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.gmap)).getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onClick(View v) {
+            public void onMapReady(GoogleMap googleMap) {
+                mMap = googleMap;
+                mHelper = new MapHelper(GeoShapeGoogleMapActivity.this, mMap);
+                mMap.setMyLocationEnabled(true);
+                mMap.setOnMapLongClickListener(GeoShapeGoogleMapActivity.this);
+                mMap.setOnMarkerDragListener(GeoShapeGoogleMapActivity.this);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mMap.getUiSettings().setCompassEnabled(true);
+                mMap.getUiSettings().setZoomControlsEnabled(false);
+                polygonOptions = new PolygonOptions();
+                polygonOptions.strokeColor(Color.RED);
+
+                List<String> providers = mLocationManager.getProviders(true);
+                for (String provider : providers) {
+                    if (provider.equalsIgnoreCase(LocationManager.GPS_PROVIDER)) {
+                        mGPSOn = true;
+                        curLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                    if (provider.equalsIgnoreCase(LocationManager.NETWORK_PROVIDER)) {
+                        mNetworkOn = true;
+                        curLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    }
+                }
+
+                if(!mGPSOn & !mNetworkOn){
+                    showGPSDisabledAlertToUser();
+                }
+
+                gps_button = (Button)findViewById(R.id.gps);
+                gps_button.setEnabled(false);
+                gps_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 //                if(curLocation !=null){
 //                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curlatLng,16));
 //                }
-                showZoomDialog();
-            }
-        });
+                        showZoomDialog();
+                    }
+                });
 
-        clear_button = (Button) findViewById(R.id.clear);
-        clear_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (markerArray.size() != 0){
-                    showClearDialog();
+                clear_button = (Button) findViewById(R.id.clear);
+                clear_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (markerArray.size() != 0){
+                            showClearDialog();
+                        }
+                    }
+                });
+                return_button = (Button) findViewById(R.id.save);
+                return_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        returnLocation();
+                    }
+                });
+
+
+                Intent intent = getIntent();
+                if (intent != null && intent.getExtras() != null) {
+                    if ( intent.hasExtra(GeoShapeWidget.SHAPE_LOCATION) ) {
+                        data_loaded =true;
+                        clear_button.setEnabled(true);
+                        String s = intent.getStringExtra(GeoShapeWidget.SHAPE_LOCATION);
+                        gps_button.setEnabled(true);
+                        overlayIntentPolygon(s);
+                    }
                 }
-            }
-        });
-        return_button = (Button) findViewById(R.id.save);
-        return_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                returnLocation();
-            }
-        });
 
 
-        Intent intent = getIntent();
-        if (intent != null && intent.getExtras() != null) {
-            if ( intent.hasExtra(GeoShapeWidget.SHAPE_LOCATION) ) {
-                data_loaded =true;
-                clear_button.setEnabled(true);
-                String s = intent.getStringExtra(GeoShapeWidget.SHAPE_LOCATION);
-                gps_button.setEnabled(true);
-                overlayIntentPolygon(s);
-            }
-        }
+                layers_button = (Button)findViewById(R.id.layers);
+                layers_button.setOnClickListener(new View.OnClickListener() {
 
+                    @Override
+                    public void onClick(View v) {
+                        mHelper.showLayersDialog();
 
-        layers_button = (Button)findViewById(R.id.layers);
-        layers_button.setOnClickListener(new View.OnClickListener() {
+                    }
+                });
 
-            @Override
-            public void onClick(View v) {
-                mHelper.showLayersDialog();
+                zoomDialogView = getLayoutInflater().inflate(R.layout.geoshape_zoom_dialog, null);
 
-            }
-        });
+                zoomLocationButton = (Button) zoomDialogView.findViewById(R.id.zoom_location);
+                zoomLocationButton.setOnClickListener(new View.OnClickListener() {
 
-        zoomDialogView = getLayoutInflater().inflate(R.layout.geoshape_zoom_dialog, null);
+                    @Override
+                    public void onClick(View v) {
+                        if(curLocation !=null){
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curlatLng,17));
+                        }
+                        zoomDialog.dismiss();
+                    }
+                });
 
-        zoomLocationButton = (Button) zoomDialogView.findViewById(R.id.zoom_location);
-        zoomLocationButton.setOnClickListener(new View.OnClickListener() {
+                zoomPointButton = (Button) zoomDialogView.findViewById(R.id.zoom_shape);
+                zoomPointButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if(curLocation !=null){
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(curlatLng,17));
-                }
-                zoomDialog.dismiss();
-            }
-        });
-
-        zoomPointButton = (Button) zoomDialogView.findViewById(R.id.zoom_shape);
-        zoomPointButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
+                    @Override
+                    public void onClick(View v) {
 //                zoomToCentroid();
-                zoomtoBounds();
-                zoomDialog.dismiss();
+                        zoomtoBounds();
+                        zoomDialog.dismiss();
+                    }
+                });
+                // If there is a last know location go there
+                if(curLocation !=null){
+                    curlatLng = new LatLng(curLocation.getLatitude(),curLocation.getLongitude());
+                    foundFirstLocation = true;
+                    initZoom = true;
+                    gps_button.setEnabled(true);
+                    showZoomDialog();
+                }
             }
         });
-        // If there is a last know location go there
-        if(curLocation !=null){
-            curlatLng = new LatLng(curLocation.getLatitude(),curLocation.getLongitude());
-            foundFirstLocation = true;
-            initZoom = true;
-            gps_button.setEnabled(true);
-            showZoomDialog();
-        }
-
     }
 
 

@@ -31,10 +31,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,7 +56,8 @@ public class SplashScreenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d("SplashScreen", "called");
+        FirebaseMessaging.getInstance().subscribeToTopic("form~formId~struct");
         // must be at the beginning of any activity that can be called from an external intent
         try {
             Collect.createODKDirs();
