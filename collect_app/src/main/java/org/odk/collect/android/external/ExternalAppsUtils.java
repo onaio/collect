@@ -38,7 +38,7 @@ import org.javarosa.xpath.expr.XPathFuncExpr;
 import org.javarosa.xpath.expr.XPathPathExpr;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.ExternalParamsException;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 
 import android.content.Intent;
 import android.database.Cursor;

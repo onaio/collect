@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.odk.collect.android.provider;
+package io.ona.collect.android.provider;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -20,11 +20,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.database.ItemsetDbAdapter;
 import org.odk.collect.android.database.ODKSQLiteOpenHelper;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 import org.odk.collect.android.utilities.FileUtils;
 import org.odk.collect.android.utilities.MediaUtils;
 

@@ -16,8 +16,8 @@ package org.odk.collect.android.activities;
 
 import java.util.ArrayList;
 
-import org.odk.collect.android.R;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import io.ona.collect.android.R;
+import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 
 import android.app.Activity;
 import android.app.AlertDialog;

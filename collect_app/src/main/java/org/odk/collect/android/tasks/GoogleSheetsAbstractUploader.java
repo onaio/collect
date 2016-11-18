@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.FormException;
 import org.odk.collect.android.picasa.AlbumEntry;
@@ -41,9 +41,9 @@ import org.odk.collect.android.picasa.PicasaClient;
 import org.odk.collect.android.picasa.PicasaUrl;
 import org.odk.collect.android.picasa.UserFeed;
 import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
+import io.ona.collect.android.provider.InstanceProviderAPI;
+import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
