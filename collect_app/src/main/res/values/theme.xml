@@ -6,5 +6,19 @@
 	    <item name="android:scrollbarSize">1.75mm</item>
 	    <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
 	    <item name="android:fadeScrollbars">false</item>
-	</style>    
+	</style>
+
+	<style name="OnaCollect" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorPrimary">@color/ona_orange</item>
+		<item name="colorAccent">@color/ona_blue</item>
+		<item name="android:textColorPrimary">@android:color/black</item>
+		<item name="android:textColorHint">@color/ona_grey</item>
+		<item name="android:textColorSecondary">@color/ona_blue</item>
+		<item name="android:buttonStyle">@style/OnaCollect.Button</item>
+	</style>
+
+	<style name="OnaCollect.Button" parent="Base.Widget.AppCompat.Button">
+		<item name="android:background">@drawable/ona_button_background</item>
+		<item name="android:textColor">@android:color/white</item>
+	</style>
 </resources>

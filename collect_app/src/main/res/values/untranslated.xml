@@ -16,5 +16,8 @@
 	<string translatable="false" name="default_server_url">https://opendatakit.appspot.com</string>
 	<string translatable="false" name="default_odk_formlist">/formList</string>
 	<string translatable="false" name="default_odk_submission">/submission</string>
+	<string translatable="false" name="password_reset_link">"https://ona.io/request-password-reset"</string>
+	<string translatable="false" name="create_account_link">"https://ona.io/join"</string>
+	<string translatable="false" name="company_name">Ona</string>
     <item name="mapview" type="id"/>
 </resources>
