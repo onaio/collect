@@ -15,11 +15,13 @@
 package org.odk.collect.android.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDex;
 
 import io.ona.collect.android.R;
 import org.odk.collect.android.database.ActivityLogger;
@@ -96,6 +98,12 @@ public class Collect extends Application {
 
     public void setExternalDataManager(ExternalDataManager externalDataManager) {
         this.externalDataManager = externalDataManager;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public static int getQuestionFontsize() {
