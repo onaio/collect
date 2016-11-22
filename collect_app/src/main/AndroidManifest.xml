@@ -224,9 +224,11 @@
             android:name="org.odk.collect.android.activities.BearingActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="org.odk.collect.android.activities.SplashScreenActivity"
+            android:name="io.ona.collect.android.activities.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog" >
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/OnaCollect">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="OnaCollect" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/ona_orange</item>
+        <item name="colorAccent">@color/ona_blue</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorHint">@color/ona_grey</item>
+        <item name="android:textColorSecondary">@color/ona_blue</item>
+        <item name="android:colorButtonNormal">@color/ona_orange</item>
+        <item name="android:buttonStyle">@style/OnaCollect.Button</item>
+    </style>
+
+    <style name="OnaCollect.Button" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+</resources>
