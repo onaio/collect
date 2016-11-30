@@ -13,8 +13,11 @@
 	<string translatable="false" name="protocol_google_sheets">google_sheets</string>
     <string translatable="false" name="default_form_processing_logic">-1</string>
     <string translatable="false" name="protocol_other">other_protocol</string>
-	<string translatable="false" name="default_server_url">https://opendatakit.appspot.com</string>
+	<string translatable="false" name="default_server_url">https://odk.ona.io</string>
 	<string translatable="false" name="default_odk_formlist">/formList</string>
 	<string translatable="false" name="default_odk_submission">/submission</string>
+	<string translatable="false" name="password_reset_link">"https://ona.io/request-password-reset"</string>
+	<string translatable="false" name="create_account_link">"https://ona.io/join"</string>
+	<string translatable="false" name="company_name">Ona</string>
     <item name="mapview" type="id"/>
 </resources>

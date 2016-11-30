@@ -143,7 +143,7 @@
 <string name="username">Username</string>
 <string name="view_hierarchy">Go To Prompt</string>
 <string name="general_preferences">General Settings</string>
-<string name="click_to_web">Tap to visit http://opendatakit.org</string>
+<string name="click_to_web">Tap to visit https://ona.io</string>
 <string name="client">User Interface</string>
 <string name="show_splash">Show splash screen</string>
 <string name="show_splash_summary">Shows when application starts</string>
@@ -153,7 +153,7 @@
 <string name="use_odk_default">Use default image</string>
 <string name="change_splash_path">Change image</string>
 <string name="show_location">Show Location</string>
-<string name="app_url">http://opendatakit.org</string>
+<string name="app_url">https://ona.io</string>
 <string name="keep_changes">Save Changes</string>
 <string name="go_to_location">Go to Location</string>
 <string name="change_formlist_url">Form list path (appended to URL)</string>
@@ -397,4 +397,12 @@
 <string name="geotrace_view_change_location">View or Change GeoTrace</string>
 <string name="bearing">Bearing: %.3f</string>
 <string name="direction">Direction: %s</string>
+
+    <string name="welcome_message">Welcome to %s.</string>
+    <string name="sign_in_instructions">Sign in with your %s account.</string>
+    <string name="sign_in">Sign In</string>
+    <string name="need_account">Need an account?</string>
+    <string name="forgot_password">Forgot your password</string>
+    <string name="please_enter_username">Please enter a username</string>
+    <string name="please_enter_password">Please enter a password</string>
 </resources>

@@ -18,5 +18,11 @@ the License.
 
     <drawable name="white">#ffffffff</drawable>
     <drawable name="black">#ff000000</drawable>
+    <color name="ona_light_beige">#f7f6f0</color>
+    <color name="ona_light_grey">#f0f0f0</color>
+    <color name="ona_grey">#8e8e8e</color>
+    <color name="ona_orange">#FF5D00</color>
+    <color name="ona_green">#32616E</color>
+    <color name="ona_blue">#698fd1</color>
 
 </resources>
