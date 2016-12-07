@@ -2,7 +2,7 @@ package org.odk.collect.android.spatial;
 
 import android.content.Context;
 
-import org.odk.collect.android.R;
+import io.ona.collect.android.R;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
