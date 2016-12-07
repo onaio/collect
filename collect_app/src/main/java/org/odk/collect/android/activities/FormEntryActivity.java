@@ -2794,7 +2794,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 
 	private void sendSavedBroadcast() {
 		Intent i = new Intent();
-		i.setAction("org.odk.collect.android.FormSaved");
+		i.setAction("io.ona.collect.android.FormSaved");
 		this.sendBroadcast(i);
 	}
 

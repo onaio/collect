@@ -63,7 +63,7 @@
 
     <application
         android:name="org.odk.collect.android.application.Collect"
-		android:supportsRtl="true" 
+		android:supportsRtl="true"
         android:largeHeap="true"
         android:installLocation="auto"
         android:icon="@drawable/notes"
@@ -96,11 +96,11 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="vnd.android.cursor.item/vnd.odk.form" />
-                <data android:mimeType="vnd.android.cursor.item/vnd.odk.instance" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.ona.form" />
+                <data android:mimeType="vnd.android.cursor.item/vnd.ona.instance" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name="org.odk.collect.android.activities.NotificationActivity"
             android:label="@string/app_name"
             android:taskAffinity=""
@@ -112,7 +112,7 @@
             android:label="@string/app_name" />
         <activity
             android:name="org.odk.collect.android.activities.GoogleDriveActivity"
-            android:label="@string/app_name" 
+            android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden"
             />
         <activity
@@ -125,7 +125,7 @@
 
             <category android:name="android.intent.category.DEFAULT" />
 
-            <data android:mimeType="vnd.android.cursor.dir/vnd.odk.instance" />
+            <data android:mimeType="vnd.android.cursor.dir/vnd.ona.instance" />
         </intent-filter>
 
         <activity
@@ -141,7 +141,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="vnd.android.cursor.dir/vnd.odk.form" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.ona.form" />
             </intent-filter>
         </activity>
         <activity
@@ -254,7 +254,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="org.odk.collect.android.FormSaved" />
+                <action android:name="io.ona.collect.android.FormSaved" />
             </intent-filter>
         </receiver>
 
