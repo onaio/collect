@@ -146,6 +146,22 @@ public class AggregatePreferencesActivity extends PreferenceActivity {
 		mPasswordPreference.getEditText().setFilters(new InputFilter[] { new ControlCharacterFilter() });
 	}
 
+	@Override
+	protected void onStop() {
+		//update the webutils user digest to prevent getting 403s from API endpoints
+		SharedPreferences settings =
+				PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+		String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
+		String server = settings.getString(PreferencesActivity.KEY_SERVER_URL,
+				getString(R.string.default_server_url));
+		Uri uri = Uri.parse(server);
+
+		WebUtils.addCredentials(storedUsername, storedPassword, uri.getHost());
+
+		super.onStop();
+	}
+
 }
 
 /**
