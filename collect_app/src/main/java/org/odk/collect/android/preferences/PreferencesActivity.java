@@ -42,6 +42,7 @@ import io.ona.collect.android.R;
 import org.odk.collect.android.logic.FormController;
 import org.odk.collect.android.logic.PropertyManager;
 import org.odk.collect.android.utilities.MediaUtils;
+import org.odk.collect.android.utilities.WebUtils;
 
 import java.util.ArrayList;
 
@@ -517,6 +518,22 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     // may have changed.
     IPropertyManager mgr = new PropertyManager(this);
     FormController.initializeJavaRosa(mgr);
+  }
+
+  @Override
+  protected void onStop() {
+    //update the webutils user digest to prevent getting 403s from API endpoints
+    SharedPreferences settings =
+            PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+    String storedPassword = settings.getString(PreferencesActivity.KEY_PASSWORD, null);
+    String server = settings.getString(PreferencesActivity.KEY_SERVER_URL,
+            getString(R.string.default_server_url));
+    Uri uri = Uri.parse(server);
+
+    WebUtils.addCredentials(storedUsername, storedPassword, uri.getHost());
+
+    super.onStop();
   }
 
   @Override
