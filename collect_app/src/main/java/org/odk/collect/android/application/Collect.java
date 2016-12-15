@@ -24,6 +24,8 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 
 import io.ona.collect.android.R;
+import io.ona.collect.android.utils.MQTTUtils;
+
 import org.odk.collect.android.database.ActivityLogger;
 import org.odk.collect.android.external.ExternalDataManager;
 import org.odk.collect.android.logic.FormController;
@@ -241,6 +243,8 @@ public class Collect extends Application {
         
         mActivityLogger = new ActivityLogger(
                 mgr.getSingularProperty(PropertyManager.DEVICE_ID_PROPERTY));
+
+        MQTTUtils.getMqttAndroidClientInstance();
     }
 
 }
