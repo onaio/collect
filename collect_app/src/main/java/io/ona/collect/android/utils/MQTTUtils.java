@@ -260,6 +260,27 @@ public class MQTTUtils {
         }
     }
 
+    public static void subscribeToTopic(final String[] topic, boolean subscribeToSubtopics, int qualityOfService) {
+        String topicString = getTopicString(topic, subscribeToSubtopics);
+        subscribeToTopic(topicString, qualityOfService);
+    }
+
+    private static String getTopicString(String[] topic, boolean subscribeToSubtopics) {
+        String topicString = "";
+        for(String curTopic : topic) {
+            if(topicString.length() > 0) {
+                topicString = topicString + "/";
+            }
+            topicString = topicString + curTopic;
+        }
+
+        if(subscribeToSubtopics) {
+            topicString = topicString + "/#";
+        }
+
+        return topicString;
+    }
+
     public static void subscribeToTopic(final String topic, int qualityOfService) {
         try {
             if (mqttAndroidClient != null) {
