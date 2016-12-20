@@ -49,6 +49,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import io.ona.collect.android.R;
+import io.ona.collect.android.logic.mqtt.FormSchemaUpdateHandler;
+import io.ona.collect.android.logic.mqtt.MqttMessageHandler;
 import io.ona.collect.android.provider.FormsProviderAPI;
 import io.ona.collect.android.provider.InstanceProviderAPI;
 
@@ -56,7 +58,7 @@ import io.ona.collect.android.provider.InstanceProviderAPI;
  * Created by Jason Rogena - jrogena@ona.io on 09/12/2016.
  */
 
-public class MQTTUtils {
+public class MqttUtils {
     private static final String TAG = "MQTTUtils";
     /*
     After creating the client key (android.collect.ona.io.key) and certificate (android.collect.ona.io.crt) using the instructions here -> https://github.com/onaio/playbooks/wiki/Creating-a-Mosquitto-Client-Certificate-and-Key
@@ -85,6 +87,7 @@ public class MQTTUtils {
     private static MqttAndroidClient mqttAndroidClient;
     private static HashMap<String, ArrayList<String>> subscribedFormTopics;
     private static HashMap<String, ArrayList<String>> subscribedUserTopics;
+    private static ArrayList<MqttMessageHandler> messageHandlers;
 
     static {
         subscribedFormTopics = new HashMap<>();
@@ -114,6 +117,8 @@ public class MQTTUtils {
             String clientId = getClientId();
 
             Log.d(TAG, "Client id is "+clientId);
+            messageHandlers = new ArrayList<>();
+            messageHandlers.add(new FormSchemaUpdateHandler());
             mqttAndroidClient = new MqttAndroidClient(context, "ssl://10.20.22.169:8883", clientId);
             try {
                 Log.d(TAG, "About to try connection");
@@ -144,11 +149,17 @@ public class MQTTUtils {
                     }
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
-                        if (message != null && message.getPayload() != null) {
-                            String payloadString = new String(message.getPayload());
-                            Log.d(TAG, "Topic: " + topic + " Message: " + payloadString);
-                        } else {
-                            Log.w(TAG, "Received a message with a null payload");
+                        boolean handled = false;
+                        for(MqttMessageHandler curHandler : messageHandlers) {
+                            if(curHandler.canHandle(topic, message)) {
+                                curHandler.handle(topic, message);
+                                handled = true;
+                                break;
+                            }
+                        }
+
+                        if(!handled) {
+                            Log.w(TAG, "Could not handle message from topic " + topic);
                         }
                     }
 

@@ -408,4 +408,6 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="please_enter_username">Please enter a username</string>
     <string name="please_enter_password">Please enter a password</string>
+    <string name="update_for_form">%s updated</string>
+    <string name="form_update_ready_for_download">A new version for %s is now available for download</string>
 </resources>
