@@ -570,10 +570,11 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
      *
      * @param formId the form to be checked. A form with this ID may or may not reside on the local device.
      * @param latestVersion the version against which the local form (if any) is tested.
+     * @param newMd5Hash the MD5 hash for the new form XML.
      * @return true if a form with id <code>formId</code> exists on the local device and its version is less than
      *         <code>latestVersion</code>.
      */
-    public static boolean isLocalFormSuperseded(String formId, String latestVersion) {
+    public static boolean isLocalFormSuperseded(String formId, String latestVersion, String newMd5Hash) {
 
        if ( formId == null ) {
           Log.e(t, "isLocalFormSuperseded: server is not OpenRosa-compliant. <formID> is null!");
@@ -582,7 +583,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
         String[] selectionArgs = { formId };
         String selection = FormsColumns.JR_FORM_ID + "=?";
-        String[] fields = { FormsColumns.JR_VERSION };
+        String[] fields = { FormsColumns.JR_VERSION, FormsColumns.MD5_HASH };
 
         Cursor formCursor = null;
         try {
@@ -597,6 +598,14 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 // any non-null version on server is newer
                 return (latestVersion != null);
             }
+
+            if(newMd5Hash != null) {
+                String currentMd5Hash = formCursor.getString(formCursor.getColumnIndex(fields[1]));
+                if(currentMd5Hash != null && !currentMd5Hash.equals(newMd5Hash)) {
+                    return true;
+                }
+            }
+
             String jr_version = formCursor.getString(idxJrVersion);
             // apparently, the isNull() predicate above is not respected on all Android OSes???
             if ( jr_version == null && latestVersion == null ) {
@@ -626,7 +635,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         ListView ls = getListView();
         for (int idx = 0; idx < mFormList.size(); idx++) {
             HashMap<String, String> item = mFormList.get(idx);
-            if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY))) {
+            String formHash = mFormNamesAndURLs.get(item.get(FORMDETAIL_KEY)).formHash;
+            if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY), formHash)) {
                 ls.setItemChecked(idx, true);
             }
         }
