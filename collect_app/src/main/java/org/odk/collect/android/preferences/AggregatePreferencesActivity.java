@@ -15,6 +15,8 @@
 package org.odk.collect.android.preferences;
 
 import io.ona.collect.android.R;
+import io.ona.collect.android.utils.MqttUtils;
+
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.utilities.UrlUtils;
 import org.odk.collect.android.utilities.WebUtils;
@@ -158,6 +160,11 @@ public class AggregatePreferencesActivity extends PreferenceActivity {
 		Uri uri = Uri.parse(server);
 
 		WebUtils.addCredentials(storedUsername, storedPassword, uri.getHost());
+
+		if(!MqttUtils.initMqttAndroidClient()) {//MQTT Client was already initialized before
+			//refresh the form & user subscriptions incase something has changed
+			MqttUtils.refreshTopicSubscriptions();
+		}
 
 		super.onStop();
 	}

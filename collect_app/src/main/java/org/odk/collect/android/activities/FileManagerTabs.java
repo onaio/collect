@@ -15,6 +15,8 @@
 package org.odk.collect.android.activities;
 
 import io.ona.collect.android.R;
+import io.ona.collect.android.utils.MqttUtils;
+
 import org.odk.collect.android.application.Collect;
 
 import android.app.TabActivity;
@@ -101,6 +103,12 @@ public class FileManagerTabs extends TabActivity {
 	@Override
 	protected void onStop() {
 		Collect.getInstance().getActivityLogger().logOnStop(this);
+
+		if(!MqttUtils.initMqttAndroidClient()) {//MQTT Client was already initialized before
+			//refresh the form & user subscriptions incase something has changed
+			MqttUtils.refreshTopicSubscriptions();
+		}
+
 		super.onStop();
 	}
 

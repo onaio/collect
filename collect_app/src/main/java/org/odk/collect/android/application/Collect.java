@@ -244,7 +244,7 @@ public class Collect extends Application {
         mActivityLogger = new ActivityLogger(
                 mgr.getSingularProperty(PropertyManager.DEVICE_ID_PROPERTY));
 
-        MqttUtils.getMqttAndroidClientInstance();
+        MqttUtils.initMqttAndroidClient();
     }
 
 }

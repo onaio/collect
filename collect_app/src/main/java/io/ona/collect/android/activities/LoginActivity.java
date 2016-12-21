@@ -25,6 +25,7 @@ import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.preferences.PreferencesActivity;
 
 import io.ona.collect.android.R;
+import io.ona.collect.android.utils.MqttUtils;
 
 /**
  * The first activity opened when the app is launched.
@@ -248,6 +249,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         if(v.equals(loginB)) {
             if(validateInput() && saveCredentials()) {
+                MqttUtils.initMqttAndroidClient();
                 startActivity(new Intent(this, MainMenuActivity.class));
                 finish();
             }

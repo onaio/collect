@@ -39,6 +39,8 @@ import android.text.Spanned;
 
 import org.javarosa.core.services.IPropertyManager;
 import io.ona.collect.android.R;
+import io.ona.collect.android.utils.MqttUtils;
+
 import org.odk.collect.android.logic.FormController;
 import org.odk.collect.android.logic.PropertyManager;
 import org.odk.collect.android.utilities.MediaUtils;
@@ -532,6 +534,11 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     Uri uri = Uri.parse(server);
 
     WebUtils.addCredentials(storedUsername, storedPassword, uri.getHost());
+
+    if(!MqttUtils.initMqttAndroidClient()) {//MQTT Client was already initialized before
+      //refresh the form & user subscriptions incase something has changed
+      MqttUtils.refreshTopicSubscriptions();
+    }
 
     super.onStop();
   }

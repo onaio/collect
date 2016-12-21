@@ -13,6 +13,8 @@ import org.odk.collect.android.listeners.InstanceUploaderListener;
 import org.odk.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.provider.InstanceProviderAPI;
 import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import io.ona.collect.android.utils.MqttUtils;
+
 import org.odk.collect.android.tasks.GoogleSheetsAbstractUploader;
 import org.odk.collect.android.tasks.InstanceUploaderTask;
 import org.odk.collect.android.utilities.WebUtils;
@@ -59,6 +61,7 @@ public class NetworkReceiver extends BroadcastReceiver implements InstanceUpload
 			if (currentNetworkInfo != null && currentNetworkInfo.getState() == NetworkInfo.State.CONNECTED) {
 				if (interfaceIsEnabled(context, currentNetworkInfo)) {
 					uploadForms(context);
+                    MqttUtils.initMqttAndroidClient();
 				}
 			}
 		} else if (action.equals("io.ona.collect.android.FormSaved")) {
@@ -71,6 +74,7 @@ public class NetworkReceiver extends BroadcastReceiver implements InstanceUpload
 			} else {
 				if (interfaceIsEnabled(context, ni)) {
 					uploadForms(context);
+                    MqttUtils.initMqttAndroidClient();
 				}
 			}
 		}

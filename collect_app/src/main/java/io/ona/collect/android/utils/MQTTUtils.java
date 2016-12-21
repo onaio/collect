@@ -20,12 +20,10 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
-import org.odk.collect.android.activities.FormDownloadList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.listeners.FormListDownloaderListener;
 import org.odk.collect.android.logic.FormDetails;
 import org.odk.collect.android.logic.PropertyManager;
-import org.odk.collect.android.picasa.Content;
 import org.odk.collect.android.preferences.PreferencesActivity;
 import org.odk.collect.android.tasks.DownloadFormListTask;
 import org.odk.collect.android.utilities.WebUtils;
@@ -52,7 +50,6 @@ import io.ona.collect.android.R;
 import io.ona.collect.android.logic.mqtt.FormSchemaUpdateHandler;
 import io.ona.collect.android.logic.mqtt.MqttMessageHandler;
 import io.ona.collect.android.provider.FormsProviderAPI;
-import io.ona.collect.android.provider.InstanceProviderAPI;
 
 /**
  * Created by Jason Rogena - jrogena@ona.io on 09/12/2016.
@@ -102,16 +99,8 @@ public class MqttUtils {
     public static final int QOS_AT_LEAST_ONCE = 1;
     public static final int QOS_EXACTLY_ONCE = 2;
 
-    public static MqttAndroidClient getMqttAndroidClientInstance() {
-        if(mqttAndroidClient == null) {
-            initMqttAndroidClient();
-        }
-
-        return mqttAndroidClient;
-    }
-
-    private static boolean initMqttAndroidClient() {
-        if(okToInit()) {
+    public static boolean initMqttAndroidClient() {
+        if(mqttAndroidClient == null && okToInit()) {
             Log.i(TAG, "Initializing the MQTT Client");
             Context context = Collect.getInstance();
             String clientId = getClientId();
@@ -134,7 +123,7 @@ public class MqttUtils {
                 token.setActionCallback(new IMqttActionListener() {
                     @Override
                     public void onSuccess(IMqttToken asyncActionToken) {
-                        subscribeToAllTopics();
+                        refreshTopicSubscriptions();
                     }
 
                     @Override
@@ -170,18 +159,32 @@ public class MqttUtils {
                         Log.d(TAG, "Delivery Complete");
                     }
                 });
-            } catch (MqttException e) {
-                Log.e(TAG, e.getMessage());
-                e.printStackTrace();
+
+                return true;
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
+                disconnect();
                 e.printStackTrace();
             }
         }
+
         return false;
     }
 
-    private static void subscribeToAllTopics() {
+    private static boolean disconnect() {
+        boolean result = false;
+        try {
+            mqttAndroidClient.disconnect();
+            result = true;
+        } catch (MqttException e1) {
+            e1.printStackTrace();
+        }
+
+        mqttAndroidClient = null;
+
+        return result;
+    }
+
+    public static void refreshTopicSubscriptions() {
         Log.i(TAG, "Subscribing to all topics");
 
         Context context = Collect.getInstance();
@@ -388,7 +391,7 @@ public class MqttUtils {
      * currently available on the device (should only subscribe to topics corresponding to forms that
      * are currently on the device)
      */
-    public static void refreshFormTopicSubscriptions(final boolean firstTime) {
+    private static void refreshFormTopicSubscriptions(final boolean firstTime) {
         DownloadFormListTask downloadFormListTask = new DownloadFormListTask();
         downloadFormListTask.setDownloaderListener(new FormListDownloaderListener() {
             @Override

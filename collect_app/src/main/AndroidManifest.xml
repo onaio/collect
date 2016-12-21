@@ -36,6 +36,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -257,6 +258,11 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="io.ona.collect.android.FormSaved" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="io.ona.collect.android.receivers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 

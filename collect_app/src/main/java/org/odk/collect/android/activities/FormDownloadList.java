@@ -26,6 +26,8 @@ import org.odk.collect.android.listeners.FormListDownloaderListener;
 import org.odk.collect.android.logic.FormDetails;
 import org.odk.collect.android.preferences.PreferencesActivity;
 import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
+import io.ona.collect.android.utils.MqttUtils;
+
 import org.odk.collect.android.tasks.DownloadFormListTask;
 import org.odk.collect.android.tasks.DownloadFormsTask;
 import org.odk.collect.android.utilities.CompatibilityUtils;
@@ -270,6 +272,12 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     @Override
     protected void onStop() {
 		Collect.getInstance().getActivityLogger().logOnStop(this);
+
+        if(!MqttUtils.initMqttAndroidClient()) {//MQTT Client was already initialized before
+            //refresh the form & user subscriptions incase something has changed
+            MqttUtils.refreshTopicSubscriptions();
+        }
+
     	super.onStop();
     }
 
