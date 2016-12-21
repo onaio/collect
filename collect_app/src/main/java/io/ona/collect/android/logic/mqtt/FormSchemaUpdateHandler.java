@@ -13,6 +13,9 @@ import org.odk.collect.android.activities.FormDownloadList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.logic.FormDetails;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import io.ona.collect.android.R;
 
 /**
@@ -29,20 +32,28 @@ public class FormSchemaUpdateHandler implements MqttMessageHandler {
     private static final String KEY_DESCRIPTION_TEXT = "descriptionText";
     private static final String KEY_DOWNLOAD_URL = "downloadUrl";
     private static final String KEY_MANIFEST_URL = "manifestUrl";
+    private static final int MIN_NOTIFICATION_ID = 2000;
+    private static final int MAX_NOTIFICATION_ID = 4000;
+
+    private final HashMap<String, Integer> formNotificationIds;
+
+    public FormSchemaUpdateHandler() {
+        formNotificationIds = new HashMap<>();
+    }
 
     @Override
     public boolean canHandle(String topic, MqttMessage message) {
         try {
             String rawMessage = new String(message.getPayload());
             JSONObject data = new JSONObject(rawMessage);
-            if(data.has(KEY_MESSAGE_ID)
+            if (data.has(KEY_MESSAGE_ID)
                     && data.has(KEY_MESSAGE_TYPE)
                     && data.has(KEY_PAYLOAD)
                     && data.has(KEY_TIME)) {
                 String messageType = data.getString(KEY_MESSAGE_TYPE);
-                if(messageType.equals(MESSAGE_TYPE_SCHEMA_UPDATE)) {
+                if (messageType.equals(MESSAGE_TYPE_SCHEMA_UPDATE)) {
                     JSONObject payload = data.getJSONObject(KEY_PAYLOAD);
-                    if(payload.has(KEY_FORM_ID)
+                    if (payload.has(KEY_FORM_ID)
                             && payload.has(KEY_NAME)
                             && payload.has(KEY_MAJOR_MINOR_VERSION)
                             && payload.has(KEY_VERSION)
@@ -70,30 +81,62 @@ public class FormSchemaUpdateHandler implements MqttMessageHandler {
                     payload.getString(KEY_DOWNLOAD_URL),
                     payload.getString(KEY_MANIFEST_URL),
                     payload.getString(KEY_FORM_ID),
-                    payload.getString(KEY_VERSION));
+                    payload.getString(KEY_VERSION),
+                    payload.getString(KEY_HASH));
+            sendUpdateNotification(formDetails);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    /**
+     * This method checks whether the provided form has an update, and sends a notification to the
+     * notification centre if so
+     *
+     * @param formDetails   The details of the form
+     */
+    public void sendUpdateNotification(FormDetails formDetails) {
+        //check if form actually needs an update
+        if(FormDownloadList.isLocalFormSuperseded(formDetails.formID, formDetails.formVersion, formDetails.formHash)) {
             Intent notifyIntent = new Intent(Collect.getInstance(), FormDownloadList.class);
             notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             PendingIntent pendingNotify = PendingIntent.getActivity(Collect.getInstance(), 0,
                     notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+            String formVersion = formDetails.formVersion;
+            String contentText;
+            if(formVersion != null && formVersion.length() > 0) {
+                contentText = Collect.getInstance().getResources().getString(
+                        R.string.form_update_ready_for_download,
+                        Collect.getInstance().getResources().getString(R.string.version_of, formVersion),
+                        formDetails.formName);
+            } else {
+                contentText = Collect.getInstance().getResources().getString(
+                        R.string.form_update_ready_for_download,
+                        Collect.getInstance().getResources().getString(R.string.a_newer_version_of),
+                        formDetails.formName);
+            }
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(Collect.getInstance())
-                    .setSmallIcon(R.drawable.notes)
+                    .setSmallIcon(R.drawable.ic_stat_notes)
                     .setContentTitle(Collect.getInstance().getResources().getString(R.string.update_for_form, formDetails.formName))
+                    .setContentText(contentText)
                     .setContentIntent(pendingNotify)
-                    .setContentText(Collect.getInstance().getResources().getString(R.string.form_update_ready_for_download, formDetails.formName))
-                    .setAutoCancel(false)
-                    .setLargeIcon(
-                            BitmapFactory.decodeResource(Collect.getInstance().getResources(),
-                                    android.R.drawable.ic_dialog_info));
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(contentText))
+                    .setAutoCancel(true);
 
-            NotificationManager mNotificationManager = (NotificationManager)Collect.getInstance()
+            NotificationManager mNotificationManager = (NotificationManager) Collect.getInstance()
                     .getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(data.getInt(KEY_MESSAGE_ID), mBuilder.build());
-        } catch (Exception e) {
-            e.printStackTrace();
+            mNotificationManager.notify(getFormNotificationId(formDetails.formID), mBuilder.build());
         }
-        return false;
+    }
+
+    private int getFormNotificationId(String formId) {
+        if(!formNotificationIds.containsKey(formId)) {
+            Random random = new Random();
+            formNotificationIds.put(formId, random.nextInt(MAX_NOTIFICATION_ID) + MIN_NOTIFICATION_ID);
+        }
+
+        return formNotificationIds.get(formId);
     }
 }

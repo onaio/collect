@@ -418,6 +418,14 @@ public class MqttUtils {
                 } else if(value.containsKey(DownloadFormListTask.DL_ERROR_MSG)) {
                     Log.e(TAG, "An error occurred while trying to get the list of available forms");
                 } else {
+                    int formSchemaHandlerIndex = -1;
+                    for(int i =0; i < messageHandlers.size(); i++) {
+                        MqttMessageHandler curHandler = messageHandlers.get(i);
+                        if(curHandler instanceof FormSchemaUpdateHandler) {
+                            formSchemaHandlerIndex = i;
+                            break;
+                        }
+                    }
                     ArrayList<String> newFormSchemaSubscriptions = new ArrayList<String>();
                     ArrayList<String> newFormMessagesSubscriptions = new ArrayList<String>();
 
@@ -425,6 +433,13 @@ public class MqttUtils {
                     for(FormDetails curForm : value.values()) {
                         //determine if form is currently downloaded
                         if(isFormDownloaded(curForm.formID)) {
+                            //check if an update already required
+                            if(formSchemaHandlerIndex != -1) {
+                                ((FormSchemaUpdateHandler) messageHandlers
+                                        .get(formSchemaHandlerIndex))
+                                        .sendUpdateNotification(curForm);
+                            }
+
                             String onaFormId = getOnaFormId(curForm.downloadUrl);
                             Log.d(TAG, "Ona form id for "+curForm.downloadUrl+" is "+onaFormId);
                             if(onaFormId != null) {

@@ -409,5 +409,7 @@
     <string name="please_enter_username">Please enter a username</string>
     <string name="please_enter_password">Please enter a password</string>
     <string name="update_for_form">%s updated</string>
-    <string name="form_update_ready_for_download">A new version for %s is now available for download</string>
+    <string name="a_newer_version_of">A new version of</string>
+    <string name="version_of">Version %s of</string>
+    <string name="form_update_ready_for_download">%1$s %2$s is now available for download</string>
 </resources>

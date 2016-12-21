@@ -11,7 +11,7 @@ public interface MqttMessageHandler {
     String KEY_MESSAGE_TYPE = "message_type";
     String KEY_TIME = "time";
     String KEY_PAYLOAD = "payload";
-    
+
     boolean canHandle(String topic, MqttMessage message);
     boolean handle(String topic, MqttMessage message);
 }
