@@ -124,7 +124,9 @@ public class MqttUtils {
                 Log.d(TAG, "About to try connection");
                 MqttConnectOptions options = new MqttConnectOptions();
                 options.setCleanSession(false);
-
+                options.setAutomaticReconnect(true);
+                options.setConnectionTimeout(60);
+                options.setKeepAliveInterval(60);
                 options.setSocketFactory(getMosquittoSocketFactory());
 
                 final IMqttToken token = mqttAndroidClient.connect(options);
@@ -473,19 +475,19 @@ public class MqttUtils {
     }
 
     private static void updateSubscriptions(ArrayList<String> currentSubscriptions, ArrayList<String> newSubscriptions, int qos) {
-        ArrayList<String> oldSubscriptions = new ArrayList<>(currentSubscriptions);
+        ArrayList<String> oldSubscriptions = (ArrayList<String>) currentSubscriptions.clone();
         for(String curNewSubscription : newSubscriptions) {
-            if(oldSubscriptions.contains(curNewSubscription)) {
+            if(currentSubscriptions.contains(curNewSubscription)) {
                 oldSubscriptions.remove(curNewSubscription);
             } else {
                 subscribeToTopic(curNewSubscription, qos);
                 currentSubscriptions.add(curNewSubscription);
             }
+        }
 
-            for(String curOldSubscription : oldSubscriptions) {
-                currentSubscriptions.remove(curOldSubscription);
-                unsubscribeFromTopic(curOldSubscription);
-            }
+        for(String curOldSubscription : oldSubscriptions) {
+            currentSubscriptions.remove(curOldSubscription);
+            unsubscribeFromTopic(curOldSubscription);
         }
     }
 
