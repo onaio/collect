@@ -191,11 +191,9 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                             manifestUrl = null;
                         }
                     } else if (tag.equals("hash")){
-                        hash = XFormParser.getXMLText(child, true);
+                        hash = FormDetails.formatHash(XFormParser.getXMLText(child, true));
                         if(hash != null && hash.length() == 0) {
                             hash = null;
-                        } else if (hash != null) {
-                            hash = hash.replace("md5:", "");
                         }
                     }
                 }

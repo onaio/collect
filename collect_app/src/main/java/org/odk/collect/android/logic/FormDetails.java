@@ -63,4 +63,18 @@ public class FormDetails implements Serializable {
         errorStr = null;
     }
 
+    /**
+     * This method removes the hash type (e.g 'md5:') prefix put in the JavaRosa hash for a form
+     *
+     * @param javaRosaHash
+     * @return
+     */
+    public static String formatHash(String javaRosaHash) {
+        if(javaRosaHash != null) {
+            javaRosaHash = javaRosaHash.replace("md5:", "");
+        }
+
+        return javaRosaHash;
+    }
+
 }

@@ -82,7 +82,7 @@ public class FormSchemaUpdateHandler implements MqttMessageHandler {
                     payload.getString(KEY_MANIFEST_URL),
                     payload.getString(KEY_FORM_ID),
                     payload.getString(KEY_VERSION),
-                    payload.getString(KEY_HASH));
+                    FormDetails.formatHash(payload.getString(KEY_HASH)));
             sendUpdateNotification(formDetails);
         } catch (Exception e) {
             e.printStackTrace();
