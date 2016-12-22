@@ -409,7 +409,15 @@
     <string name="please_enter_username">Please enter a username</string>
     <string name="please_enter_password">Please enter a password</string>
     <string name="update_for_form">%s updated</string>
+    <string name="updating_form">%s updating</string>
     <string name="a_newer_version_of">A new version of</string>
+    <string name="the_new_version_of">the new version of</string>
     <string name="version_of">Version %s of</string>
+    <string name="form_update_downloaded">%1$s %2$s successfully downloaded</string>
+    <string name="update_failed">%s update failed</string>
+    <string name="failed_to_download_form_update">Failed to download %1$s %2$s</string>
     <string name="form_update_ready_for_download">%1$s %2$s is now available for download</string>
+    <string name="auto_download_form_update">Auto update forms</string>
+    <string name="auto_download_form_update_description">Auto update forms when it\'s safe to do so</string>
+    <string name="downloading_form_update">Downloading %1$s %2$s</string>
 </resources>

@@ -442,7 +442,7 @@ public class MqttUtils {
                             if(formSchemaHandlerIndex != -1) {
                                 ((FormSchemaUpdateHandler) messageHandlers
                                         .get(formSchemaHandlerIndex))
-                                        .sendUpdateNotification(curForm);
+                                        .handleForm(curForm);
                             }
 
                             String onaFormId = getOnaFormId(curForm.downloadUrl);
