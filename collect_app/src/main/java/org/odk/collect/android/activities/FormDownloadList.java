@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import io.ona.collect.android.R;
 import org.odk.collect.android.application.Collect;
@@ -25,6 +26,9 @@ import org.odk.collect.android.listeners.FormDownloaderListener;
 import org.odk.collect.android.listeners.FormListDownloaderListener;
 import org.odk.collect.android.logic.FormDetails;
 import org.odk.collect.android.preferences.PreferencesActivity;
+
+import io.ona.collect.android.provider.FormAncillaryDataAPI;
+import io.ona.collect.android.provider.FormAncillaryDataProvider;
 import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 import io.ona.collect.android.utils.MqttUtils;
 
@@ -635,6 +639,84 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     }
 
     /**
+     * This method updates the needsUpdate column in the form's ancillary data table. This method
+     * will not update the row if there are's more than one form with the same JavaRosa formId
+     *
+     * @param jrFormId      The JavaRosa formId for the form
+     * @param needsUpdate   Set to TRUE if the form needs an update
+     */
+    public static boolean setFormNeedsUpdate(String jrFormId, boolean needsUpdate) {
+        if(jrFormId != null) {
+            String[] selectionArgs = { jrFormId };
+            String selection = FormsColumns.JR_FORM_ID + "=?";
+            String[] fields = { FormsColumns._ID };
+
+            Cursor formCursor = null;
+            try {
+                formCursor = Collect.getInstance().getContentResolver().query(FormsColumns.CONTENT_URI, fields, selection, selectionArgs, null);
+                if ( formCursor.getCount() == 1 ) {//don't update the row if there is more than
+                    // one form with the same jrFormId
+                    formCursor.moveToFirst();
+                    int formId = formCursor.getInt(formCursor.getColumnIndex(FormsColumns._ID));
+                    return setFormNeedsUpdate(formId, needsUpdate);
+                }
+            } finally {
+                if (formCursor != null) {
+                    formCursor.close();
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * This method updates the needsUpdate column in the form's ancillary data table
+     *
+     * @param formId        The id of the form in
+     *                      {@link io.ona.collect.android.provider.FormsProvider}
+     * @param needsUpdate   Set to TRUE if the form needs an update
+     */
+    public static boolean setFormNeedsUpdate(long formId, boolean needsUpdate) {
+        //check if there's a row with the form Id
+        Cursor cursor = null;
+        boolean createAncillaryDataRow = false;
+        try {
+            String[] fields = { FormAncillaryDataAPI.FormDataColumns._ID };
+            Uri uri = Uri.withAppendedPath(FormAncillaryDataAPI.FormDataColumns.CONTENT_URI,
+                    String.valueOf(formId));//TODO: not sure if this will work
+            cursor = Collect.getInstance().getContentResolver().query(uri, fields, null, null,
+                    null);
+            if(cursor.getCount() == 0) {
+                createAncillaryDataRow = true;
+            }
+        } finally {
+            if(cursor != null) {
+                cursor.close();
+            }
+        }
+
+        if(createAncillaryDataRow) {
+            Log.d(t, "No row in ancillary data table found for form with id " + formId + ". " +
+                    "Creating one");
+            FormAncillaryDataProvider.createAncillaryDataRow(formId);
+        }
+
+        Uri toUpdate = Uri.withAppendedPath(FormAncillaryDataAPI.FormDataColumns.CONTENT_URI,
+                String.valueOf(formId));
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FormAncillaryDataAPI.FormDataColumns.NEEDS_UPDATE, needsUpdate);
+        int noRowsUpdated = Collect.getInstance().getContentResolver().update(toUpdate,
+                contentValues, null, null);
+
+        if(noRowsUpdated > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Causes any local forms that have been updated on the server to become checked in the list. This is a prompt and a
      * convenience to users to download the latest version of those forms from the server.
      */
@@ -646,6 +728,9 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             String formHash = mFormNamesAndURLs.get(item.get(FORMDETAIL_KEY)).formHash;
             if (isLocalFormSuperseded(item.get(FORM_ID_KEY), item.get(FORM_VERSION_KEY), formHash)) {
                 ls.setItemChecked(idx, true);
+                setFormNeedsUpdate(item.get(FORM_ID_KEY), true);
+            } else {
+                setFormNeedsUpdate(item.get(FORM_ID_KEY), false);
             }
         }
     }

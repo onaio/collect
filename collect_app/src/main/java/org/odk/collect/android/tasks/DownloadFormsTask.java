@@ -27,6 +27,8 @@ import java.util.zip.GZIPInputStream;
 import org.javarosa.xform.parse.XFormParser;
 import org.kxml2.kdom.Element;
 import io.ona.collect.android.R;
+
+import org.odk.collect.android.activities.FormDownloadList;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.TaskCancelledException;
 import org.odk.collect.android.listeners.FormDownloaderListener;
@@ -170,6 +172,8 @@ public class DownloadFormsTask extends
             } else {
                 cleanUp(fileResult, null, tempMediaPath);
             }
+
+            FormDownloadList.setFormNeedsUpdate(fd.formID, false);
 
             count++;
             saveResult(result, fd, message);

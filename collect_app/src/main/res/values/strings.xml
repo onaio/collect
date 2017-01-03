@@ -231,7 +231,7 @@
 <string name="admin_password_incorrect">Sorry, password is incorrect!</string>
 <string name="enter_admin_password">Enter Admin Password</string>
 <string name="found_in_menu">Uncheck to hide from menu in Form Entry</string>
-<string name="autosend">Auto Send</string>
+<string name="autosend">Automation</string>
 <string name="autosend_wifi">Auto send with Wi-Fi</string>
 <string name="autosend_wifi_summary">Auto send when Wi-Fi is available</string>
 <string name="autosend_network">Auto send with network</string>
@@ -413,11 +413,16 @@
     <string name="a_newer_version_of">A new version of</string>
     <string name="the_new_version_of">the new version of</string>
     <string name="version_of">Version %s of</string>
-    <string name="form_update_downloaded">%1$s %2$s successfully downloaded</string>
+    <string name="form_update_downloaded">%1$s %2$s has been successfully downloaded</string>
     <string name="update_failed">%s update failed</string>
     <string name="failed_to_download_form_update">Failed to download %1$s %2$s</string>
     <string name="form_update_ready_for_download">%1$s %2$s is now available for download</string>
     <string name="auto_download_form_update">Auto update forms</string>
     <string name="auto_download_form_update_description">Auto update forms when it\'s safe to do so</string>
     <string name="downloading_form_update">Downloading %1$s %2$s</string>
+    <string name="form_update_available">Form Update Available</string>
+    <string name="confirm_fill_old_version_of_form">A newer version of this form is now
+        available for download. Are you sure you want to continue filling an older version?</string>
+    <string name="continue_filling">Continue filling</string>
+    <string name="get_new_version">Get the new version</string>
 </resources>

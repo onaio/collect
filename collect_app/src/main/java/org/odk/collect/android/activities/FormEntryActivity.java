@@ -80,6 +80,8 @@ import org.odk.collect.android.logic.FormController;
 import org.odk.collect.android.logic.FormController.FailedConstraint;
 import org.odk.collect.android.preferences.AdminPreferencesActivity;
 import org.odk.collect.android.preferences.PreferencesActivity;
+
+import io.ona.collect.android.provider.FormAncillaryDataAPI;
 import io.ona.collect.android.provider.FormsProviderAPI.FormsColumns;
 import io.ona.collect.android.provider.InstanceProviderAPI;
 import io.ona.collect.android.provider.InstanceProviderAPI.InstanceColumns;
@@ -181,6 +183,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 
 	private static final int PROGRESS_DIALOG = 1;
 	private static final int SAVING_DIALOG = 2;
+	private static final int UPDATE_AVAILABLE_DIALOG = 3;
 	
 	private boolean mAutoSaved;
 
@@ -435,6 +438,8 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 							}
 						}
 					}
+
+					checkIfUpdateAvailable(jrFormId);
 				} else if (getContentResolver().getType(uri).equals(FormsColumns.CONTENT_ITEM_TYPE)) {
 					Cursor c = null;
 					try {
@@ -497,6 +502,13 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 								}
 							}
 						}
+
+						try {
+							int formId = Integer.parseInt(uri.getPathSegments().get(1));
+							checkIfUpdateAvailable(formId);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					} finally {
 						if (c != null) {
 							c.close();
@@ -514,6 +526,50 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 				showDialog(PROGRESS_DIALOG);
 				// show dialog before we execute...
 				mFormLoaderTask.execute(mFormPath);
+			}
+		}
+	}
+
+	private void checkIfUpdateAvailable(String jrFormId) {
+		if(jrFormId != null) {
+			String selection = FormsColumns.JR_FORM_ID + "=?";
+			String[] selectionArgs = { jrFormId };
+			String[] fields = { FormsColumns._ID };
+			Cursor cursor = null;
+			try {
+				cursor = getContentResolver().query(FormsColumns.CONTENT_URI, fields, selection,
+						selectionArgs, null);
+				if(cursor.getCount() == 1) {
+					cursor.moveToFirst();
+					int formId = cursor.getInt(cursor.getColumnIndex(FormsColumns._ID));
+					checkIfUpdateAvailable(formId);
+				}
+			} finally {
+				if(cursor != null) {
+					cursor.close();
+				}
+			}
+		}
+	}
+
+	private void checkIfUpdateAvailable(int formId) {
+		Uri uri = Uri.withAppendedPath(FormAncillaryDataAPI.FormDataColumns.CONTENT_URI,
+				String.valueOf(formId));
+		String[] fields = {FormAncillaryDataAPI.FormDataColumns.NEEDS_UPDATE};
+		Cursor cursor = null;
+		try {
+			cursor = getContentResolver().query(uri, fields, null, null, null);
+			if(cursor.getCount() == 1) {
+				cursor.moveToFirst();
+				int updateAvailable = cursor.getInt(cursor.getColumnIndex(FormAncillaryDataAPI
+						.FormDataColumns.NEEDS_UPDATE));
+				if(updateAvailable == 1) {
+					showDialog(UPDATE_AVAILABLE_DIALOG);
+				}
+			}
+		} finally {
+			if(cursor != null) {
+				cursor.close();
 			}
 		}
 	}
@@ -2145,6 +2201,28 @@ public class FormEntryActivity extends Activity implements AnimationListener,
                 }
             });
 			return mProgressDialog;
+		case UPDATE_AVAILABLE_DIALOG:
+			Log.d(t, "Creating UPDATE_AVAILABLE_DIALOG");
+			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setTitle(getResources().getString(R.string.form_update_available));
+			alertDialog.setMessage(getResources().getString(R.string.confirm_fill_old_version_of_form));
+			alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string
+					.get_new_version), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					Intent intent = new Intent(FormEntryActivity.this, FormDownloadList.class);
+					startActivity(intent);
+				}
+			});
+			alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getResources().getString(R.string
+					.continue_filling), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			return alertDialog;
 		}
 		return null;
 	}

@@ -395,7 +395,7 @@ public class FormsProvider extends ContentProvider {
 
 		long rowId = db.insert(FORMS_TABLE_NAME, null, values);
 		if (rowId > 0) {
-			createAncillaryDataRow(rowId);
+			FormAncillaryDataProvider.createAncillaryDataRow(rowId);
 			Uri formUri = ContentUris.withAppendedId(FormsColumns.CONTENT_URI,
 					rowId);
 			getContext().getContentResolver().notifyChange(formUri, null);
@@ -407,20 +407,6 @@ public class FormsProvider extends ContentProvider {
 		}
 
 		throw new SQLException("Failed to insert row into " + uri);
-	}
-
-	/**
-	 * This method creates a row in the FormAncillaryDataProvider corresponding to the form
-	 *
-	 * @param formId The formId of the form being deleted
-	 */
-	private void createAncillaryDataRow(long formId) {
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(FormAncillaryDataAPI.FormDataColumns._ID, formId);
-		contentValues.put(FormAncillaryDataAPI.FormDataColumns.NEEDS_UPDATE, false);
-
-		Uri uri = Collect.getInstance().getContentResolver()
-						.insert(FormAncillaryDataAPI.FormDataColumns.CONTENT_URI, contentValues);
 	}
 
 	private void deleteFileOrDir(String fileName) {

@@ -103,6 +103,7 @@ public class FormSchemaUpdateHandler implements MqttMessageHandler {
     public void handleForm(FormDetails formDetails) {
         //check if form actually needs an update
         if(FormDownloadList.isLocalFormSuperseded(formDetails.formID, formDetails.formVersion, formDetails.formHash)) {
+            FormDownloadList.setFormNeedsUpdate(formDetails.formID, true);
             SharedPreferences settings =
                     PreferenceManager.getDefaultSharedPreferences(Collect.getInstance());
             boolean autoDownload = settings.getBoolean(
@@ -114,6 +115,8 @@ public class FormSchemaUpdateHandler implements MqttMessageHandler {
                 Log.d(TAG, "Autodownload setting set to false");
                 sendUpdateNotification(formDetails);
             }
+        } else {
+            FormDownloadList.setFormNeedsUpdate(formDetails.formID, false);
         }
     }
 

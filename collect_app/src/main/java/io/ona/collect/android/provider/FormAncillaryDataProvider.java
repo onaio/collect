@@ -270,6 +270,20 @@ public class FormAncillaryDataProvider extends ContentProvider {
         return count;
     }
 
+    /**
+     * This method creates a row in the FormAncillaryDataProvider corresponding to the form
+     *
+     * @param formId The formId of the form being deleted
+     */
+    public static void createAncillaryDataRow(long formId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FormAncillaryDataAPI.FormDataColumns._ID, formId);
+        contentValues.put(FormAncillaryDataAPI.FormDataColumns.NEEDS_UPDATE, false);
+
+        Uri uri = Collect.getInstance().getContentResolver()
+                .insert(FormAncillaryDataAPI.FormDataColumns.CONTENT_URI, contentValues);
+    }
+
     static {
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(FormAncillaryDataAPI.AUTHORITY, "formAncillaryData", FORM_DATA);
