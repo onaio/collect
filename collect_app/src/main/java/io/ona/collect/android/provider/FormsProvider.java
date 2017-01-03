@@ -395,6 +395,7 @@ public class FormsProvider extends ContentProvider {
 
 		long rowId = db.insert(FORMS_TABLE_NAME, null, values);
 		if (rowId > 0) {
+			createAncillaryDataRow(rowId);
 			Uri formUri = ContentUris.withAppendedId(FormsColumns.CONTENT_URI,
 					rowId);
 			getContext().getContentResolver().notifyChange(formUri, null);
@@ -406,6 +407,20 @@ public class FormsProvider extends ContentProvider {
 		}
 
 		throw new SQLException("Failed to insert row into " + uri);
+	}
+
+	/**
+	 * This method creates a row in the FormAncillaryDataProvider corresponding to the form
+	 *
+	 * @param formId The formId of the form being deleted
+	 */
+	private void createAncillaryDataRow(long formId) {
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(FormAncillaryDataAPI.FormDataColumns._ID, formId);
+		contentValues.put(FormAncillaryDataAPI.FormDataColumns.NEEDS_UPDATE, false);
+
+		Uri uri = Collect.getInstance().getContentResolver()
+						.insert(FormAncillaryDataAPI.FormDataColumns.CONTENT_URI, contentValues);
 	}
 
 	private void deleteFileOrDir(String fileName) {
@@ -440,6 +455,30 @@ public class FormsProvider extends ContentProvider {
 	}
 
 	/**
+	 * This method deletes the row in the FormAncillaryDataProvider corresponding to the form
+	 * being deleted
+	 *
+	 * @param formId The formId of the form being deleted
+	 *
+	 * @return TRUE if able to delete the form data
+     */
+	private boolean deleteAncillaryDataRow(long formId) {
+		Uri deleteFormData =
+				Uri.withAppendedPath(FormAncillaryDataAPI.FormDataColumns.CONTENT_URI,
+						String.valueOf(formId));
+		int result = Collect.getInstance().getContentResolver().delete(deleteFormData, null, null);
+
+		if(result > 0) {
+			Log.d(t, "Deleted ancillary form data for form with id "+formId);
+			return true;
+		}
+
+		Log.d(t, "Could not delete ancillary form data for form with id "+formId);
+
+		return false;
+	}
+
+	/**
 	 * This method removes the entry from the content provider, and also removes
 	 * any associated files. files: form.xml, [formmd5].formdef, formname-media
 	 * {directory}
@@ -467,6 +506,7 @@ public class FormsProvider extends ContentProvider {
 						deleteFileOrDir(formFilePath);
 						deleteFileOrDir(del.getString(del
 								.getColumnIndex(FormsColumns.FORM_MEDIA_PATH)));
+						deleteAncillaryDataRow(del.getInt(del.getColumnIndex(FormsColumns._ID)));
 					} while (del.moveToNext());
 				}
 			} finally {
@@ -509,7 +549,7 @@ public class FormsProvider extends ContentProvider {
                             // if something else is accessing the provider this may not exist
                             // so catch it and move on.
                         }
-
+						deleteAncillaryDataRow(c.getInt(c.getColumnIndex(FormsColumns._ID)));
 					} while (c.moveToNext());
 				}
 			} finally {

@@ -82,6 +82,10 @@
             android:exported="true"
             android:name="io.ona.collect.android.provider.InstanceProvider"
             android:authorities="io.ona.collect.android.provider.odk.instances" />
+        <provider
+            android:exported="true"
+            android:name=".provider.FormAncillaryDataProvider"
+            android:authorities="io.ona.collect.android.provider.odk.forms.ancillary" />
 
         <activity
             android:name="org.odk.collect.android.activities.MainMenuActivity"
