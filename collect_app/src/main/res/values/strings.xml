@@ -425,4 +425,7 @@
         available for download. Are you sure you want to continue filling an older version?</string>
     <string name="continue_filling">Continue filling</string>
     <string name="get_new_version">Get the new version</string>
+    <string name="auto_check_form_updates">Auto check for form updates</string>
+    <string name="auto_check_form_updates_description">Auto check and notify you when form
+        updates are made available</string>
 </resources>

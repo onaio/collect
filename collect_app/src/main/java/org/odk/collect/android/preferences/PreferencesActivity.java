@@ -99,6 +99,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
   public static final String KEY_AUTOSEND_WIFI = "autosend_wifi";
   public static final String KEY_AUTOSEND_NETWORK = "autosend_network";
+  public static final String KEY_AUTOCHECK_FORM_UPDATES = "autocheck_form_updates";
   public static final String KEY_AUTODOWNLOAD_FORM_UPDATES = "autodownload_form_updates";
 
   public static final String KEY_NAVIGATION = "navigation";
@@ -124,6 +125,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   private ListPreference mConstraintBehaviorPreference;
   private CheckBoxPreference mAutosendWifiPreference;
   private CheckBoxPreference mAutosendNetworkPreference;
+  private CheckBoxPreference mAutocheckFormUpdatesPreference;
   private CheckBoxPreference mAutodownloadFormUpdatesPreference;
   private ListPreference mProtocolPreference;
   private PreferenceScreen mProtocolSettings;
@@ -154,7 +156,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     PreferenceCategory autosendCategory = (PreferenceCategory) findPreference(getString(R.string.autosend));
     mAutosendWifiPreference = (CheckBoxPreference) findPreference(KEY_AUTOSEND_WIFI);
     mAutosendNetworkPreference = (CheckBoxPreference) findPreference(KEY_AUTOSEND_NETWORK);
-    mAutodownloadFormUpdatesPreference = (CheckBoxPreference) findPreference(KEY_AUTODOWNLOAD_FORM_UPDATES);
+    mAutocheckFormUpdatesPreference = (CheckBoxPreference) findPreference
+            (KEY_AUTOCHECK_FORM_UPDATES);
+    mAutodownloadFormUpdatesPreference = (CheckBoxPreference) findPreference
+            (KEY_AUTODOWNLOAD_FORM_UPDATES);
     PreferenceCategory serverCategory = (PreferenceCategory) findPreference(getString(R.string.server_preferences));
 
     mProtocolPreference = (ListPreference) findPreference(KEY_PROTOCOL);
@@ -188,6 +193,13 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     if (!(autosendNetworkAvailable || adminMode)) {
       autosendCategory.removePreference(mAutosendNetworkPreference);
     }
+
+    boolean autocheckFormUpdates = adminPreferences.getBoolean(AdminPreferencesActivity
+            .KEY_AUTOCHECK_FORM_UPDATES, true);
+    if(!(autocheckFormUpdates || adminMode)) {
+      autosendCategory.removePreference(mAutocheckFormUpdatesPreference);
+    }
+
     boolean autodownloadFormUpdates = adminPreferences.getBoolean(
             AdminPreferencesActivity.KEY_AUTODOWNLOAD_FORM_UPDATES, true);
     if (!(autodownloadFormUpdates || adminMode)) {

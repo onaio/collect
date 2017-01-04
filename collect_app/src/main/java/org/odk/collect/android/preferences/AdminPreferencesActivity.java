@@ -80,6 +80,7 @@ public class AdminPreferencesActivity extends PreferenceActivity {
 
     public static String KEY_AUTOSEND_WIFI = "autosend_wifi";
     public static String KEY_AUTOSEND_NETWORK = "autosend_network";
+	public static String KEY_AUTOCHECK_FORM_UPDATES = "autocheck_form_updates";
 	public static String KEY_AUTODOWNLOAD_FORM_UPDATES = "autodownload_form_updates";
 
     public static String KEY_NAVIGATION = "navigation";

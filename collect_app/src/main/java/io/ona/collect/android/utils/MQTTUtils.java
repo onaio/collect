@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -95,76 +96,80 @@ public class MqttUtils {
         subscribedUserTopics.put(TOPIC_MESSAGES, new ArrayList<String>());
     }
 
-    public static final int QOS_AT_MOST_ONCE = 0;
-    public static final int QOS_AT_LEAST_ONCE = 1;
-    public static final int QOS_EXACTLY_ONCE = 2;
+    private static final int QOS_AT_MOST_ONCE = 0;
+    private static final int QOS_AT_LEAST_ONCE = 1;
+    private static final int QOS_EXACTLY_ONCE = 2;
 
     public static boolean initMqttAndroidClient() {
-        if(mqttAndroidClient == null && okToInit()) {
-            Log.i(TAG, "Initializing the MQTT Client");
-            Context context = Collect.getInstance();
-            String clientId = getClientId();
+        if(okToInit()) {
+            if(mqttAndroidClient == null) {
+                Log.i(TAG, "Initializing the MQTT Client");
+                Context context = Collect.getInstance();
+                String clientId = getClientId();
 
-            Log.d(TAG, "Client id is "+clientId);
-            messageHandlers = new ArrayList<>();
-            messageHandlers.add(new FormSchemaUpdateHandler());
-            mqttAndroidClient = new MqttAndroidClient(context, "ssl://10.20.22.169:8883", clientId);
-            try {
-                Log.d(TAG, "About to try connection");
-                MqttConnectOptions options = new MqttConnectOptions();
-                options.setCleanSession(false);
-                options.setAutomaticReconnect(true);
-                options.setConnectionTimeout(60);
-                options.setKeepAliveInterval(60);
-                options.setSocketFactory(getMosquittoSocketFactory());
+                Log.d(TAG, "Client id is "+clientId);
+                messageHandlers = new ArrayList<>();
+                messageHandlers.add(new FormSchemaUpdateHandler());
+                mqttAndroidClient = new MqttAndroidClient(context, "ssl://10.20.22.169:8883", clientId);
+                try {
+                    Log.d(TAG, "About to try connection");
+                    MqttConnectOptions options = new MqttConnectOptions();
+                    options.setCleanSession(false);
+                    options.setAutomaticReconnect(true);
+                    options.setConnectionTimeout(60);
+                    options.setKeepAliveInterval(60);
+                    options.setSocketFactory(getMosquittoSocketFactory());
 
-                final IMqttToken token = mqttAndroidClient.connect(options);
-                Log.d(TAG, "Post connect code");
-                token.setActionCallback(new IMqttActionListener() {
-                    @Override
-                    public void onSuccess(IMqttToken asyncActionToken) {
-                        refreshTopicSubscriptions();
-                    }
+                    final IMqttToken token = mqttAndroidClient.connect(options);
+                    Log.d(TAG, "Post connect code");
+                    token.setActionCallback(new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            refreshTopicSubscriptions();
+                        }
 
-                    @Override
-                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                        exception.printStackTrace();
-                        Log.w(TAG, "Unable to connect to the MQTT broker because of "+exception.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            exception.printStackTrace();
+                            Log.w(TAG, "Unable to connect to the MQTT broker because of "+exception.getMessage());
+                        }
+                    });
 
-                mqttAndroidClient.setCallback(new MqttCallback() {
-                    @Override
-                    public void connectionLost(Throwable cause) {
-                        Log.w(TAG, "Connection to broker lost");
-                    }
-                    @Override
-                    public void messageArrived(String topic, MqttMessage message) throws Exception {
-                        boolean handled = false;
-                        for(MqttMessageHandler curHandler : messageHandlers) {
-                            if(curHandler.canHandle(topic, message)) {
-                                curHandler.handle(topic, message);
-                                handled = true;
-                                break;
+                    mqttAndroidClient.setCallback(new MqttCallback() {
+                        @Override
+                        public void connectionLost(Throwable cause) {
+                            Log.w(TAG, "Connection to broker lost");
+                        }
+                        @Override
+                        public void messageArrived(String topic, MqttMessage message) throws Exception {
+                            boolean handled = false;
+                            for(MqttMessageHandler curHandler : messageHandlers) {
+                                if(curHandler.canHandle(topic, message)) {
+                                    curHandler.handle(topic, message);
+                                    handled = true;
+                                    break;
+                                }
+                            }
+
+                            if(!handled) {
+                                Log.w(TAG, "Could not handle message from topic " + topic);
                             }
                         }
 
-                        if(!handled) {
-                            Log.w(TAG, "Could not handle message from topic " + topic);
+                        @Override
+                        public void deliveryComplete(IMqttDeliveryToken token) {
+                            Log.d(TAG, "Delivery Complete");
                         }
-                    }
+                    });
 
-                    @Override
-                    public void deliveryComplete(IMqttDeliveryToken token) {
-                        Log.d(TAG, "Delivery Complete");
-                    }
-                });
-
-                return true;
-            } catch (Exception e) {
-                disconnect();
-                e.printStackTrace();
+                    return true;
+                } catch (Exception e) {
+                    disconnect();
+                    e.printStackTrace();
+                }
             }
+        } else {
+            disconnect();
         }
 
         return false;
@@ -172,31 +177,34 @@ public class MqttUtils {
 
     private static boolean disconnect() {
         boolean result = false;
-        try {
-            mqttAndroidClient.disconnect();
-            result = true;
-        } catch (MqttException e1) {
-            e1.printStackTrace();
+        if(mqttAndroidClient != null) {
+            try {
+                Log.i(TAG, "Disconnecting the MQTT client");
+                mqttAndroidClient.disconnect();
+                result = true;
+            } catch (MqttException e1) {
+                e1.printStackTrace();
+            }
         }
-
         mqttAndroidClient = null;
 
         return result;
     }
 
     public static void refreshTopicSubscriptions() {
-        Log.i(TAG, "Subscribing to all topics");
+        if(mqttAndroidClient != null) {
+            Log.i(TAG, "Subscribing to all topics");
+            Context context = Collect.getInstance();
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+            String username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+            String userMessagesTopic = getTopicString(new String[]{TOPIC_USERS, username, TOPIC_MESSAGES}, false);
+            ArrayList<String> newUserMessagesTopics = new ArrayList<>();
+            newUserMessagesTopics.add(userMessagesTopic);
 
-        Context context = Collect.getInstance();
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        String username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-        String userMessagesTopic = getTopicString(new String[]{TOPIC_USERS, username, TOPIC_MESSAGES}, false);
-        ArrayList<String> newUserMessagesTopics = new ArrayList<>();
-        newUserMessagesTopics.add(userMessagesTopic);
+            updateSubscriptions(subscribedUserTopics.get(TOPIC_MESSAGES), newUserMessagesTopics, QOS_EXACTLY_ONCE);
 
-        updateSubscriptions(subscribedUserTopics.get(TOPIC_MESSAGES), newUserMessagesTopics, QOS_EXACTLY_ONCE);
-
-        refreshFormTopicSubscriptions(true);
+            refreshFormTopicSubscriptions(true);
+        }
     }
 
     /**
@@ -210,8 +218,11 @@ public class MqttUtils {
         Context context = Collect.getInstance();
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         String storedUsername = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+        boolean autoCheckUpdates = settings.getBoolean(PreferencesActivity
+                .KEY_AUTOCHECK_FORM_UPDATES, true);
         if(storedUsername != null
-                && storedUsername.trim().length() > 0) {
+                && storedUsername.trim().length() > 0
+                && autoCheckUpdates) {
             return true;
         }
 
@@ -344,7 +355,7 @@ public class MqttUtils {
         return topicString;
     }
 
-    public static void subscribeToTopic(final String topic, int qualityOfService) {
+    private static void subscribeToTopic(final String topic, int qualityOfService) {
         try {
             if (mqttAndroidClient != null) {
                 IMqttToken subToken = mqttAndroidClient.subscribe(topic, qualityOfService);
@@ -365,7 +376,7 @@ public class MqttUtils {
         }
     }
 
-    public static void unsubscribeFromTopic(final String topic) {
+    private static void unsubscribeFromTopic(final String topic) {
         try {
             if (mqttAndroidClient != null) {
                 IMqttToken unsubToken = mqttAndroidClient.unsubscribe(topic);

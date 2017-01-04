@@ -91,6 +91,12 @@
             android:summary="@string/found_in_settings"
             android:title="@string/autosend_network" />
         <CheckBoxPreference
+            android:id="@+id/autocheck_form_updates"
+            android:defaultValue="true"
+            android:key="autocheck_form_updates"
+            android:summary="@string/found_in_settings"
+            android:title="@string/auto_check_form_updates" />
+        <CheckBoxPreference
             android:id="@+id/autodownload_form_updates"
             android:defaultValue="true"
             android:key="autodownload_form_updates"

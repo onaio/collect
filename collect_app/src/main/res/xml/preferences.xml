@@ -58,6 +58,12 @@
             android:summary="@string/autosend_network_summary"
             android:title="@string/autosend_network" />
         <CheckBoxPreference
+            android:id="@+id/autocheck_form_updates"
+            android:defaultValue="true"
+            android:key="autocheck_form_updates"
+            android:summary="@string/auto_check_form_updates_description"
+            android:title="@string/auto_check_form_updates" />
+        <CheckBoxPreference
             android:id="@+id/autodownload_form_updates"
             android:defaultValue="false"
             android:key="autodownload_form_updates"
