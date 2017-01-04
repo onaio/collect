@@ -408,4 +408,6 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="please_enter_username">Please enter a username</string>
     <string name="please_enter_password">Please enter a password</string>
+    <string name="all_forms">All Forms</string>
+    <string name="forms_by">Forms by %s</string>
 </resources>
