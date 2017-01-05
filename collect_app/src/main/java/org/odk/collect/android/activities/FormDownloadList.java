@@ -764,9 +764,20 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         HashMap<String, HashMap<String, FormDetails>> result = new HashMap<>();
         result.put(getResources().getString(R.string.all_forms), forms);
 
+        SharedPreferences settings =
+                PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS,
+                true);
+        String username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+
         for(FormDetails curForm : forms.values()) {
             String user = getOnaUser(curForm.downloadUrl);
             if(user != null) {
+                //check if user wants to see shared forms
+                if(username != null && !showSharedForms && !user.equals(username)) {
+                    continue;
+                }
+
                 String userKey = getResources().getString(R.string.forms_by, user);
                 if(!result.containsKey(userKey)) {
                     result.put(userKey,
@@ -781,6 +792,9 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
         if(result.size() == 2) {//forms from only one account
             //remove the all_forms item to avoid redundant items
+            result.remove(getResources().getString(R.string.all_forms));
+        } else if(result.size() == 1 && !showSharedForms) {//only all_forms in map and shared
+            // forms is not turned on. Mean the user doesn't have any forms
             result.remove(getResources().getString(R.string.all_forms));
         }
 

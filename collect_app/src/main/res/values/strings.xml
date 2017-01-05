@@ -408,6 +408,10 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="please_enter_username">Please enter a username</string>
     <string name="please_enter_password">Please enter a password</string>
-    <string name="all_forms">All Forms</string>
+    <string name="all_forms">All forms</string>
     <string name="forms_by">Forms by %s</string>
+    <string name="shared_forms">Shared Forms</string>
+    <string name="show_shared_forms">Show forms shared with you</string>
+    <string name="show_shared_forms_description">Select to show forms other Ona users have shared
+        with you</string>
 </resources>

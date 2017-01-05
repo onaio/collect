@@ -59,6 +59,16 @@
             android:title="@string/autosend_network" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:key="@string/shared_forms"
+        android:title="@string/shared_forms">
+        <CheckBoxPreference
+            android:id="@+id/show_shared_forms"
+            android:defaultValue="true"
+            android:key="show_shared_forms"
+            android:summary="@string/show_shared_forms_description"
+            android:title="@string/show_shared_forms" />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:key="@string/client"
         android:title="@string/client" >
        <ListPreference android:id="@+id/constraint_behavior"

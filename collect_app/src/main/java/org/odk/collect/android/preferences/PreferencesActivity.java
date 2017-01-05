@@ -98,6 +98,8 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   public static final String KEY_AUTOSEND_WIFI = "autosend_wifi";
   public static final String KEY_AUTOSEND_NETWORK = "autosend_network";
 
+  public static final String KEY_SHOW_SHARED_FORMS = "show_shared_forms";
+
   public static final String KEY_NAVIGATION = "navigation";
   public static final String KEY_CONSTRAINT_BEHAVIOR = "constraint_behavior";
 
@@ -121,6 +123,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   private ListPreference mConstraintBehaviorPreference;
   private CheckBoxPreference mAutosendWifiPreference;
   private CheckBoxPreference mAutosendNetworkPreference;
+  private CheckBoxPreference showSharedFormsPreference;
   private ListPreference mProtocolPreference;
   private PreferenceScreen mProtocolSettings;
   protected EditTextPreference mUsernamePreference;
@@ -186,6 +189,19 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
     if (!(autosendNetworkAvailable || autosendWifiAvailable || adminMode)) {
       getPreferenceScreen().removePreference(autosendCategory);
+    }
+
+    PreferenceCategory sharedFormsCategory = (PreferenceCategory) findPreference(getString(R.string
+            .shared_forms));
+    showSharedFormsPreference = (CheckBoxPreference) findPreference(KEY_SHOW_SHARED_FORMS);
+    boolean showSharedForms = adminPreferences.getBoolean(AdminPreferencesActivity
+            .KEY_SHOW_SHARED_FORMS, true);
+    if(!(showSharedForms || adminMode)) {
+      sharedFormsCategory.removePreference(showSharedFormsPreference);
+    }
+
+    if(!(showSharedForms || adminMode)) {
+      getPreferenceScreen().removePreference(sharedFormsCategory);
     }
 
     mProtocolPreference = (ListPreference) findPreference(KEY_PROTOCOL);
