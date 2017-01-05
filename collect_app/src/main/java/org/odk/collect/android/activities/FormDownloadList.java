@@ -675,7 +675,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             mFormNamesAndURLs = result;
 
             HashMap<String, HashMap<String, FormDetails>> userForms =
-                    splitFormsIntoAccounts(mFormNamesAndURLs);
+                    splitFormsIntoAccounts(getBaseContext(), mFormNamesAndURLs);
             ArrayList<String> userSpinnerValues = new ArrayList<>(userForms.keySet());
 
             //sort how forms will appear in the spinner
@@ -707,7 +707,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String selectedKey = parent.getItemAtPosition(position).toString();
                     HashMap<String, HashMap<String, FormDetails>> userForms =
-                            splitFormsIntoAccounts(mFormNamesAndURLs);
+                            splitFormsIntoAccounts(getBaseContext(), mFormNamesAndURLs);
 
                     if(userForms.containsKey(selectedKey)) {
                         refreshFormList(userForms.get(selectedKey));
@@ -758,14 +758,14 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         mFormListAdapter.notifyDataSetChanged();
     }
 
-    private HashMap<String, HashMap<String, FormDetails>> splitFormsIntoAccounts(
-            final HashMap<String, FormDetails> forms) {
+    public static HashMap<String, HashMap<String, FormDetails>> splitFormsIntoAccounts(
+            Context context, final HashMap<String, FormDetails> forms) {
 
         HashMap<String, HashMap<String, FormDetails>> result = new HashMap<>();
-        result.put(getResources().getString(R.string.all_forms), forms);
+        result.put(context.getResources().getString(R.string.all_forms), forms);
 
         SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                PreferenceManager.getDefaultSharedPreferences(context);
         boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS,
                 true);
         String username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
@@ -778,7 +778,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                     continue;
                 }
 
-                String userKey = getResources().getString(R.string.forms_by, user);
+                String userKey = context.getResources().getString(R.string
+                        .forms_by, user);
                 if(!result.containsKey(userKey)) {
                     result.put(userKey,
                             new HashMap<String, FormDetails>());
@@ -792,10 +793,10 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
         if(result.size() == 2) {//forms from only one account
             //remove the all_forms item to avoid redundant items
-            result.remove(getResources().getString(R.string.all_forms));
+            result.remove(context.getResources().getString(R.string.all_forms));
         } else if(result.size() == 1 && !showSharedForms) {//only all_forms in map and shared
             // forms is not turned on. Mean the user doesn't have any forms
-            result.remove(getResources().getString(R.string.all_forms));
+            result.remove(context.getResources().getString(R.string.all_forms));
         }
 
         return result;
@@ -808,9 +809,9 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
      *
      * @return  The Ona User that owns the form or null if something goes wrong
      */
-    private static String getOnaUser(String formDownloadUrl) {
+    public static String getOnaUser(String formDownloadUrl) {
         //https://odk.ona.io/yri/forms/129132/form.xml
-        Pattern pattern = Pattern.compile("http[s]?://[\\w\\._]+/([\\w_]+)/forms/[\\d]+/form\\.xml");
+        Pattern pattern = Pattern.compile("http[s]?://[\\w\\.]+/([\\w]+)/forms/[\\d]+/form\\.xml");
         Matcher matcher = pattern.matcher(formDownloadUrl);
         if(matcher.find()) {
             return matcher.group(1);
