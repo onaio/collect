@@ -77,6 +77,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
   // AGGREGATE SPECIFIC
   public static final String KEY_SERVER_URL = "server_url";
+  public static final String KEY_API_URL = "api_url";
 
   // GOOGLE SPECIFIC
   public static final String KEY_GOOGLE_SHEETS_URL = "google_sheets_url";
@@ -84,6 +85,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   // OTHER SPECIFIC
   public static final String KEY_FORMLIST_URL = "formlist_url";
   public static final String KEY_SUBMISSION_URL = "submission_url";
+  public static final String KEY_PROJECTS_URL = "projects_url";
 
   public static final String NAVIGATION_SWIPE = "swipe";
   public static final String NAVIGATION_BUTTONS = "buttons";

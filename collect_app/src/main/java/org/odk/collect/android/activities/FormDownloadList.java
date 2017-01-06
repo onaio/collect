@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.database.Cursor;
 import io.ona.collect.android.R;
@@ -119,6 +117,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private Spinner formAccountsSpinner;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
+    private HashMap<String, HashMap<String, FormDetails>> formsInProjects = new HashMap<>();
     private SimpleAdapter mFormListAdapter;
     private ArrayList<HashMap<String, String>> mFormList;
 
@@ -319,6 +318,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         } else {
 
             mFormNamesAndURLs = new HashMap<String, FormDetails>();
+            formsInProjects = new HashMap<>();
             if (mProgressDialog != null) {
                 // This is needed because onPrepareDialog() is broken in 1.6.
                 mProgressDialog.setMessage(getString(R.string.please_wait));
@@ -647,7 +647,9 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
      *
      * @param result
      */
-    public void formListDownloadingComplete(HashMap<String, FormDetails> result) {
+    public void formListDownloadingComplete(HashMap<String, FormDetails> result,
+                                            final HashMap<String, HashMap<String, FormDetails>>
+                                                    formsInProjects) {
         dismissDialog(PROGRESS_DIALOG);
         mDownloadFormListTask.setDownloaderListener(null);
         mDownloadFormListTask = null;
@@ -673,28 +675,17 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         } else {
             // Everything worked. Clear the list and add the results.
             mFormNamesAndURLs = result;
+            this.formsInProjects = formsInProjects;
 
-            HashMap<String, HashMap<String, FormDetails>> userForms =
-                    splitFormsIntoAccounts(getBaseContext(), mFormNamesAndURLs);
-            ArrayList<String> userSpinnerValues = new ArrayList<>(userForms.keySet());
+            ArrayList<String> userSpinnerValues = new ArrayList<>(formsInProjects.keySet());
 
             //sort how forms will appear in the spinner
             Collections.sort(userSpinnerValues);
             ArrayList<String> sortedSpinnerValues = new ArrayList<>();
 
-            SharedPreferences settings =
-                    PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String userFormsKey = getResources().getString(R.string.forms_by, settings.getString
-                    (PreferencesActivity.KEY_USERNAME, null));
-
             if(userSpinnerValues.contains(getResources().getString(R.string.all_forms))) {
                 userSpinnerValues.remove(getResources().getString(R.string.all_forms));
                 sortedSpinnerValues.add(getResources().getString(R.string.all_forms));
-            }
-
-            if(userSpinnerValues.contains(userFormsKey)) {
-                userSpinnerValues.remove(userFormsKey);
-                sortedSpinnerValues.add(userFormsKey);
             }
 
             sortedSpinnerValues.addAll(userSpinnerValues);
@@ -706,11 +697,9 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String selectedKey = parent.getItemAtPosition(position).toString();
-                    HashMap<String, HashMap<String, FormDetails>> userForms =
-                            splitFormsIntoAccounts(getBaseContext(), mFormNamesAndURLs);
 
-                    if(userForms.containsKey(selectedKey)) {
-                        refreshFormList(userForms.get(selectedKey));
+                    if(formsInProjects.containsKey(selectedKey)) {
+                        refreshFormList(formsInProjects.get(selectedKey));
                     }
                 }
 
@@ -726,98 +715,30 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private void refreshFormList(HashMap<String, FormDetails> forms) {
         mFormList.clear();
 
-        ArrayList<String> ids = new ArrayList<String>(forms.keySet());
-        for (int i = 0; i < forms.size(); i++) {
-            String formDetailsKey = ids.get(i);
-            FormDetails details = forms.get(formDetailsKey);
+        // Sort the forms based on form name
+        ArrayList<FormDetails> sortedForms = new ArrayList<FormDetails>(forms.values());
+        Collections.sort(sortedForms);
+
+        HashMap<String, String> idToKey = new HashMap<>();
+        for (String curKey : forms.keySet()) {
+            idToKey.put(forms.get(curKey).formID, curKey);
+        }
+
+        for (int i = 0; i < sortedForms.size(); i++) {
+            FormDetails details = sortedForms.get(i);
             HashMap<String, String> item = new HashMap<String, String>();
             item.put(FORMNAME, details.formName);
             item.put(FORMID_DISPLAY,
                     ((details.formVersion == null) ? "" : (getString(R.string.version) + " " + details.formVersion + " ")) +
                             "ID: " + details.formID );
-            item.put(FORMDETAIL_KEY, formDetailsKey);
+            item.put(FORMDETAIL_KEY, idToKey.get(details.formID));
             item.put(FORM_ID_KEY, details.formID);
             item.put(FORM_VERSION_KEY, details.formVersion);
 
-            // Insert the new form in alphabetical order.
-            if (mFormList.size() == 0) {
-                mFormList.add(item);
-            } else {
-                int j;
-                for (j = 0; j < mFormList.size(); j++) {
-                    HashMap<String, String> compareMe = mFormList.get(j);
-                    String name = compareMe.get(FORMNAME);
-                    if (name.compareTo(forms.get(ids.get(i)).formName) > 0) {
-                        break;
-                    }
-                }
-                mFormList.add(j, item);
-            }
+            mFormList.add(item);
         }
         selectSupersededForms();
         mFormListAdapter.notifyDataSetChanged();
-    }
-
-    public static HashMap<String, HashMap<String, FormDetails>> splitFormsIntoAccounts(
-            Context context, final HashMap<String, FormDetails> forms) {
-
-        HashMap<String, HashMap<String, FormDetails>> result = new HashMap<>();
-        result.put(context.getResources().getString(R.string.all_forms), forms);
-
-        SharedPreferences settings =
-                PreferenceManager.getDefaultSharedPreferences(context);
-        boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS,
-                true);
-        String username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-
-        for(FormDetails curForm : forms.values()) {
-            String user = getOnaUser(curForm.downloadUrl);
-            if(user != null) {
-                //check if user wants to see shared forms
-                if(username != null && !showSharedForms && !user.equals(username)) {
-                    continue;
-                }
-
-                String userKey = context.getResources().getString(R.string
-                        .forms_by, user);
-                if(!result.containsKey(userKey)) {
-                    result.put(userKey,
-                            new HashMap<String, FormDetails>());
-                }
-
-                result.get(userKey).put(curForm.formID, curForm);
-            } else {
-                Log.e(t, "Could not extract the user that owns the specified form");
-            }
-        }
-
-        if(result.size() == 2) {//forms from only one account
-            //remove the all_forms item to avoid redundant items
-            result.remove(context.getResources().getString(R.string.all_forms));
-        } else if(result.size() == 1 && !showSharedForms) {//only all_forms in map and shared
-            // forms is not turned on. Mean the user doesn't have any forms
-            result.remove(context.getResources().getString(R.string.all_forms));
-        }
-
-        return result;
-    }
-
-    /**
-     * This method extracts the Ona user that owns a form from the form's Download URL
-     *
-     * @param formDownloadUrl   The download URL for the form (obtained from /formList endpoint)
-     *
-     * @return  The Ona User that owns the form or null if something goes wrong
-     */
-    public static String getOnaUser(String formDownloadUrl) {
-        //https://odk.ona.io/yri/forms/129132/form.xml
-        Pattern pattern = Pattern.compile("http[s]?://[\\w\\.]+/([\\w]+)/forms/[\\d]+/form\\.xml");
-        Matcher matcher = pattern.matcher(formDownloadUrl);
-        if(matcher.find()) {
-            return matcher.group(1);
-        }
-
-        return null;
     }
 
     /**

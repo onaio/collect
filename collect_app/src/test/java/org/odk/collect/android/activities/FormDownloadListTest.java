@@ -2,7 +2,6 @@ package org.odk.collect.android.activities;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -60,11 +59,11 @@ public class FormDownloadListTest {
     public void testSplitFormsIntoAccounts() {
         FormDownloadList formDownloadList = Robolectric.setupActivity(FormDownloadList.class);
         String user1 = "user1";
-        String user1Key = formDownloadList.getString(R.string.forms_by, user1);
+        String user1Key = formDownloadList.getString(R.string.forms_in, user1);
         String user2 = "user2";
-        String user2Key = formDownloadList.getString(R.string.forms_by, user2);
+        String user2Key = formDownloadList.getString(R.string.forms_in, user2);
         String user3 = "user3";
-        String user3Key = formDownloadList.getString(R.string.forms_by, user3);
+        String user3Key = formDownloadList.getString(R.string.forms_in, user3);
         String form1 = "form1";
         String form2 = "form2";
         String form3 = "form3";
