@@ -111,7 +111,7 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
             downloadURLToKey.put(forms.get(curKey).downloadUrl, curKey);
         }
 
-        HashMap<String, String> onaFormIdProjectMap = new HashMap<>();//map with ona form ids
+        HashMap<String, String> onaFormIdProjectMap = new HashMap<>();// Map with ona form ids
         // and keys and their corresponding projects as values
         for (ProjectDetails curProject : projects) {
             onaFormIdProjectMap.putAll(curProject.formIdProjectMap);
@@ -149,18 +149,20 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
                                 new HashMap<String, FormDetails>());
                     }
 
-                    result.get(projectKey).put(idToKey.get(curForm.formID), curForm);
+                    result.get(projectKey).put(downloadURLToKey.get(curForm.downloadUrl), curForm);
                 }
             } else {
                 Log.e(TAG, "Could not extract the user that owns the specified form");
             }
         }
 
-        if (result.size() == 2) {//forms from only one account
+        if (result.size() == 2 || (result.size() == 1 && !showSharedForms)) {
+            /*
+            All forms are initially all put in the first item in the map (called "all_forms").
+            Cases where you end up with two items in the map after splitting forms by accounts means
+            that there's only one account
+             */
             // Remove the all_forms item to avoid redundant items
-            result.remove(allFormsString);
-        } else if (result.size() == 1 && !showSharedForms) {// Only all_forms in map and shared
-            // Forms is not turned on. Mean the user doesn't have any forms
             result.remove(allFormsString);
         }
 

@@ -41,18 +41,22 @@ public class FormDownloadListTest {
         String url2 = "http://odk.ona.io/"+username1+"/forms/129132/form.xml";
         Assert.assertTrue(FormDownloadList.getOnaUser(url2).equals(username1));
 
+        //test other ona URL
+        String url3 = "http://ona.io/"+username1+"/forms/129132/form.xml";
+        Assert.assertTrue(FormDownloadList.getOnaUser(url3).equals(username1));
+
         //test bad URL
-        String url3 = "http://odk.ona.io/"+username1+"/forms/129132/form";
-        Assert.assertTrue(FormDownloadList.getOnaUser(url3) == null);
+        String url4 = "http://odk.ona.io/"+username1+"/forms/129132/form";
+        Assert.assertTrue(FormDownloadList.getOnaUser(url4) == null);
 
         //test non Ona URL
-        String url4 = "http://fa.la.la.la/"+username1+"/forms/129132/form.xml";
-        Assert.assertTrue(FormDownloadList.getOnaUser(url4).equals(username1));
+        String url5 = "http://fa.la.la.la/"+username1+"/forms/129132/form.xml";
+        Assert.assertTrue(FormDownloadList.getOnaUser(url5).equals(username1));
 
         //test a bad username
         String username2 = "dfsDFE12_fsd ";
-        String url5 = "http://odk.ona.io/"+username2+"/forms/129132/form.xml";
-        Assert.assertTrue(FormDownloadList.getOnaUser(url5) == null);
+        String url6 = "http://odk.ona.io/"+username2+"/forms/129132/form.xml";
+        Assert.assertTrue(FormDownloadList.getOnaUser(url6) == null);
     }
 
     @Test
