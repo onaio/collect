@@ -683,9 +683,10 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
             Collections.sort(userSpinnerValues);
             ArrayList<String> sortedSpinnerValues = new ArrayList<>();
 
-            if(userSpinnerValues.contains(getResources().getString(R.string.all_forms))) {
-                userSpinnerValues.remove(getResources().getString(R.string.all_forms));
-                sortedSpinnerValues.add(getResources().getString(R.string.all_forms));
+            String allFormsString = getResources().getString(R.string.all_forms);
+            if(userSpinnerValues.contains(allFormsString)) {
+                userSpinnerValues.remove(allFormsString);
+                sortedSpinnerValues.add(allFormsString);
             }
 
             sortedSpinnerValues.addAll(userSpinnerValues);
@@ -719,19 +720,23 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         ArrayList<FormDetails> sortedForms = new ArrayList<FormDetails>(forms.values());
         Collections.sort(sortedForms);
 
-        HashMap<String, String> idToKey = new HashMap<>();
+        // Since we're not sure what keys where used in the form's hashmap (might either be the
+        // form id or the form name--in cases where Aggregate v0.9 and below was used) create
+        // another hashmap to identify the keys in the first hashmap (meta, I know)
+        HashMap<String, String> downloadUrlToKey = new HashMap<>();
         for (String curKey : forms.keySet()) {
-            idToKey.put(forms.get(curKey).formID, curKey);
+            downloadUrlToKey.put(forms.get(curKey).downloadUrl, curKey);
         }
 
         for (int i = 0; i < sortedForms.size(); i++) {
             FormDetails details = sortedForms.get(i);
             HashMap<String, String> item = new HashMap<String, String>();
             item.put(FORMNAME, details.formName);
-            item.put(FORMID_DISPLAY,
-                    ((details.formVersion == null) ? "" : (getString(R.string.version) + " " + details.formVersion + " ")) +
-                            "ID: " + details.formID );
-            item.put(FORMDETAIL_KEY, idToKey.get(details.formID));
+            item.put(FORMID_DISPLAY, String.format("%s%sID: %s",
+                    (details.formVersion == null) ? "" : getString(R.string.version) + " ",
+                    (details.formVersion == null) ? "" : details.formVersion + " ",
+                    details.formID));
+            item.put(FORMDETAIL_KEY, downloadUrlToKey.get(details.downloadUrl));
             item.put(FORM_ID_KEY, details.formID);
             item.put(FORM_VERSION_KEY, details.formVersion);
 

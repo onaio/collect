@@ -105,10 +105,10 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
             Context context, final HashMap<String, FormDetails> forms,
             ArrayList<ProjectDetails> projects) {
 
-        HashMap<String, String> idToKey = new HashMap<>();// Map with formId as key and key on
-        // forms map as value
+        HashMap<String, String> downloadURLToKey = new HashMap<>();// Map with downloadURL as key
+        // and key in forms map as value
         for (String curKey : forms.keySet()) {
-            idToKey.put(forms.get(curKey).formID, curKey);
+            downloadURLToKey.put(forms.get(curKey).downloadUrl, curKey);
         }
 
         HashMap<String, String> onaFormIdProjectMap = new HashMap<>();//map with ona form ids
