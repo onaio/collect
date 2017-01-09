@@ -4,6 +4,14 @@
         android:key="@string/other_preferences"
         android:title="@string/other_preferences" >
         <EditTextPreference
+            android:id="@+id/api_url"
+            android:defaultValue="@string/default_api_url"
+            android:dialogTitle="@string/change_api_url"
+            android:inputType="textNoSuggestions"
+            android:key="api_url"
+            android:layout="?android:attr/preferenceLayoutChild"
+            android:title="@string/api_url" />
+        <EditTextPreference
             android:id="@+id/formlist_url"
             android:defaultValue="@string/default_odk_formlist"
             android:dialogTitle="@string/change_formlist_url"
@@ -19,6 +27,14 @@
             android:key="submission_url"
             android:layout="?android:attr/preferenceLayoutChild"
             android:title="@string/submission_url" />
+        <EditTextPreference
+            android:id="@+id/projects_url"
+            android:defaultValue="@string/default_ona_projects"
+            android:dialogTitle="@string/change_projects_url"
+            android:inputType="textNoSuggestions"
+            android:key="projects_url"
+            android:layout="?android:attr/preferenceLayoutChild"
+            android:title="@string/projects_url" />
     </PreferenceCategory>
    
 </PreferenceScreen>

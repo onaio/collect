@@ -30,8 +30,10 @@ import android.text.InputFilter;
 public class OtherPreferencesActivity extends AggregatePreferencesActivity
 		implements OnPreferenceChangeListener {
 
+	protected EditTextPreference mApiUrlPreference;
 	protected EditTextPreference mSubmissionUrlPreference;
 	protected EditTextPreference mFormListUrlPreference;
+	protected EditTextPreference mProjectsUrlPreference;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,19 @@ public class OtherPreferencesActivity extends AggregatePreferencesActivity
 
 		addPreferencesFromResource(R.xml.other_preferences);
 
+		mApiUrlPreference = (EditTextPreference) findPreference(PreferencesActivity.KEY_API_URL);
 		mFormListUrlPreference = (EditTextPreference) findPreference(PreferencesActivity.KEY_FORMLIST_URL);
 		mSubmissionUrlPreference = (EditTextPreference) findPreference(PreferencesActivity.KEY_SUBMISSION_URL);
+		mProjectsUrlPreference = (EditTextPreference) findPreference(PreferencesActivity
+				.KEY_PROJECTS_URL);
 
 		InputFilter[] filters = { new ControlCharacterFilter(), new WhitespaceFilter() };
 
 		mServerUrlPreference.getEditText().setFilters(filters);
+
+		mApiUrlPreference.setOnPreferenceChangeListener(this);
+		mApiUrlPreference.setSummary(mApiUrlPreference.getText());
+		mApiUrlPreference.getEditText().setFilters(filters);
 
 		mFormListUrlPreference.setOnPreferenceChangeListener(this);
 		mFormListUrlPreference.setSummary(mFormListUrlPreference.getText());
@@ -53,6 +62,10 @@ public class OtherPreferencesActivity extends AggregatePreferencesActivity
 		mSubmissionUrlPreference.setOnPreferenceChangeListener(this);
 		mSubmissionUrlPreference.setSummary(mSubmissionUrlPreference.getText());
 		mSubmissionUrlPreference.getEditText().setFilters(filters);
+
+		mProjectsUrlPreference.setOnPreferenceChangeListener(this);
+		mProjectsUrlPreference.setSummary(mProjectsUrlPreference.getText());
+		mProjectsUrlPreference.getEditText().setFilters(filters);
 	}
 
 	/**

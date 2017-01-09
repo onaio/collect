@@ -77,12 +77,12 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
   // AGGREGATE SPECIFIC
   public static final String KEY_SERVER_URL = "server_url";
-  public static final String KEY_API_URL = "api_url";
 
   // GOOGLE SPECIFIC
   public static final String KEY_GOOGLE_SHEETS_URL = "google_sheets_url";
 
   // OTHER SPECIFIC
+  public static final String KEY_API_URL = "api_url";
   public static final String KEY_FORMLIST_URL = "formlist_url";
   public static final String KEY_SUBMISSION_URL = "submission_url";
   public static final String KEY_PROJECTS_URL = "projects_url";
@@ -612,8 +612,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   private void setDefaultAggregatePaths() {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
     Editor editor = sp.edit();
+    editor.putString(KEY_API_URL, getString(R.string.default_api_url));
     editor.putString(KEY_FORMLIST_URL, getString(R.string.default_odk_formlist));
     editor.putString(KEY_SUBMISSION_URL, getString(R.string.default_odk_submission));
+    editor.putString(KEY_PROJECTS_URL, getString(R.string.default_ona_projects));
     editor.commit();
   }
 
