@@ -492,12 +492,12 @@ public final class WebUtils {
 			return new JsonArrayFetchResult("Invalid server URL (no hostname): " + urlString, 0);
 		}
 
-		// if https then enable preemptive basic auth...
+		// If https then enable preemptive basic auth...
 		if (u.getScheme().equals("https")) {
 			enablePreemptiveBasicAuth(localContext, u.getHost());
 		}
 
-		// set up request...
+		// Set up request...
 		HttpGet req = new HttpGet();
 		req.setURI(u);
 		req.addHeader(WebUtils.ACCEPT_ENCODING_HEADER, WebUtils.GZIP_CONTENT_ENCODING);
@@ -513,7 +513,7 @@ public final class WebUtils {
 			if (statusCode != HttpStatus.SC_OK) {
 				WebUtils.discardEntityBytes(response);
 				if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
-					// clear the cookies -- should not be necessary?
+					// Clear the cookies -- should not be necessary?
 					Collect.getInstance().getCookieStore().clear();
 				}
 				String webError = response.getStatusLine().getReasonPhrase()
@@ -541,7 +541,7 @@ public final class WebUtils {
 				Log.e(t, error);
 				return new JsonArrayFetchResult(error, 0);
 			}
-			// parse response
+			// Parse response
 			JSONArray array = null;
 			try {
 				InputStream is = null;
@@ -560,24 +560,24 @@ public final class WebUtils {
 				} finally {
 					if (isr != null) {
 						try {
-							// ensure stream is consumed...
+							// Ensure stream is consumed...
 							final long count = 1024L;
 							while (isr.skip(count) == count)
 								;
 						} catch (Exception e) {
-							// no-op
+							// No-op
 						}
 						try {
 							isr.close();
 						} catch (Exception e) {
-							// no-op
+							// No-op
 						}
 					}
 					if (is != null) {
 						try {
 							is.close();
 						} catch (Exception e) {
-							// no-op
+							// No-op
 						}
 					}
 				}

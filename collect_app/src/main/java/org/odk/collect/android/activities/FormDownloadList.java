@@ -679,12 +679,12 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
             ArrayList<String> userSpinnerValues = new ArrayList<>(formsInProjects.keySet());
 
-            //sort how forms will appear in the spinner
+            // Sort how forms will appear in the spinner
             Collections.sort(userSpinnerValues);
             ArrayList<String> sortedSpinnerValues = new ArrayList<>();
 
             String allFormsString = getResources().getString(R.string.all_forms);
-            if(userSpinnerValues.contains(allFormsString)) {
+            if (userSpinnerValues.contains(allFormsString)) {
                 userSpinnerValues.remove(allFormsString);
                 sortedSpinnerValues.add(allFormsString);
             }
@@ -699,13 +699,14 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String selectedKey = parent.getItemAtPosition(position).toString();
 
-                    if(formsInProjects.containsKey(selectedKey)) {
+                    if (formsInProjects.containsKey(selectedKey)) {
                         refreshFormList(formsInProjects.get(selectedKey));
                     }
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {}
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
             });
             formAccountsSpinner.setAdapter(userArrayAdapter);
 

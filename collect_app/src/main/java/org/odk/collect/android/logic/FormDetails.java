@@ -123,7 +123,7 @@ public class FormDetails implements Serializable, Comparator<FormDetails>, Compa
         if (lhs != null) {
             return lhs.compareTo(rhs);
         } else {
-            return -1;//lhs is considered less than rhs
+            return -1;// lhs is considered less than rhs
         }
     }
 }

@@ -46,9 +46,9 @@ public class ProjectDetails {
         String nameWithFormsIn = Collect.getInstance().getResources().getString(R.string.forms_in,
                 projectName);
 
-        if(projectDetails.has("forms")) {
+        if (projectDetails.has("forms")) {
             JSONArray forms = projectDetails.getJSONArray("forms");
-            for(int i = 0; i < forms.length(); i++) {
+            for (int i = 0; i < forms.length(); i++) {
                 String formId = forms.getJSONObject(i).getString("formid");
                 formIds.add(formId);
                 formIdProjectMap.put(formId, nameWithFormsIn);
@@ -67,7 +67,7 @@ public class ProjectDetails {
     public static boolean isFormInProject(FormDetails form, ProjectDetails project) {
         try {
             Integer onaFormId = Integer.parseInt(FormDetails.getOnaFormId(form));
-            if(project.formIds.contains(onaFormId)) {
+            if (project.formIds.contains(onaFormId)) {
                 return true;
             }
         } catch (Exception e) {

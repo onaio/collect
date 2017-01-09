@@ -198,11 +198,11 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
     showSharedFormsPreference = (CheckBoxPreference) findPreference(KEY_SHOW_SHARED_FORMS);
     boolean showSharedForms = adminPreferences.getBoolean(AdminPreferencesActivity
             .KEY_SHOW_SHARED_FORMS, true);
-    if(!(showSharedForms || adminMode)) {
+    if (!(showSharedForms || adminMode)) {
       sharedFormsCategory.removePreference(showSharedFormsPreference);
     }
 
-    if(!(showSharedForms || adminMode)) {
+    if (!(showSharedForms || adminMode)) {
       getPreferenceScreen().removePreference(sharedFormsCategory);
     }
 

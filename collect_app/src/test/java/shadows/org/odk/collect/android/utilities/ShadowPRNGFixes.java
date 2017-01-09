@@ -12,6 +12,6 @@ import org.robolectric.annotation.Implements;
 public class ShadowPRNGFixes {
     @Implementation
     public static void apply() {
-        //override whatever code this method executes
+        // Override whatever code this method executes
     }
 }
