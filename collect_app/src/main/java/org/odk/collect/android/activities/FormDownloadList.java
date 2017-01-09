@@ -709,8 +709,6 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 }
             });
             formAccountsSpinner.setAdapter(userArrayAdapter);
-
-            mDownloadButton.setEnabled(!(selectedItemCount() == 0));
         }
     }
 
@@ -745,6 +743,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         }
         selectSupersededForms();
         mFormListAdapter.notifyDataSetChanged();
+
+        mDownloadButton.setEnabled(!(selectedItemCount() == 0));
     }
 
     /**
