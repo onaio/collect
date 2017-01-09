@@ -475,8 +475,7 @@ public final class WebUtils {
 	 * @param httpclient
 	 * @return
 	 */
-	public static JsonArrayFetchResult getJsonArray(String urlString,
-													HttpContext localContext, HttpClient httpclient) {
+	public static JsonArrayFetchResult getJsonArray(String urlString, HttpContext localContext, HttpClient httpclient) {
 		URI u = null;
 		Log.d(t, "Making jsonArray request to "+urlString);
 		try {
