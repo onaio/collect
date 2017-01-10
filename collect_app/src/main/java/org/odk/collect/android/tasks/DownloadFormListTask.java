@@ -19,6 +19,10 @@ import org.opendatakit.httpclientandroidlib.protocol.HttpContext;
 import org.javarosa.xform.parse.XFormParser;
 import org.kxml2.kdom.Element;
 import io.ona.collect.android.R;
+import io.ona.collect.android.listeners.ProjectListDownloaderListener;
+import io.ona.collect.android.logic.ProjectDetails;
+import io.ona.collect.android.tasks.ProjectDownloadListTask;
+
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.listeners.FormListDownloaderListener;
 import org.odk.collect.android.logic.FormDetails;
@@ -31,6 +35,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -41,7 +46,8 @@ import java.util.HashMap;
  *
  * @author carlhartung
  */
-public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String, FormDetails>> {
+public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String, FormDetails>>
+        implements ProjectListDownloaderListener{
     private static final String t = "DownloadFormsTask";
 
     // used to store error message if one occurs
@@ -258,11 +264,8 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
 
     @Override
     protected void onPostExecute(HashMap<String, FormDetails> value) {
-        synchronized (this) {
-            if (mStateListener != null) {
-                mStateListener.formListDownloadingComplete(value);
-            }
-        }
+        ProjectDownloadListTask task = new ProjectDownloadListTask(value, this);
+        task.execute();
     }
 
 
@@ -272,4 +275,28 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
         }
     }
 
+    @Override
+    public void projectListDownloadingComplete(ArrayList<ProjectDetails> value,
+                                               HashMap<String, FormDetails> forms,
+                                               HashMap<String, HashMap<String, FormDetails>>
+                                                       formsInProjects) {
+        synchronized (this) {
+            if (mStateListener != null) {
+                mStateListener.formListDownloadingComplete(forms, formsInProjects);
+            }
+        }
+    }
+
+    @Override
+    public void projectListErrorOccurred(HashMap<String, FormDetails> forms,
+                                         HashMap<String, HashMap<String, FormDetails>>
+                                                 formsInProjects,
+                                         ProjectDownloadListTask.HttpError error,
+                                         String errorMessage) {
+        synchronized (this) {
+            if (mStateListener != null) {
+                mStateListener.formListDownloadingComplete(forms, formsInProjects);
+            }
+        }
+    }
 }

@@ -15,6 +15,7 @@
 package org.odk.collect.android.activities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -53,10 +54,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
@@ -110,8 +114,10 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
     private DownloadFormsTask mDownloadFormsTask;
     private Button mToggleButton;
     private Button mRefreshButton;
+    private Spinner formAccountsSpinner;
 
     private HashMap<String, FormDetails> mFormNamesAndURLs = new HashMap<String,FormDetails>();
+    private HashMap<String, HashMap<String, FormDetails>> formsInProjects = new HashMap<>();
     private SimpleAdapter mFormListAdapter;
     private ArrayList<HashMap<String, String>> mFormList;
 
@@ -178,6 +184,8 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 clearChoices();
             }
         });
+
+        formAccountsSpinner = (Spinner) findViewById(R.id.form_accounts_spinner);
 
         if (savedInstanceState != null) {
             // If the screen has rotated, the hashmap with the form ids and urls is passed here.
@@ -310,6 +318,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         } else {
 
             mFormNamesAndURLs = new HashMap<String, FormDetails>();
+            formsInProjects = new HashMap<>();
             if (mProgressDialog != null) {
                 // This is needed because onPrepareDialog() is broken in 1.6.
                 mProgressDialog.setMessage(getString(R.string.please_wait));
@@ -638,7 +647,9 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
      *
      * @param result
      */
-    public void formListDownloadingComplete(HashMap<String, FormDetails> result) {
+    public void formListDownloadingComplete(HashMap<String, FormDetails> result,
+                                            final HashMap<String, HashMap<String, FormDetails>>
+                                                    formsInProjects) {
         dismissDialog(PROGRESS_DIALOG);
         mDownloadFormListTask.setDownloaderListener(null);
         mDownloadFormListTask = null;
@@ -664,43 +675,77 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
         } else {
             // Everything worked. Clear the list and add the results.
             mFormNamesAndURLs = result;
+            this.formsInProjects = formsInProjects;
 
-            mFormList.clear();
+            ArrayList<String> userSpinnerValues = new ArrayList<>(formsInProjects.keySet());
 
-            ArrayList<String> ids = new ArrayList<String>(mFormNamesAndURLs.keySet());
-            for (int i = 0; i < result.size(); i++) {
-            	String formDetailsKey = ids.get(i);
-            	FormDetails details = mFormNamesAndURLs.get(formDetailsKey);
-                HashMap<String, String> item = new HashMap<String, String>();
-                item.put(FORMNAME, details.formName);
-                item.put(FORMID_DISPLAY,
-                		((details.formVersion == null) ? "" : (getString(R.string.version) + " " + details.formVersion + " ")) +
-                		"ID: " + details.formID );
-                item.put(FORMDETAIL_KEY, formDetailsKey);
-                item.put(FORM_ID_KEY, details.formID);
-                item.put(FORM_VERSION_KEY, details.formVersion);
+            // Sort how forms will appear in the spinner
+            Collections.sort(userSpinnerValues);
+            ArrayList<String> sortedSpinnerValues = new ArrayList<>();
 
-                // Insert the new form in alphabetical order.
-                if (mFormList.size() == 0) {
-                    mFormList.add(item);
-                } else {
-                    int j;
-                    for (j = 0; j < mFormList.size(); j++) {
-                        HashMap<String, String> compareMe = mFormList.get(j);
-                        String name = compareMe.get(FORMNAME);
-                        if (name.compareTo(mFormNamesAndURLs.get(ids.get(i)).formName) > 0) {
-                            break;
-                        }
-                    }
-                    mFormList.add(j, item);
-                }
+            String allFormsString = getResources().getString(R.string.all_forms);
+            if (userSpinnerValues.contains(allFormsString)) {
+                userSpinnerValues.remove(allFormsString);
+                sortedSpinnerValues.add(allFormsString);
             }
-            selectSupersededForms();
-            mFormListAdapter.notifyDataSetChanged();
-            mDownloadButton.setEnabled(!(selectedItemCount() == 0));
+
+            sortedSpinnerValues.addAll(userSpinnerValues);
+
+            ArrayAdapter<String> userArrayAdapter = new ArrayAdapter<String>(this, android.R
+                    .layout.simple_spinner_item, sortedSpinnerValues);
+            userArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            formAccountsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedKey = parent.getItemAtPosition(position).toString();
+
+                    if (formsInProjects.containsKey(selectedKey)) {
+                        refreshFormList(formsInProjects.get(selectedKey));
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+            formAccountsSpinner.setAdapter(userArrayAdapter);
         }
     }
 
+    private void refreshFormList(HashMap<String, FormDetails> forms) {
+        mFormList.clear();
+
+        // Sort the forms based on form name
+        ArrayList<FormDetails> sortedForms = new ArrayList<FormDetails>(forms.values());
+        Collections.sort(sortedForms);
+
+        // Since we're not sure what keys where used in the form's hashmap (might either be the
+        // form id or the form name--in cases where Aggregate v0.9 and below was used) create
+        // another hashmap to identify the keys in the first hashmap (meta, I know)
+        HashMap<String, String> downloadUrlToKey = new HashMap<>();
+        for (String curKey : forms.keySet()) {
+            downloadUrlToKey.put(forms.get(curKey).downloadUrl, curKey);
+        }
+
+        for (int i = 0; i < sortedForms.size(); i++) {
+            FormDetails details = sortedForms.get(i);
+            HashMap<String, String> item = new HashMap<String, String>();
+            item.put(FORMNAME, details.formName);
+            item.put(FORMID_DISPLAY, String.format("%s%sID: %s",
+                    (details.formVersion == null) ? "" : getString(R.string.version) + " ",
+                    (details.formVersion == null) ? "" : details.formVersion + " ",
+                    details.formID));
+            item.put(FORMDETAIL_KEY, downloadUrlToKey.get(details.downloadUrl));
+            item.put(FORM_ID_KEY, details.formID);
+            item.put(FORM_VERSION_KEY, details.formVersion);
+
+            mFormList.add(item);
+        }
+        selectSupersededForms();
+        mFormListAdapter.notifyDataSetChanged();
+
+        mDownloadButton.setEnabled(!(selectedItemCount() == 0));
+    }
 
     /**
      * Creates an alert dialog with the given tite and message. If shouldExit is set to true, the

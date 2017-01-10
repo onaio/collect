@@ -16,11 +16,15 @@ package org.odk.collect.android.listeners;
 
 import org.odk.collect.android.logic.FormDetails;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import io.ona.collect.android.logic.ProjectDetails;
 
 /**
  * @author Carl Hartung (carlhartung@gmail.com)
  */
 public interface FormListDownloaderListener {
-    void formListDownloadingComplete(HashMap<String, FormDetails> value);
+    void formListDownloadingComplete(HashMap<String, FormDetails> value,
+                                     HashMap<String, HashMap<String, FormDetails>> formsInProjects);
 }

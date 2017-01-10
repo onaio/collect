@@ -18,6 +18,20 @@ the License.
 	android:layout_height="fill_parent"
 	android:layout_alignParentTop="true">
 
+	<RelativeLayout
+		android:id="@+id/form_accounts_canvas"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:background="@color/ona_light_beige"
+		android:padding="10dp">
+		<Spinner
+			android:id="@+id/form_accounts_spinner"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true" />
+	</RelativeLayout>
+
     <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -62,7 +76,7 @@ android:layout_weight="1"      />
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_above="@+id/buttonholder"
-		android:layout_alignParentTop="true" />
+		android:layout_below="@id/form_accounts_canvas" />
 
    <TextView
       android:id="@android:id/empty"

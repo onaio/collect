@@ -1,0 +1,217 @@
+[
+  {
+    "url": "https://api.ona.io/api/v1/projects/1",
+    "projectid": 17444,
+    "owner": "https://api.ona.io/api/v1/users/user1",
+    "created_by": "https://api.ona.io/api/v1/users/user1",
+    "metadata": {
+      "category": "humanitarian",
+      "billing-code": "",
+      "location": "",
+      "description": ""
+    },
+    "starred": false,
+    "users": [
+      {
+        "first_name": "Jason",
+        "last_name": "Rogena",
+        "is_org": false,
+        "role": "editor",
+        "user": "user4",
+        "metadata": {
+          "first-login": false,
+          "zebra": {
+            "hide-project-view-walkthrough?": true,
+            "hide-home-walkthrough?": true,
+            "hide-billing-notification?": true,
+            "hide-data-view-walkthrough?": true,
+            "hide-odk-notification?": true,
+            "hide-share-modal-walkthrough?": true
+          }
+        }
+      },
+      {
+        "first_name": "sandra",
+        "last_name": "k",
+        "is_org": false,
+        "role": "owner",
+        "user": "user1",
+        "metadata": {
+          "zebra": {
+            "hide-project-view-walkthrough?": true,
+            "hide-home-walkthrough?": true,
+            "hide-billing-notification?": true,
+            "hide-data-view-walkthrough?": true,
+            "hide-odk-notification?": true,
+            "hide-share-modal-walkthrough?": true
+          },
+          "avatar-url": "https://images.ona.io/image/51f602d40b6541bb8798ccb3a9497bda/background3image.jpeg"
+        }
+      }
+    ],
+    "forms": [
+      {
+        "name": "Colourful_Choices",
+        "formid": 129132,
+        "id_string": "Colourful_Choices_3"
+      },
+      {
+        "name": "karojx1",
+        "formid": 148128,
+        "id_string": "karojx1"
+      },
+      {
+        "name": "OSM Example",
+        "formid": 129133,
+        "id_string": "osm_example"
+      },
+      {
+        "name": "Ranking Test 11072016",
+        "formid": 150167,
+        "id_string": "Ranking_Test"
+      }
+    ],
+    "public": true,
+    "tags": [],
+    "num_datasets": 4,
+    "last_submission_date": "2016-09-20T14:19:08.360Z",
+    "teams": [],
+    "name": "overlimit",
+    "date_created": "2016-06-14T11:35:52.294341Z",
+    "date_modified": "2017-01-01T08:11:59.290886Z"
+  },
+  {
+    "url": "https://api.ona.io/api/v1/projects/2",
+    "projectid": 22165,
+    "owner": "https://api.ona.io/api/v1/users/user2",
+    "created_by": "https://api.ona.io/api/v1/users/user3",
+    "metadata": {
+      "category": "health",
+      "billing-code": "",
+      "location": "Global",
+      "description": "Repository for the EC reference app forms."
+    },
+    "starred": false,
+    "users": [
+      {
+        "first_name": "OpenSRP",
+        "last_name": "",
+        "is_org": true,
+        "role": "owner",
+        "user": "user2",
+        "metadata": {
+          "background-image-url": "https://images.ona.io/image/18793d30ced44d35a0dd5397803742ee/P1610167-2 (1).jpg",
+          "zebra": {
+            "hide-usage-limit-notification?": true,
+            "hide-odk-notification?": true,
+            "hide-billing-notification?": true
+          },
+          "avatar-url": "https://images.ona.io/image/61454b80c3b44793a0353fd81e73f261/OpenSRP-Logo-R3-20140908-02-small.png"
+        }
+      }
+    ],
+    "forms": [
+      {
+        "name": "New Household Registration",
+        "formid": 150074,
+        "id_string": "FWNewHH_1"
+      },
+      {
+        "name": "Pregnancy Surveillance and Registration",
+        "formid": 150064,
+        "id_string": "PregnancySurveillanceAndRegistrationForm_1"
+      }
+    ],
+    "public": false,
+    "tags": [],
+    "num_datasets": 2,
+    "last_submission_date": null,
+    "teams": [
+      {
+        "role": "owner",
+        "name": "opensrp#Owners",
+        "users": [
+          "roger",
+          "cagulas",
+          "mberg",
+          "maina",
+          "emuhia"
+        ]
+      },
+      {
+        "role": null,
+        "name": "opensrp#members",
+        "users": [
+          "opensrp",
+          "kzeller",
+          "numera",
+          "raihanrdg",
+          "roger",
+          "cag",
+          "maimoonak",
+          "kehealy08",
+          "thrive_indonesia",
+          "a_pedrana",
+          "cagulas",
+          "onasupport",
+          "mberg",
+          "alabriqu",
+          "malavi",
+          "maina",
+          "marwannulhakam",
+          "emuhia",
+          "jrogena"
+        ]
+      }
+    ],
+    "name": "EC Reference App",
+    "date_created": "2016-09-15T09:48:41.566526Z",
+    "date_modified": "2017-01-09T09:21:29.509369Z"
+  },
+  {
+    "url": "https://api.ona.io/api/v1/projects/3",
+    "projectid": 22709,
+    "owner": "https://api.ona.io/api/v1/users/user4",
+    "created_by": "https://api.ona.io/api/v1/users/user4",
+    "metadata": {
+      "category": "general",
+      "show-inactive?": true
+    },
+    "starred": false,
+    "users": [
+      {
+        "first_name": "Jason",
+        "last_name": "Rogena",
+        "is_org": false,
+        "role": "owner",
+        "user": "user4",
+        "metadata": {
+          "first-login": false,
+          "zebra": {
+            "hide-project-view-walkthrough?": true,
+            "hide-home-walkthrough?": true,
+            "hide-billing-notification?": true,
+            "hide-data-view-walkthrough?": true,
+            "hide-odk-notification?": true,
+            "hide-share-modal-walkthrough?": true
+          }
+        }
+      }
+    ],
+    "forms": [
+      {
+        "name": "WHO STEPS Instrument (version 3.1)",
+        "formid": 151572,
+        "id_string": "STEPS_Instrument_V3_1"
+      }
+    ],
+    "public": true,
+    "tags": [],
+    "num_datasets": 1,
+    "last_submission_date": null,
+    "teams": [],
+    "name": "steps_test",
+    "date_created": "2016-09-26T09:50:30.748904Z",
+    "date_modified": "2017-01-05T06:42:48.211299Z"
+  }
+]

@@ -14,6 +14,7 @@
 
 package org.odk.collect.android.utilities;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,14 +23,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.zip.GZIPInputStream;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import io.ona.collect.android.R;
+import io.ona.collect.android.utils.JsonArrayFetchResult;
+
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.preferences.PreferencesActivity;
 import org.opendatakit.httpclientandroidlib.*;
@@ -58,7 +64,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.util.Log;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Common utility methods for managing the credentials associated with the
@@ -75,10 +84,12 @@ public final class WebUtils {
 	private static final String DATE_HEADER = "Date";
 
 	public static final String HTTP_CONTENT_TYPE_TEXT_XML = "text/xml";
+	public static final String HTTP_CONTENT_TYPE_APPLICATION_JSON = "application/json";
 	public static final int CONNECTION_TIMEOUT = 30000;
 
 	public static final String ACCEPT_ENCODING_HEADER = "Accept-Encoding";
 	public static final String GZIP_CONTENT_ENCODING = "gzip";
+	public static final String HEADER_AUTHORIZATION = "Authorization";
 
 	public static final List<AuthScope> buildAuthScopes(String host) {
 		List<AuthScope> asList = new ArrayList<AuthScope>();
@@ -453,5 +464,214 @@ public final class WebUtils {
 			Log.w(t, error);
 			return new DocumentFetchResult(error, 0);
 		}
+	}
+
+	/**
+	 * Common method for returning a parsed xml document given a url and the
+	 * http context and client objects involved in the web connection.
+	 *
+	 * @param urlString
+	 * @param localContext
+	 * @param httpclient
+	 * @return
+	 */
+	public static JsonArrayFetchResult getJsonArray(String urlString, HttpContext localContext, HttpClient httpclient) {
+		URI u = null;
+		Log.d(t, "Making jsonArray request to "+urlString);
+		try {
+			URL url = new URL(urlString);
+			u = url.toURI();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JsonArrayFetchResult(e.getLocalizedMessage()
+					+ ("while accessing") + urlString, 0);
+		}
+
+		if (u.getHost() == null ) {
+			return new JsonArrayFetchResult("Invalid server URL (no hostname): " + urlString, 0);
+		}
+
+		// If https then enable preemptive basic auth...
+		if (u.getScheme().equals("https")) {
+			enablePreemptiveBasicAuth(localContext, u.getHost());
+		}
+
+		// Set up request...
+		HttpGet req = new HttpGet();
+		req.setURI(u);
+		req.addHeader(WebUtils.ACCEPT_ENCODING_HEADER, WebUtils.GZIP_CONTENT_ENCODING);
+		HttpResponse response = null;
+		try {
+			response = httpclient.execute(req, localContext);
+			Log.d(t, "Http response gotten for the Json request");
+			int statusCode = response.getStatusLine().getStatusCode();
+			Log.d(t, "Status code is "+statusCode);
+
+			HttpEntity entity = response.getEntity();
+
+			if (statusCode != HttpStatus.SC_OK) {
+				WebUtils.discardEntityBytes(response);
+				if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+					// Clear the cookies -- should not be necessary?
+					Collect.getInstance().getCookieStore().clear();
+				}
+				String webError = response.getStatusLine().getReasonPhrase()
+						+ " (" + statusCode + ")";
+
+				return new JsonArrayFetchResult(u.toString()
+						+ " responded with: " + webError, statusCode);
+			}
+
+			if (entity == null) {
+				String error = "No entity body returned from: " + u.toString();
+				Log.e(t, error);
+				return new JsonArrayFetchResult(error, 0);
+			}
+
+			if (!entity.getContentType().getValue().toLowerCase(Locale.ENGLISH)
+					.contains(WebUtils.HTTP_CONTENT_TYPE_APPLICATION_JSON)) {
+				WebUtils.discardEntityBytes(response);
+				String error = "ContentType: "
+						+ entity.getContentType().getValue()
+						+ " returned from: "
+						+ u.toString()
+						+ " is not application/json.  This is often caused a network proxy.  Do " +
+						"you need to login to your network?";
+				Log.e(t, error);
+				return new JsonArrayFetchResult(error, 0);
+			}
+			// Parse response
+			JSONArray array = null;
+			try {
+				InputStream is = null;
+				InputStreamReader isr = null;
+				try {
+					is = entity.getContent();
+					Header contentEncoding = entity.getContentEncoding();
+					if ( contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase(WebUtils.GZIP_CONTENT_ENCODING) ) {
+						is = new GZIPInputStream(is);
+					}
+					isr = new InputStreamReader(is, "UTF-8");
+					String data = IOUtils.toString(isr);
+					array = new JSONArray(data);
+					isr.close();
+					isr = null;
+				} finally {
+					if (isr != null) {
+						try {
+							// Ensure stream is consumed...
+							final long count = 1024L;
+							while (isr.skip(count) == count)
+								;
+						} catch (Exception e) {
+							// No-op
+						}
+						try {
+							isr.close();
+						} catch (Exception e) {
+							// No-op
+						}
+					}
+					if (is != null) {
+						try {
+							is.close();
+						} catch (Exception e) {
+							// No-op
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				String error = "Parsing failed with " + e.getMessage()
+						+ "while accessing " + u.toString();
+				Log.e(t, error);
+				return new JsonArrayFetchResult(error, 0);
+			}
+
+			return new JsonArrayFetchResult(array);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String cause;
+			Throwable c = e;
+			while (c.getCause() != null) {
+				c = c.getCause();
+			}
+			cause = c.toString();
+			String error = "Error: " + cause + " while accessing "
+					+ u.toString();
+
+			Log.w(t, error);
+			return new JsonArrayFetchResult(error, 0);
+		}
+	}
+
+	/**
+	 * Given a URL, sets up a connection and gets the HTTP response body from the server.
+	 * If the network request is successful, it returns the response body in String form. Otherwise,
+	 * it will throw an IOException.
+	 */
+	public static String downloadUrl(URL url, ArrayList<Header> requestedHeaders)
+			throws IOException {
+		InputStream stream = null;
+		HttpsURLConnection connection = null;
+		String result = null;
+		try {
+			connection = (HttpsURLConnection) url.openConnection();
+			connection.setReadTimeout(CONNECTION_TIMEOUT);
+			connection.setConnectTimeout(CONNECTION_TIMEOUT);
+
+			// For this use case, set HTTP method to GET.
+			connection.setRequestMethod("GET");
+			connection.setDoInput(true);
+			connection.addRequestProperty(WebUtils.ACCEPT_ENCODING_HEADER,
+					WebUtils.GZIP_CONTENT_ENCODING);
+
+			if (requestedHeaders != null) {
+				for (Header curHeader : requestedHeaders) {
+					connection.addRequestProperty(curHeader.getName(), curHeader.getValue());
+				}
+			}
+
+			connection.connect();
+
+			int responseCode = connection.getResponseCode();
+			if (responseCode != HttpsURLConnection.HTTP_OK) {
+				throw new IOException("HTTP error code: " + responseCode);
+			}
+
+			// Retrieve the response body as an InputStream.
+			stream = connection.getInputStream();
+			String contentEncoding = connection.getContentEncoding();
+			if ( contentEncoding != null
+					&& contentEncoding.equalsIgnoreCase(WebUtils.GZIP_CONTENT_ENCODING)) {
+				stream = new GZIPInputStream(stream);
+			}
+
+			if (stream != null) {
+				// Converts Stream to String with max length of 500.
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+				StringBuilder builder = new StringBuilder();
+				String line;
+				while((line = bufferedReader.readLine()) != null) {
+					builder.append(line).append("\n");
+				}
+
+				result = builder.toString();
+			}
+		} finally {
+			// Close Stream and disconnect HTTPS connection.
+			if (stream != null) {
+				stream.close();
+			}
+			if (connection != null) {
+				connection.disconnect();
+			}
+		}
+		return result;
+	}
+
+	public static Header constructBasicAuthHeader(String username, String password) {
+		return BasicScheme.authenticate(new UsernamePasswordCredentials(username, password),
+				"UTF-8", false);
 	}
 }

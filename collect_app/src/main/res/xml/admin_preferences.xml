@@ -91,6 +91,12 @@
             android:summary="@string/found_in_settings"
             android:title="@string/autosend_network" />
         <CheckBoxPreference
+            android:id="@+id/show_shared_forms"
+            android:defaultValue="true"
+            android:key="show_shared_forms"
+            android:summary="@string/found_in_settings"
+            android:title="@string/show_shared_forms" />
+        <CheckBoxPreference
             android:id="@+id/navigation"
             android:defaultValue="true"
             android:key="navigation"

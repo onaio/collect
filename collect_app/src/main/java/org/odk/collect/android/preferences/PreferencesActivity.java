@@ -82,8 +82,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   public static final String KEY_GOOGLE_SHEETS_URL = "google_sheets_url";
 
   // OTHER SPECIFIC
+  public static final String KEY_API_URL = "api_url";
   public static final String KEY_FORMLIST_URL = "formlist_url";
   public static final String KEY_SUBMISSION_URL = "submission_url";
+  public static final String KEY_PROJECTS_URL = "projects_url";
 
   public static final String NAVIGATION_SWIPE = "swipe";
   public static final String NAVIGATION_BUTTONS = "buttons";
@@ -97,6 +99,8 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
   public static final String KEY_AUTOSEND_WIFI = "autosend_wifi";
   public static final String KEY_AUTOSEND_NETWORK = "autosend_network";
+
+  public static final String KEY_SHOW_SHARED_FORMS = "show_shared_forms";
 
   public static final String KEY_NAVIGATION = "navigation";
   public static final String KEY_CONSTRAINT_BEHAVIOR = "constraint_behavior";
@@ -121,6 +125,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   private ListPreference mConstraintBehaviorPreference;
   private CheckBoxPreference mAutosendWifiPreference;
   private CheckBoxPreference mAutosendNetworkPreference;
+  private CheckBoxPreference showSharedFormsPreference;
   private ListPreference mProtocolPreference;
   private PreferenceScreen mProtocolSettings;
   protected EditTextPreference mUsernamePreference;
@@ -186,6 +191,19 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
     if (!(autosendNetworkAvailable || autosendWifiAvailable || adminMode)) {
       getPreferenceScreen().removePreference(autosendCategory);
+    }
+
+    PreferenceCategory sharedFormsCategory = (PreferenceCategory) findPreference(getString(R.string
+            .shared_forms));
+    showSharedFormsPreference = (CheckBoxPreference) findPreference(KEY_SHOW_SHARED_FORMS);
+    boolean showSharedForms = adminPreferences.getBoolean(AdminPreferencesActivity
+            .KEY_SHOW_SHARED_FORMS, true);
+    if (!(showSharedForms || adminMode)) {
+      sharedFormsCategory.removePreference(showSharedFormsPreference);
+    }
+
+    if (!(showSharedForms || adminMode)) {
+      getPreferenceScreen().removePreference(sharedFormsCategory);
     }
 
     mProtocolPreference = (ListPreference) findPreference(KEY_PROTOCOL);
@@ -594,8 +612,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
   private void setDefaultAggregatePaths() {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
     Editor editor = sp.edit();
+    editor.putString(KEY_API_URL, getString(R.string.default_api_url));
     editor.putString(KEY_FORMLIST_URL, getString(R.string.default_odk_formlist));
     editor.putString(KEY_SUBMISSION_URL, getString(R.string.default_odk_submission));
+    editor.putString(KEY_PROJECTS_URL, getString(R.string.default_ona_projects));
     editor.commit();
   }
 

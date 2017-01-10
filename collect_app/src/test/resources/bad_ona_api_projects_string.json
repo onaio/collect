@@ -1,0 +1,82 @@
+[
+  {
+    "url": "https://api.ona.io/api/v1/projects/1",
+    "projectid": 17444,
+    "owner": "https://api.ona.io/api/v1/users/user1",
+    "created_by": "https://api.ona.io/api/v1/users/user1",
+    "metadata": {
+      "category": "humanitarian",
+      "billing-code": "",
+      "location": "",
+      "description": ""
+    },
+    "starred": false,
+    "users": [
+      {
+        "first_name": "Jason",
+        "last_name": "Rogena",
+        "is_org": false,
+        "role": "editor",
+        "user": "user4",
+        "metadata": {
+          "first-login": false,
+          "zebra": {
+            "hide-project-view-walkthrough?": true,
+            "hide-home-walkthrough?": true,
+            "hide-billing-notification?": true,
+            "hide-data-view-walkthrough?": true,
+            "hide-odk-notification?": true,
+            "hide-share-modal-walkthrough?": true
+          }
+        }
+      },
+      {
+        "first_name": "sandra",
+        "last_name": "k",
+        "is_org": false,
+        "role": "owner",
+        "user": "user1",
+        "metadata": {
+          "zebra": {
+            "hide-project-view-walkthrough?": true,
+            "hide-home-walkthrough?": true,
+            "hide-billing-notification?": true,
+            "hide-data-view-walkthrough?": true,
+            "hide-odk-notification?": true,
+            "hide-share-modal-walkthrough?": true
+          },
+          "avatar-url": "https://images.ona.io/image/51f602d40b6541bb8798ccb3a9497bda/background3image.jpeg"
+        }
+      }
+    ],
+    "forms": [
+      {
+        "name": "Colourful_Choices",
+        "formid": 129132,
+        "id_string": "Colourful_Choices_3"
+      },
+      {
+        "name": "karojx1",
+        "formid": 148128,
+        "id_string": "karojx1"
+      },
+      {
+        "name": "OSM Example",
+        "formid": 129133,
+        "id_string": "osm_example"
+      },
+      {
+        "name": "Ranking Test 11072016",
+        "formid": 150167,
+        "id_string": "Ranking_Test"
+      }
+    ],
+    "public": true,
+    "tags": [],
+    "num_datasets": 4,
+    "last_submission_date": "2016-09-20T14:19:08.360Z",
+    "teams": [],
+    "date_created": "2016-06-14T11:35:52.294341Z",
+    "date_modified": "2017-01-01T08:11:59.290886Z"
+  }
+]

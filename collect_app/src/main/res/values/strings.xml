@@ -36,9 +36,9 @@
 <string name="recapture_osm">Redo OSM Tagging</string>
 <string name="capture_video">Record Video</string>
 <string name="change_language">Change Language</string>
-<string name="change_password">ODK Password</string>
+<string name="change_password">Ona Password</string>
 <string name="change_protocol_settings_default">Platform Settings</string>
-<string name="change_username">ODK Username</string>
+<string name="change_username">Ona Username</string>
 <string name="clearanswer_confirm">Remove the response to \"%s\"?</string>
 <string name="clear_answer">Remove response</string>
 <string name="clear_answer_ask">Remove This Response?</string>
@@ -186,7 +186,7 @@
 <string name="save_as_error">Saved name must not be blank!</string>
 <string name="edit_prompt">Edit Prompt</string>
 <string name="selected_google_account_text">Google account</string>
-<string name="server_platform_odk_aggregate">ODK Aggregate</string>
+<string name="server_platform_odk_aggregate">Ona</string>
 <string name="server_platform_other">Other</string>
 <string name="font_size_extra_large">Extra Large</string>
 <string name="font_size_large">Large</string>
@@ -305,7 +305,7 @@
 <string name="go_shared">Shared with Me</string>
 <string name="modified_on_date_at_time">\'Modified on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
 <string name="protocol_settings">Configure platform settings</string>
-<string name="aggregate_preferences">ODK Aggregate settings</string>
+<string name="aggregate_preferences">Ona settings</string>
 <string name="other_preferences">Other platform settings</string>
 <string name="google_preferences">Google Sheets settings</string>
 <string name="drive_get_file">Getting %1$s and media files.</string>
@@ -408,4 +408,14 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="please_enter_username">Please enter a username</string>
     <string name="please_enter_password">Please enter a password</string>
+    <string name="all_forms">Forms in all projects</string>
+    <string name="forms_in">Forms in %s</string>
+    <string name="shared_forms">Shared Forms</string>
+    <string name="show_shared_forms">Show forms shared with you</string>
+    <string name="show_shared_forms_description">Select to show forms other Ona users have shared
+        with you</string>
+    <string name="projects_url">Projects path</string>
+    <string name="change_projects_url">Projects path (appended to URL)</string>
+    <string name="change_api_url">API URL</string>
+    <string name="api_url">API URL</string>
 </resources>
