@@ -440,7 +440,7 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
                 final View dialogView = factory.inflate(R.layout.server_auth_dialog, null);
 
                 // Get the server, username, and password from the settings
-                SharedPreferences settings =
+                final SharedPreferences settings =
                     PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String server =
                     settings.getString(PreferencesActivity.KEY_SERVER_URL,
@@ -474,6 +474,10 @@ public class FormDownloadList extends ListActivity implements FormListDownloader
 
                         WebUtils.addCredentials(username.getText().toString(), password.getText()
                                 .toString(), u.getHost());
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString(PreferencesActivity.KEY_USERNAME, username.getText().toString());
+                        editor.putString(PreferencesActivity.KEY_PASSWORD, password.getText().toString());
+                        editor.commit();
                         downloadFormList();
                     }
                 });

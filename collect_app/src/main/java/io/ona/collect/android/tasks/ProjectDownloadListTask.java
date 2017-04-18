@@ -73,6 +73,10 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
         ArrayList<Header> extraHeaders = new ArrayList<>();
         extraHeaders.add(WebUtils.constructBasicAuthHeader(storedUsername, storedPassword));
 
+        formsInProjects = new HashMap<>();
+        String allFormsString = Collect.getInstance().getResources().getString(R.string.all_forms);
+        formsInProjects.put(allFormsString, forms);
+
         try {
             String result = WebUtils.downloadUrl(new URL(downloadListUrl), extraHeaders);
             JSONArray array = new JSONArray(result);
@@ -85,7 +89,7 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
             }
 
             if (forms != null) {
-                formsInProjects = splitFormsIntoAccounts(Collect.getInstance(), forms, projectDetails);
+                splitFormsIntoAccounts(Collect.getInstance(), forms, formsInProjects, projectDetails);
             }
         } catch (MalformedURLException mue) {
             errorMessage = mue.getMessage();
@@ -101,8 +105,9 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
         return projectDetails;
     }
 
-    public static HashMap<String, HashMap<String, FormDetails>> splitFormsIntoAccounts(
+    public static void splitFormsIntoAccounts(
             Context context, final HashMap<String, FormDetails> forms,
+            HashMap<String, HashMap<String, FormDetails>> formsInProjects,
             ArrayList<ProjectDetails> projects) {
 
         HashMap<String, String> downloadURLToKey = new HashMap<>();// Map with downloadURL as key
@@ -120,8 +125,6 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
         if (projects == null) projects = new ArrayList<>();
 
         String allFormsString = context.getResources().getString(R.string.all_forms);
-        HashMap<String, HashMap<String, FormDetails>> result = new HashMap<>();
-        result.put(allFormsString, forms);
 
         SharedPreferences settings =
                 PreferenceManager.getDefaultSharedPreferences(context);
@@ -144,29 +147,27 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
                 }
 
                 if (projectKey != null) {
-                    if (!result.containsKey(projectKey)) {
-                        result.put(projectKey,
+                    if (!formsInProjects.containsKey(projectKey)) {
+                        formsInProjects.put(projectKey,
                                 new HashMap<String, FormDetails>());
                     }
 
-                    result.get(projectKey).put(downloadURLToKey.get(curForm.downloadUrl), curForm);
+                    formsInProjects.get(projectKey).put(downloadURLToKey.get(curForm.downloadUrl), curForm);
                 }
             } else {
                 Log.e(TAG, "Could not extract the user that owns the specified form");
             }
         }
 
-        if (result.size() == 2 || (result.size() == 1 && !showSharedForms)) {
+        if (formsInProjects.size() == 2 || (formsInProjects.size() == 1 && !showSharedForms)) {
             /*
             All forms are initially all put in the first item in the map (called "all_forms").
             Cases where you end up with two items in the map after splitting forms by accounts means
             that there's only one account
              */
             // Remove the all_forms item to avoid redundant items
-            result.remove(allFormsString);
+            formsInProjects.remove(allFormsString);
         }
-
-        return result;
     }
 
     @Override
