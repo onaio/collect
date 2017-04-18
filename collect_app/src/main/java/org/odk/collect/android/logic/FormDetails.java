@@ -14,7 +14,12 @@
 
 package org.odk.collect.android.logic;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import org.odk.collect.android.preferences.PreferencesActivity;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -125,5 +130,32 @@ public class FormDetails implements Serializable, Comparator<FormDetails>, Compa
         } else {
             return -1;// lhs is considered less than rhs
         }
+    }
+
+    /**
+     * Determines whether a form should be showing based on whether the 'Show shared forms' preference
+     * is turned on
+     *
+     * @param context
+     * @param curForm
+     * @return
+     */
+    public static boolean formShouldBeShowing(Context context, FormDetails curForm) {
+        SharedPreferences settings =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS,
+                true);
+
+        if (!showSharedForms) {
+            String username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
+            String user = FormDetails.getOnaUser(curForm);
+
+            if (user == null || username == null || !user.equals(username)) {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 }

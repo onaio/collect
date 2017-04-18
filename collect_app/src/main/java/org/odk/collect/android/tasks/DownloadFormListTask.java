@@ -30,6 +30,7 @@ import org.odk.collect.android.preferences.PreferencesActivity;
 import org.odk.collect.android.utilities.DocumentFetchResult;
 import org.odk.collect.android.utilities.WebUtils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -209,7 +210,10 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                             R.string.parse_openrosa_formlist_failed, error)));
                     return formList;
                 }
-                formList.put(formId, new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion));
+                FormDetails curForm = new FormDetails(formName, downloadUrl, manifestUrl, formId, (version != null) ? version : majorMinorVersion);
+                if (FormDetails.formShouldBeShowing(Collect.getInstance(), curForm)) {
+                    formList.put(formId, curForm);
+                }
             }
         } else {
             // Aggregate 0.9.x mode...
@@ -252,7 +256,10 @@ public class DownloadFormListTask extends AsyncTask<Void, String, HashMap<String
                                 R.string.parse_legacy_formlist_failed, error)));
                         return formList;
                     }
-                    formList.put(formName, new FormDetails(formName, downloadUrl, null, formId, null));
+                    FormDetails curForm = new FormDetails(formName, downloadUrl, null, formId, null);
+                    if(FormDetails.formShouldBeShowing(Collect.getInstance(), curForm)) {
+                        formList.put(formName, curForm);
+                    }
 
                     formId = null;
                 }

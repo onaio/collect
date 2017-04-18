@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.logic.FormDetails;
 import org.odk.collect.android.preferences.PreferencesActivity;
+import org.odk.collect.android.tasks.DownloadFormListTask;
 import org.odk.collect.android.utilities.WebUtils;
 import org.opendatakit.httpclientandroidlib.Header;
 
@@ -75,6 +76,7 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
 
         formsInProjects = new HashMap<>();
         String allFormsString = Collect.getInstance().getResources().getString(R.string.all_forms);
+
         formsInProjects.put(allFormsString, forms);
 
         try {
@@ -130,32 +132,20 @@ public class ProjectDownloadListTask extends AsyncTask<Void, Void, ArrayList<Pro
                 PreferenceManager.getDefaultSharedPreferences(context);
         boolean showSharedForms = settings.getBoolean(PreferencesActivity.KEY_SHOW_SHARED_FORMS,
                 true);
-        String username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
-
         for (FormDetails curForm : forms.values()) {
-            String user = FormDetails.getOnaUser(curForm);
-            if (user != null) {
-                // Check if user wants to see shared forms
-                if (username != null && !showSharedForms && !user.equals(username)) {
-                    continue;
+            String projectKey = null;
+            String onaFormId = FormDetails.getOnaFormId(curForm);
+            if (onaFormIdProjectMap.containsKey(onaFormId)) {
+                projectKey = onaFormIdProjectMap.get(onaFormId);
+            }
+
+            if (projectKey != null) {
+                if (!formsInProjects.containsKey(projectKey)) {
+                    formsInProjects.put(projectKey,
+                            new HashMap<String, FormDetails>());
                 }
 
-                String projectKey = null;
-                String onaFormId = FormDetails.getOnaFormId(curForm);
-                if (onaFormIdProjectMap.containsKey(onaFormId)) {
-                    projectKey = onaFormIdProjectMap.get(onaFormId);
-                }
-
-                if (projectKey != null) {
-                    if (!formsInProjects.containsKey(projectKey)) {
-                        formsInProjects.put(projectKey,
-                                new HashMap<String, FormDetails>());
-                    }
-
-                    formsInProjects.get(projectKey).put(downloadURLToKey.get(curForm.downloadUrl), curForm);
-                }
-            } else {
-                Log.e(TAG, "Could not extract the user that owns the specified form");
+                formsInProjects.get(projectKey).put(downloadURLToKey.get(curForm.downloadUrl), curForm);
             }
         }
 
