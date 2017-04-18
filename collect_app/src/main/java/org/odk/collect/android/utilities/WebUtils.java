@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -613,10 +614,15 @@ public final class WebUtils {
 	public static String downloadUrl(URL url, ArrayList<Header> requestedHeaders)
 			throws IOException {
 		InputStream stream = null;
-		HttpsURLConnection connection = null;
+		HttpURLConnection connection = null;
+		if(url.getProtocol().equalsIgnoreCase("https")) {
+			connection = (HttpsURLConnection) url.openConnection();
+		} else {
+			connection = (HttpURLConnection) url.openConnection();
+		}
+
 		String result = null;
 		try {
-			connection = (HttpsURLConnection) url.openConnection();
 			connection.setReadTimeout(CONNECTION_TIMEOUT);
 			connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
@@ -667,6 +673,7 @@ public final class WebUtils {
 				connection.disconnect();
 			}
 		}
+		Log.d(t, "Result is "+result);
 		return result;
 	}
 
