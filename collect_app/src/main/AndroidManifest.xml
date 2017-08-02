@@ -65,6 +65,13 @@ the specific language governing permissions and limitations under the License.
         android:name="org.odk.collect.android.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
+    <!-- TODO: Should this be changed to signature and the team management app signed by Collect's key -->
+    <permission
+        android:name="org.odk.collect.android.permission.RECEIVE_BROADCASTS"
+        android:protectionLevel="normal"
+        android:label="@string/perm_receive_broadcasts_label"
+        android:description="@string/perm_receive_broadcasts_description" />
+
     <uses-permission android:name="org.odk.collect.android.permission.MAPS_RECEIVE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 

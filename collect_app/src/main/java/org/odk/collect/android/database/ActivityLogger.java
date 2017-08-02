@@ -20,9 +20,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.text.TextUtils;
 
 import org.javarosa.core.model.FormIndex;
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.broadcasts.ActivityStateChangeBroadcast;
 import org.odk.collect.android.logic.FormController;
 
 import java.io.File;
@@ -255,10 +257,14 @@ public final class ActivityLogger {
 
     public void logOnStart(Activity a) {
         log(a.getClass().getName(), "onStart", null, null, null, null, null);
+        ActivityStateChangeBroadcast broadcast = new ActivityStateChangeBroadcast(a);
+        broadcast.broadcastState(ActivityStateChangeBroadcast.STATE_STARTED);
     }
 
     public void logOnStop(Activity a) {
         log(a.getClass().getName(), "onStop", null, null, null, null, null);
+        ActivityStateChangeBroadcast broadcast = new ActivityStateChangeBroadcast(a);
+        broadcast.broadcastState(ActivityStateChangeBroadcast.STATE_STOPPED);
     }
 
     public void logAction(Object t, String context, String action) {
