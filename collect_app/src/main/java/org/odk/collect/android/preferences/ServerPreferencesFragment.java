@@ -39,6 +39,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.broadcasts.ServerSettingsChangeBroadcast;
 import org.odk.collect.android.preferences.filters.ControlCharacterFilter;
 import org.odk.collect.android.preferences.filters.WhitespaceFilter;
 import org.odk.collect.android.utilities.AuthDialogUtility;
@@ -278,8 +279,7 @@ public class ServerPreferencesFragment extends BasePreferenceFragment implements
 
                 // To ensure we update current credentials in CredentialsProvider
                 credentialsHaveChanged = true;
-
-                return true;
+                break;
 
             case PreferenceKeys.KEY_PASSWORD:
                 String pw = newValue.toString();
@@ -323,6 +323,9 @@ public class ServerPreferencesFragment extends BasePreferenceFragment implements
                 }
                 break;
         }
+
+        new ServerSettingsChangeBroadcast(getActivity())
+                .broadcastChange(preference.getKey(), newValue);
         return true;
     }
 
