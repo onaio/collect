@@ -29,6 +29,7 @@ import org.odk.collect.android.http.CollectServerClient;
 import org.odk.collect.android.listeners.FormDownloaderListener;
 import org.odk.collect.android.logic.FormDetails;
 import org.odk.collect.android.logic.MediaFile;
+import org.odk.collect.android.provider.FormsProvider;
 import org.odk.collect.android.provider.FormsProviderAPI;
 
 import java.io.File;
@@ -169,6 +170,8 @@ public class FormDownloader {
                 final long start = System.currentTimeMillis();
                 Timber.w("Parsing document %s", fileResult.file.getAbsolutePath());
                 parsedFields = FileUtils.parseXML(fileResult.file);
+                parsedFields.put(FormsProviderAPI.FormsColumns.JR_DOWNLOAD_URL, fd.getDownloadUrl());
+                parsedFields.put(FormsProviderAPI.FormsColumns.JR_MANIFEST_URL, fd.getManifestUrl());
                 Timber.i("Parse finished in %.3f seconds.",
                         (System.currentTimeMillis() - start) / 1000F);
             } catch (RuntimeException e) {
@@ -302,6 +305,8 @@ public class FormDownloader {
         v.put(FormsProviderAPI.FormsColumns.DISPLAY_NAME,            formInfo.get(FileUtils.TITLE));
         v.put(FormsProviderAPI.FormsColumns.JR_VERSION,              formInfo.get(FileUtils.VERSION));
         v.put(FormsProviderAPI.FormsColumns.JR_FORM_ID,              formInfo.get(FileUtils.FORMID));
+        v.put(FormsProviderAPI.FormsColumns.JR_DOWNLOAD_URL,         formInfo.get(FormsProviderAPI.FormsColumns.JR_DOWNLOAD_URL));
+        v.put(FormsProviderAPI.FormsColumns.JR_MANIFEST_URL,         formInfo.get(FormsProviderAPI.FormsColumns.JR_MANIFEST_URL));
         v.put(FormsProviderAPI.FormsColumns.SUBMISSION_URI,          formInfo.get(FileUtils.SUBMISSIONURI));
         v.put(FormsProviderAPI.FormsColumns.BASE64_RSA_PUBLIC_KEY,   formInfo.get(FileUtils.BASE64_RSA_PUBLIC_KEY));
         v.put(FormsProviderAPI.FormsColumns.AUTO_DELETE,             formInfo.get(FileUtils.AUTO_DELETE));

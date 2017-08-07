@@ -284,6 +284,8 @@ public class DiskSyncTask extends AsyncTask<Void, String, String> {
         if (version != null) {
             updateValues.put(FormsColumns.JR_VERSION, version);
         }
+        updateValues.put(FormsColumns.JR_DOWNLOAD_URL, (String) null);
+        updateValues.put(FormsColumns.JR_MANIFEST_URL, (String) null);
         String submission = fields.get(FileUtils.SUBMISSIONURI);
         if (submission != null) {
             if (Validator.isUrlValid(submission)) {

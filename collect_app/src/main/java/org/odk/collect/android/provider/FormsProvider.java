@@ -545,6 +545,8 @@ public class FormsProvider extends ContentProvider {
         sFormsProjectionMap.put(FormsColumns.DESCRIPTION, FormsColumns.DESCRIPTION);
         sFormsProjectionMap.put(FormsColumns.JR_FORM_ID, FormsColumns.JR_FORM_ID);
         sFormsProjectionMap.put(FormsColumns.JR_VERSION, FormsColumns.JR_VERSION);
+        sFormsProjectionMap.put(FormsColumns.JR_DOWNLOAD_URL, FormsColumns.JR_DOWNLOAD_URL);
+        sFormsProjectionMap.put(FormsColumns.JR_MANIFEST_URL, FormsColumns.JR_MANIFEST_URL);
         sFormsProjectionMap.put(FormsColumns.SUBMISSION_URI, FormsColumns.SUBMISSION_URI);
         sFormsProjectionMap.put(FormsColumns.BASE64_RSA_PUBLIC_KEY, FormsColumns.BASE64_RSA_PUBLIC_KEY);
         sFormsProjectionMap.put(FormsColumns.MD5_HASH, FormsColumns.MD5_HASH);

@@ -39,6 +39,8 @@ import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.FOR
 import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.JRCACHE_FILE_PATH;
 import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.JR_FORM_ID;
 import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.JR_VERSION;
+import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.JR_DOWNLOAD_URL;
+import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.JR_MANIFEST_URL;
 import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.LANGUAGE;
 import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.LAST_DETECTED_FORM_VERSION_HASH;
 import static org.odk.collect.android.provider.FormsProviderAPI.FormsColumns.MD5_HASH;
@@ -51,7 +53,7 @@ public class FormsDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "forms.db";
     public static final String FORMS_TABLE_NAME = "forms";
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     // These exist in database versions 2 and 3, but not in 4...
     private static final String TEMP_FORMS_TABLE_NAME = "forms_v4";
@@ -82,6 +84,8 @@ public class FormsDatabaseHelper extends SQLiteOpenHelper {
                 success &= upgradeToVersion5(db);
             case 5:
                 success &= upgradeToVersion6(db);
+            case 6:
+                success &= upgradeToVersion7(db);
                 break;
             default:
                 Timber.i("Unknown version %s", oldVersion);
@@ -295,6 +299,28 @@ public class FormsDatabaseHelper extends SQLiteOpenHelper {
         return success;
     }
 
+    private boolean upgradeToVersion7(SQLiteDatabase db) {
+        boolean success = true;
+        try {
+            CustomSQLiteQueryBuilder
+                    .begin(db)
+                    .alter()
+                    .table(FORMS_TABLE_NAME)
+                    .addColumn(JR_DOWNLOAD_URL, "text")
+                    .end();
+            CustomSQLiteQueryBuilder
+                    .begin(db)
+                    .alter()
+                    .table(FORMS_TABLE_NAME)
+                    .addColumn(JR_MANIFEST_URL, "text")
+                    .end();
+        } catch (SQLiteException e) {
+            Timber.e(e);
+            success = false;
+        }
+        return success;
+    }
+
     private void createFormsTable(SQLiteDatabase db, String tableName) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + tableName + " ("
                 + _ID + " integer primary key, "
@@ -303,6 +329,8 @@ public class FormsDatabaseHelper extends SQLiteOpenHelper {
                 + DESCRIPTION + " text, "
                 + JR_FORM_ID + " text not null, "
                 + JR_VERSION + " text, "
+                + JR_DOWNLOAD_URL + " text, "
+                + JR_MANIFEST_URL + " text, "
                 + MD5_HASH + " text not null, "
                 + DATE + " integer not null, " // milliseconds
                 + FORM_MEDIA_PATH + " text not null, "
