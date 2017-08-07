@@ -159,7 +159,7 @@ public class DownloadFormsTask extends
                 // install everything
                 UriResult uriResult = null;
                 try {
-                    uriResult = findExistingOrCreateNewUri(fileResult.getFile());
+                    uriResult = findExistingOrCreateNewUri(fd, fileResult.getFile());
                     Timber.w("Form uri = %s, isNew = %b", uriResult.getUri().toString(), uriResult.isNew());
 
                     // move the media files in the media folder
@@ -246,11 +246,13 @@ public class DownloadFormsTask extends
     /**
      * Checks a form file whether it is a new one or if it matches an old one.
      *
+     * @param formDetails Details on the form
      * @param formFile the form definition file
      * @return a {@link org.odk.collect.android.tasks.DownloadFormsTask.UriResult} object
      * @throws TaskCancelledException if the user cancels the task during the download.
      */
-    private UriResult findExistingOrCreateNewUri(File formFile) throws TaskCancelledException {
+    private UriResult findExistingOrCreateNewUri(FormDetails formDetails, File formFile)
+            throws TaskCancelledException {
         Cursor cursor = null;
         Uri uri = null;
         String mediaPath;
@@ -283,6 +285,8 @@ public class DownloadFormsTask extends
 
                 v.put(FormsColumns.DISPLAY_NAME, formInfo.get(FileUtils.TITLE));
                 v.put(FormsColumns.JR_VERSION, formInfo.get(FileUtils.VERSION));
+                v.put(FormsColumns.JR_DOWNLOAD_URL, formDetails.downloadUrl);
+                v.put(FormsColumns.JR_MANIFEST_URL, formDetails.manifestUrl);
                 v.put(FormsColumns.JR_FORM_ID, formInfo.get(FileUtils.FORMID));
                 v.put(FormsColumns.SUBMISSION_URI, formInfo.get(FileUtils.SUBMISSIONURI));
                 v.put(FormsColumns.BASE64_RSA_PUBLIC_KEY,

@@ -48,7 +48,7 @@ public class FormsProvider extends ContentProvider {
 
 
     private static final String DATABASE_NAME = "forms.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String FORMS_TABLE_NAME = "forms";
 
     private static HashMap<String, String> sFormsProjectionMap;
@@ -84,6 +84,10 @@ public class FormsProvider extends ContentProvider {
                     + FormsColumns.JR_FORM_ID
                     + " text not null, "
                     + FormsColumns.JR_VERSION
+                    + " text, "
+                    + FormsColumns.JR_DOWNLOAD_URL
+                    + " text, "
+                    + FormsColumns.JR_MANIFEST_URL
                     + " text, "
                     + FormsColumns.MD5_HASH
                     + " text not null, "
@@ -123,6 +127,11 @@ public class FormsProvider extends ContentProvider {
                         + ", "
                         + FormsColumns.JR_FORM_ID
                         + ", "
+                        + ((oldVersion < 5) ? ""
+                        : FormsColumns.JR_DOWNLOAD_URL
+                        + ", "
+                        + FormsColumns.JR_MANIFEST_URL
+                        + ", ")
                         + FormsColumns.MD5_HASH
                         + ", "
                         + FormsColumns.DATE
@@ -151,6 +160,11 @@ public class FormsProvider extends ContentProvider {
                         + ", "
                         + FormsColumns.JR_FORM_ID
                         + ", "
+                        + ((oldVersion < 5) ? ""
+                        : FormsColumns.JR_DOWNLOAD_URL
+                        + ", "
+                        + FormsColumns.JR_MANIFEST_URL
+                        + ", ")
                         + FormsColumns.MD5_HASH
                         + ", "
                         + FormsColumns.DATE
@@ -163,12 +177,15 @@ public class FormsProvider extends ContentProvider {
                         + ", "
                         + FormsColumns.SUBMISSION_URI
                         + ", "
-                        + "CASE WHEN "
+                        + ((oldVersion > 3)
+                        ? FormsColumns.JR_VERSION
+                        + ", "
+                        : "CASE WHEN "
                         + MODEL_VERSION
                         + " IS NOT NULL THEN "
                         + "CAST("
                         + MODEL_VERSION
-                        + " AS TEXT) ELSE NULL END, "
+                        + " AS TEXT) ELSE NULL END, ")
                         + ((oldVersion != 3) ? ""
                         : (FormsColumns.BASE64_RSA_PUBLIC_KEY + ", "))
                         + FormsColumns.JRCACHE_FILE_PATH + " FROM "
@@ -190,6 +207,10 @@ public class FormsProvider extends ContentProvider {
                         + ", "
                         + FormsColumns.JR_FORM_ID
                         + ", "
+                        + FormsColumns.JR_DOWNLOAD_URL
+                        + ", "
+                        + FormsColumns.JR_MANIFEST_URL
+                        + ", "
                         + FormsColumns.MD5_HASH
                         + ", "
                         + FormsColumns.DATE
@@ -209,6 +230,10 @@ public class FormsProvider extends ContentProvider {
                         + FormsColumns.DESCRIPTION
                         + ", "
                         + FormsColumns.JR_FORM_ID
+                        + ", "
+                        + FormsColumns.JR_DOWNLOAD_URL
+                        + ", "
+                        + FormsColumns.JR_MANIFEST_URL
                         + ", "
                         + FormsColumns.MD5_HASH
                         + ", "
@@ -707,6 +732,10 @@ public class FormsProvider extends ContentProvider {
                 FormsColumns.JR_FORM_ID);
         sFormsProjectionMap.put(FormsColumns.JR_VERSION,
                 FormsColumns.JR_VERSION);
+        sFormsProjectionMap.put(FormsColumns.JR_DOWNLOAD_URL,
+                FormsColumns.JR_DOWNLOAD_URL);
+        sFormsProjectionMap.put(FormsColumns.JR_MANIFEST_URL,
+                FormsColumns.JR_MANIFEST_URL);
         sFormsProjectionMap.put(FormsColumns.SUBMISSION_URI,
                 FormsColumns.SUBMISSION_URI);
         sFormsProjectionMap.put(FormsColumns.BASE64_RSA_PUBLIC_KEY,

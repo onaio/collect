@@ -118,6 +118,8 @@ public class FormsDao {
                     int descriptionColumnIndex = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.DESCRIPTION);
                     int jrFormIdColumnIndex = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_FORM_ID);
                     int jrVersionColumnIndex = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_VERSION);
+                    int jrDownloadUrl = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_DOWNLOAD_URL);
+                    int jrManifestUrl = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_MANIFEST_URL);
                     int formFilePathColumnIndex = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.FORM_FILE_PATH);
                     int submissionUriColumnIndex = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.SUBMISSION_URI);
                     int base64RSAPublicKeyColumnIndex = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.BASE64_RSA_PUBLIC_KEY);
@@ -133,6 +135,8 @@ public class FormsDao {
                             .description(cursor.getString(descriptionColumnIndex))
                             .jrFormId(cursor.getString(jrFormIdColumnIndex))
                             .jrVersion(cursor.getString(jrVersionColumnIndex))
+                            .jrDownloadUrl(cursor.getString(jrDownloadUrl))
+                            .jrManifestUrl(cursor.getString(jrManifestUrl))
                             .formFilePath(cursor.getString(formFilePathColumnIndex))
                             .submissionUri(cursor.getString(submissionUriColumnIndex))
                             .base64RSAPublicKey(cursor.getString(base64RSAPublicKeyColumnIndex))
@@ -159,6 +163,8 @@ public class FormsDao {
         values.put(FormsProviderAPI.FormsColumns.DESCRIPTION, form.getDescription());
         values.put(FormsProviderAPI.FormsColumns.JR_FORM_ID, form.getJrFormId());
         values.put(FormsProviderAPI.FormsColumns.JR_VERSION, form.getJrVersion());
+        values.put(FormsProviderAPI.FormsColumns.JR_DOWNLOAD_URL, form.getJrDownloadUrl());
+        values.put(FormsProviderAPI.FormsColumns.JR_MANIFEST_URL, form.getJrManifestUrl());
         values.put(FormsProviderAPI.FormsColumns.FORM_FILE_PATH, form.getFormFilePath());
         values.put(FormsProviderAPI.FormsColumns.SUBMISSION_URI, form.getSubmissionUri());
         values.put(FormsProviderAPI.FormsColumns.BASE64_RSA_PUBLIC_KEY, form.getBASE64RSAPublicKey());

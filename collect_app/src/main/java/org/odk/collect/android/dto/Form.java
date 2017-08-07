@@ -27,6 +27,8 @@ public class Form {
     private String description;
     private String jrFormId;
     private String jrVersion;
+    private String jrDownloadUrl;
+    private String jrManifestUrl;
     private String formFilePath;
     private String submissionUri;
     private String base64RSAPublicKey;
@@ -42,6 +44,8 @@ public class Form {
         description = builder.description;
         jrFormId = builder.jrFormId;
         jrVersion = builder.jrVersion;
+        jrDownloadUrl = builder.jrDownloadUrl;
+        jrManifestUrl = builder.jrManifestUrl;
         formFilePath = builder.formFilePath;
         submissionUri = builder.submissionUri;
         base64RSAPublicKey = builder.base64RSAPublicKey;
@@ -58,6 +62,8 @@ public class Form {
         private String description;
         private String jrFormId;
         private String jrVersion;
+        private String jrDownloadUrl;
+        private String jrManifestUrl;
         private String formFilePath;
         private String submissionUri;
         private String base64RSAPublicKey;
@@ -88,6 +94,15 @@ public class Form {
             return this;
         }
 
+        public Builder jrDownloadUrl(String jrDownloadUrl) {
+            this.jrDownloadUrl = jrDownloadUrl;
+            return this;
+        }
+
+        public Builder jrManifestUrl(String jrManifestUrl) {
+            this.jrManifestUrl = jrManifestUrl;
+            return this;
+        }
 
         public Builder formFilePath(String formFilePath) {
             this.formFilePath = formFilePath;
@@ -154,6 +169,14 @@ public class Form {
 
     public String getJrVersion() {
         return jrVersion;
+    }
+
+    public String getJrDownloadUrl() {
+        return jrDownloadUrl;
+    }
+
+    public String getJrManifestUrl() {
+        return jrManifestUrl;
     }
 
     public String getFormFilePath() {

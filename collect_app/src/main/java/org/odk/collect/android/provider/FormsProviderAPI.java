@@ -47,6 +47,8 @@ public final class FormsProviderAPI {
         public static final String DESCRIPTION = "description";  // can be null
         public static final String JR_FORM_ID = "jrFormId";
         public static final String JR_VERSION = "jrVersion"; // can be null
+        public static final String JR_DOWNLOAD_URL = "jrDownloadUrl"; // can be null
+        public static final String JR_MANIFEST_URL = "jrManifestUrl"; // can be null
         public static final String FORM_FILE_PATH = "formFilePath";
         public static final String SUBMISSION_URI = "submissionUri"; // can be null
         public static final String BASE64_RSA_PUBLIC_KEY = "base64RsaPublicKey"; // can be null
