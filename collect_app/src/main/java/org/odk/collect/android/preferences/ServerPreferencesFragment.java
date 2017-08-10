@@ -39,7 +39,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.broadcasts.ServerSettingsChangeBroadcast;
+import org.odk.collect.android.broadcasts.ConnectionSettingsChangeBroadcast;
 import org.odk.collect.android.preferences.filters.ControlCharacterFilter;
 import org.odk.collect.android.preferences.filters.WhitespaceFilter;
 import org.odk.collect.android.utilities.AuthDialogUtility;
@@ -324,7 +324,7 @@ public class ServerPreferencesFragment extends BasePreferenceFragment implements
                 break;
         }
 
-        new ServerSettingsChangeBroadcast(getActivity())
+        new ConnectionSettingsChangeBroadcast(getActivity())
                 .broadcastChange(preference.getKey(), newValue);
         return true;
     }
