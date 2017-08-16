@@ -325,7 +325,7 @@ public class ServerPreferencesFragment extends BasePreferenceFragment implements
         }
 
         new ConnectionSettingsChangeBroadcast(getActivity())
-                .broadcastChange(preference.getKey(), newValue);
+                .sendBroadcast(preference.getKey(), newValue);
         return true;
     }
 

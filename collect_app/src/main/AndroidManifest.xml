@@ -275,6 +275,13 @@ the specific language governing permissions and limitations under the License.
                 <action android:name="org.odk.collect.android.FormSaved" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".receivers.ConnectionSettingsRequestReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="org.odk.collect.android.CONNECTION_SETTINGS_REQUEST" />
+            </intent-filter>
+        </receiver>
         <!-- Register AnalyticsReceiver and AnalyticsService to support background
         dispatching on non-Google Play devices. -->
         <receiver

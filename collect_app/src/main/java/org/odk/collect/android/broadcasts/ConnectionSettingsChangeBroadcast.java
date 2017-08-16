@@ -34,14 +34,21 @@ public class ConnectionSettingsChangeBroadcast extends Broadcast {
         this.context = context;
     }
 
-    public void broadcastChange(String preference, Object value) {
+    /**
+     * Broadcasts connection settings
+     *
+     * @param preference    The preference that just changed. Set to {@code null} if none
+     * @param value         The new value of the preference that was just set. Set to {@code null}
+     *                      if none
+     */
+    public void sendBroadcast(String preference, Object value) {
         GeneralSharedPreferences settings = GeneralSharedPreferences.getInstance();
 
         HashMap<String, String> preferences = new HashMap<>();
         for (String curSharedPrefKey : CONNECTION_PREFERENCES) {
             preferences.put(curSharedPrefKey, (String) settings.get(curSharedPrefKey));
         }
-        if (CONNECTION_PREFERENCES.contains(preference)) {
+        if (preference != null && CONNECTION_PREFERENCES.contains(preference)) {
             preferences.put(preference, (String) value);
         }
 
