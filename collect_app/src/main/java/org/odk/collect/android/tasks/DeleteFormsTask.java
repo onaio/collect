@@ -15,12 +15,19 @@
 package org.odk.collect.android.tasks;
 
 import android.content.ContentResolver;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.broadcasts.FormStateBroadcast;
+import org.odk.collect.android.dao.FormsDao;
+import org.odk.collect.android.dto.Form;
 import org.odk.collect.android.listeners.DeleteFormsListener;
 import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -48,6 +55,7 @@ public class DeleteFormsTask extends AsyncTask<Long, Void, Integer> {
         toDeleteCount = params.length;
 
         // delete files from database and then from file system
+        FormStateBroadcast formStateBroadcast = new FormStateBroadcast(Collect.getInstance());
         for (Long param : params) {
             if (isCancelled()) {
                 break;
@@ -55,6 +63,8 @@ public class DeleteFormsTask extends AsyncTask<Long, Void, Integer> {
             try {
                 Uri deleteForm =
                         Uri.withAppendedPath(FormsColumns.CONTENT_URI, param.toString());
+                Cursor cursor = cr.query(deleteForm, null, null, null, null);
+                List<Form> forms = new FormsDao().getFormsFromCursor(cursor);
 
                 int wasDeleted = cr.delete(deleteForm, null, null);
                 deleted += wasDeleted;
@@ -62,6 +72,10 @@ public class DeleteFormsTask extends AsyncTask<Long, Void, Integer> {
                 if (wasDeleted > 0) {
                     Collect.getInstance().getActivityLogger().logAction(this, "delete",
                             deleteForm.toString());
+                    if (forms != null && forms.size() == 1) {
+                        formStateBroadcast.broadcastState(forms.get(0),
+                                FormStateBroadcast.STATE_FORM_DELETED);
+                    }
                 }
             } catch (Exception ex) {
                 Timber.e("Exception during delete of: %s exception: %s", param.toString(), ex.toString());

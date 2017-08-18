@@ -25,7 +25,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +37,6 @@ import android.widget.SimpleAdapter;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.broadcasts.FormStateBroadcast;
 import org.odk.collect.android.dao.FormsDao;
 import org.odk.collect.android.listeners.FormDownloaderListener;
 import org.odk.collect.android.listeners.FormListDownloaderListener;
@@ -752,17 +750,12 @@ public class FormDownloadList extends FormListActivity implements FormListDownlo
 
         Set<FormDetails> keys = result.keySet();
         StringBuilder b = new StringBuilder();
-        FormStateBroadcast formStateBroadcast = new FormStateBroadcast(this);
         for (FormDetails k : keys) {
             b.append(k.formName + " ("
                     + ((k.formVersion != null)
                     ? (this.getString(R.string.version) + ": " + k.formVersion + " ")
                     : "") + "ID: " + k.formID + ") - " + result.get(k));
             b.append("\n\n");
-            if (!TextUtils.isEmpty(result.get(k))
-                    && result.get(k).equals(Collect.getInstance().getString(R.string.success))) {
-                formStateBroadcast.broadcastState(k, FormStateBroadcast.STATE_FORM_DOWNLOADED);
-            }
         }
 
         createAlertDialog(getString(R.string.download_forms_result), b.toString().trim(), EXIT);

@@ -18,11 +18,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import org.javarosa.xform.parse.XFormParser;
 import org.kxml2.kdom.Element;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.broadcasts.FormStateBroadcast;
 import org.odk.collect.android.dao.FormsDao;
 import org.odk.collect.android.exception.TaskCancelledException;
 import org.odk.collect.android.listeners.FormDownloaderListener;
@@ -732,6 +734,14 @@ public class DownloadFormsTask extends
     @Override
     protected void onPostExecute(HashMap<FormDetails, String> value) {
         synchronized (this) {
+            FormStateBroadcast formStateBroadcast = new FormStateBroadcast(Collect.getInstance());
+            for (FormDetails k : value.keySet()) {
+                if (!TextUtils.isEmpty(value.get(k))
+                        && value.get(k).equals(Collect.getInstance().getString(R.string.success))) {
+                    formStateBroadcast.broadcastState(k, FormStateBroadcast.STATE_FORM_DOWNLOADED);
+                }
+            }
+
             if (stateListener != null) {
                 stateListener.formsDownloadingComplete(value);
             }

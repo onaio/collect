@@ -3,6 +3,7 @@ package org.odk.collect.android.broadcasts;
 import android.content.Context;
 import android.content.Intent;
 
+import org.odk.collect.android.dto.Form;
 import org.odk.collect.android.logic.FormDetails;
 
 /**
@@ -38,11 +39,26 @@ public class FormStateBroadcast extends Broadcast {
         sendBroadcast(context, intent, ACTION_FORM_STATE_CHANGED);
     }
 
+    public void broadcastState(Form form, String state) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_STATE, state);
+        addForm(intent, form);
+        sendBroadcast(context, intent, ACTION_FORM_STATE_CHANGED);
+    }
+
     private void addFormDetails(Intent intent, FormDetails formDetails) {
         intent.putExtra(KEY_FORM_NAME, formDetails.formName);
         intent.putExtra(KEY_DOWNLOAD_URL, formDetails.downloadUrl);
         intent.putExtra(KEY_MANIFEST_URL, formDetails.manifestUrl);
         intent.putExtra(KEY_FORM_ID, formDetails.formID);
         intent.putExtra(KEY_FORM_VERSION, formDetails.formVersion);
+    }
+
+    private void addForm(Intent intent, Form form) {
+        intent.putExtra(KEY_FORM_NAME, form.getDisplayName());
+        intent.putExtra(KEY_DOWNLOAD_URL, form.getJrDownloadUrl());
+        intent.putExtra(KEY_MANIFEST_URL, form.getJrManifestUrl());
+        intent.putExtra(KEY_FORM_ID, form.getJrFormId());
+        intent.putExtra(KEY_FORM_VERSION, form.getJrVersion());
     }
 }
