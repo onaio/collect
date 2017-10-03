@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,12 +19,19 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import org.javarosa.core.model.FormDef;
 import org.javarosa.core.model.QuestionDef;
+import org.javarosa.core.model.condition.EvaluationContext;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.StringData;
+import org.javarosa.core.model.instance.FormInstance;
 import org.javarosa.core.model.osm.OSMTag;
 import org.javarosa.core.model.osm.OSMTagItem;
 import org.javarosa.form.api.FormEntryPrompt;
+import org.javarosa.model.xform.XPathReference;
+import org.javarosa.xpath.XPathNodeset;
+import org.javarosa.xpath.expr.XPathFuncExpr;
+import org.javarosa.xpath.expr.XPathPathExpr;
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
@@ -31,6 +40,8 @@ import org.opendatakit.httpclientandroidlib.entity.ContentType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Widget that allows the user to launch OpenMapKit to get an OSM Feature with a
@@ -40,10 +51,33 @@ import java.util.List;
  */
 public class OSMWidget extends QuestionWidget implements IBinaryWidget {
 
+    private enum Behavior {
+        DEFAULT(0),
+        GENERATE_OSM_FILE(1);
+
+        private final int id;
+        private Behavior(int id) {
+            this.id = id;
+        }
+
+        public static Behavior fromId(int id) {
+            for (Behavior cur : Behavior.values()) {
+                if (cur.id == id) {
+                    return cur;
+                }
+            }
+
+            return DEFAULT;
+        }
+    }
+
     // button colors
     private static final int OSM_GREEN = Color.rgb(126, 188, 111);
     private static final int OSM_BLUE = Color.rgb(112, 146, 255);
+    public static final String BEHAVIOR = "accuracyThreshold";
+    public static final String ACTION_GENERATE = "org.odk.collect.android.osm.action.GENERATE";
 
+    private Behavior behavior;
     private Button launchOpenMapKitButton;
     private String binaryName;
     private String instanceDirectory;
@@ -70,6 +104,14 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
          * from here. Awkward...
          */
         formFileName = formController.getMediaFolder().getName().split("-media")[0];
+
+        String behaviorId = prompt.getQuestion().getAdditionalAttribute(null, BEHAVIOR);
+        this.behavior = Behavior.DEFAULT;
+        if (!TextUtils.isEmpty(behaviorId)) {
+            try {
+                this.behavior = Behavior.fromId(Integer.parseInt(behaviorId));
+            } catch (NumberFormatException e) {}
+        }
 
         instanceDirectory = formController.getInstancePath().getParent();
         instanceId = formController.getSubmissionMetadata().instanceId;
@@ -161,7 +203,12 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
     private void launchOpenMapKit() {
         try {
             //launch with intent that sends plain text
-            Intent launchIntent = new Intent(Intent.ACTION_SEND);
+            Intent launchIntent = null;
+            if (behavior.equals(Behavior.GENERATE_OSM_FILE)) {
+                launchIntent = new Intent(ACTION_GENERATE);
+            } else {
+                launchIntent = new Intent(Intent.ACTION_SEND);
+            }
             launchIntent.setType(ContentType.TEXT_PLAIN.getMimeType());
 
             //send form id
@@ -277,7 +324,23 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         for (OSMTag tag : osmRequiredTags) {
             tagKeys.add(tag.key);
             if (tag.label != null) {
-                intent.putExtra("TAG_LABEL." + tag.key, tag.label);
+                // check if the label is an xpath
+                Pattern xPathPattern = Pattern.compile(":(/.*)");
+                Matcher xPathMatcher = xPathPattern.matcher(tag.label);
+                if (xPathMatcher.find()) {
+                    // treat this is an xpath
+                    FormDef formDef = Collect.getInstance().getFormController().getFormDef();
+                    FormInstance formInstance = formDef.getInstance();
+                    EvaluationContext evaluationContext = new EvaluationContext(
+                            formDef.getEvaluationContext(),
+                            formEntryPrompt.getIndex().getReference());
+
+                    XPathPathExpr pathExpr = XPathReference.getPathExpr(xPathMatcher.group(1));
+                    XPathNodeset xpathNodeset = pathExpr.eval(formInstance, evaluationContext);
+                    intent.putExtra("TAG_LABEL." + tag.key, (String) XPathFuncExpr.unpack(xpathNodeset));
+                } else {
+                    intent.putExtra("TAG_LABEL." + tag.key, tag.label);
+                }
             }
             ArrayList<String> tagValues = new ArrayList<String>();
             if (tag.items != null) {
