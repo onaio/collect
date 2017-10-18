@@ -134,7 +134,11 @@ public class WidgetFactory {
                 }
                 break;
             case Constants.CONTROL_OSM_CAPTURE:
-                questionWidget = new OSMWidget(context, fep);
+                if (appearance.startsWith("quick")) {
+                    questionWidget = new OSMWidget(context, fep, true);
+                } else {
+                    questionWidget = new OSMWidget(context, fep, false);
+                }
                 break;
             case Constants.CONTROL_AUDIO_CAPTURE:
                 questionWidget = new AudioWidget(context, fep);

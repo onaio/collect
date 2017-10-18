@@ -35,6 +35,7 @@ import org.javarosa.xpath.expr.XPathPathExpr;
 import org.odk.collect.android.R;
 import org.odk.collect.android.activities.FormEntryActivity;
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.listeners.AdvanceToNextListener;
 import org.odk.collect.android.logic.FormController;
 import org.opendatakit.httpclientandroidlib.entity.ContentType;
 
@@ -86,13 +87,16 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
     private TextView osmFileNameHeaderTextView;
     private TextView osmFileNameTextView;
 
+    private boolean quick;
+    private AdvanceToNextListener advanceToNextListener;
+
     private List<OSMTag> osmRequiredTags;
     private String instanceId;
     private int formId;
     private String formFileName;
     private String osmFileName;
 
-    public OSMWidget(Context context, FormEntryPrompt prompt) {
+    public OSMWidget(Context context, FormEntryPrompt prompt, boolean quick) {
         super(context, prompt);
 
         FormController formController = Collect.getInstance().getFormController();
@@ -117,6 +121,9 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         instanceDirectory = formController.getInstancePath().getParent();
         instanceId = formController.getSubmissionMetadata().instanceId;
         formId = formController.getFormDef().getID();
+
+        this.quick = quick;
+        advanceToNextListener = (AdvanceToNextListener) context;
 
         errorTextView = new TextView(context);
         errorTextView.setId(QuestionWidget.newUniqueId());
@@ -287,6 +294,8 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         osmFileNameTextView.setVisibility(View.VISIBLE);
 
         Collect.getInstance().getFormController().setIndexWaitingForData(null);
+
+        if (quick) advanceToNextListener.advance();
     }
 
     @Override
