@@ -81,6 +81,7 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
     private Button launchOpenMapKitButton;
     private String binaryName;
     private String instanceDirectory;
+    private TextView moveToNextQuestionView;
     private TextView errorTextView;
     private TextView osmFileNameHeaderTextView;
     private TextView osmFileNameTextView;
@@ -132,6 +133,18 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         launchOpenMapKitButton = new Button(getContext());
         launchOpenMapKitButton.setId(QuestionWidget.newUniqueId());
 
+        TableLayout.LayoutParams params = new TableLayout.LayoutParams();
+        params.setMargins(35, 30, 30, 35);
+
+        // text view telling user to move to the next question
+        moveToNextQuestionView = new TextView(context);
+        moveToNextQuestionView.setId(QuestionWidget.newUniqueId());
+        moveToNextQuestionView.setTextSize(20);
+        moveToNextQuestionView.setTypeface(null, Typeface.BOLD);
+        moveToNextQuestionView.setText(R.string.move_to_next_question);
+        moveToNextQuestionView.setLayoutParams(params);
+        moveToNextQuestionView.setVisibility(GONE);
+
         // Button Styling
         if (osmFileName != null) {
             launchOpenMapKitButton.setBackgroundColor(OSM_BLUE);
@@ -140,15 +153,15 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         }
         launchOpenMapKitButton.setTextColor(Color.WHITE); // White text
         if (osmFileName != null) {
+            moveToNextQuestionView.setVisibility(VISIBLE);
             launchOpenMapKitButton.setText(getContext().getString(R.string.recapture_osm));
         } else {
+            moveToNextQuestionView.setVisibility(GONE);
             launchOpenMapKitButton.setText(getContext().getString(R.string.capture_osm));
         }
         launchOpenMapKitButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, answerFontsize);
         launchOpenMapKitButton.setPadding(20, 20, 20, 20);
         launchOpenMapKitButton.setEnabled(!prompt.isReadOnly());
-        TableLayout.LayoutParams params = new TableLayout.LayoutParams();
-        params.setMargins(35, 30, 30, 35);
         launchOpenMapKitButton.setLayoutParams(params);
 
         // Launch OpenMapKit intent on click
@@ -187,6 +200,7 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         // finish complex layout
         LinearLayout answerLayout = new LinearLayout(getContext());
         answerLayout.setOrientation(LinearLayout.VERTICAL);
+        answerLayout.addView(moveToNextQuestionView);
         answerLayout.addView(launchOpenMapKitButton);
         answerLayout.addView(errorTextView);
         answerLayout.addView(osmFileNameHeaderTextView);
