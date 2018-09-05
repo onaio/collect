@@ -63,6 +63,7 @@ public class ApplicationConstants {
 
         public static final String FORM_IDS = "FORM_IDS";
         public static final String MESSAGE = "MESSAGE";
+        public static final String DELETE_INSTANCE_AFTER_SUBMISSION = "DELETE_INSTANCE_AFTER_SUBMISSION";
     }
 
     public abstract static class FormModes {
