@@ -20,6 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.javarosa.core.model.FormDef;
+import org.javarosa.core.model.FormIndex;
 import org.javarosa.core.model.QuestionDef;
 import org.javarosa.core.model.condition.EvaluationContext;
 import org.javarosa.core.model.data.IAnswerData;
@@ -27,6 +28,7 @@ import org.javarosa.core.model.data.StringData;
 import org.javarosa.core.model.instance.FormInstance;
 import org.javarosa.core.model.osm.OSMTag;
 import org.javarosa.core.model.osm.OSMTagItem;
+import org.javarosa.form.api.FormEntryController;
 import org.javarosa.form.api.FormEntryPrompt;
 import org.javarosa.model.xform.XPathReference;
 import org.javarosa.xpath.XPathNodeset;
@@ -53,15 +55,15 @@ import java.util.regex.Pattern;
 public class OSMWidget extends QuestionWidget implements IBinaryWidget {
 
     private enum Behavior {
-        DEFAULT(0),
-        GENERATE_OSM_FILE(1);
+        DEFAULT("default"),
+        GENERATE_OSM_FILE("generate");
 
-        private final int id;
-        private Behavior(int id) {
+        private final String id;
+        private Behavior(String id) {
             this.id = id;
         }
 
-        public static Behavior fromId(int id) {
+        public static Behavior fromId(String id) {
             for (Behavior cur : Behavior.values()) {
                 if (cur.id == id) {
                     return cur;
@@ -75,8 +77,9 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
     // button colors
     private static final int OSM_GREEN = Color.rgb(126, 188, 111);
     private static final int OSM_BLUE = Color.rgb(112, 146, 255);
-    public static final String BEHAVIOR = "accuracyThreshold";
+    public static final String BEHAVIOR = "behavior";
     public static final String ACTION_GENERATE = "org.odk.collect.android.osm.action.GENERATE";
+    private static final String GEO_CONTEXT = "geoContext";
 
     private Behavior behavior;
     private Button launchOpenMapKitButton;
@@ -95,6 +98,7 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
     private int formId;
     private String formFileName;
     private String osmFileName;
+    private String geoContext;
 
     public OSMWidget(Context context, FormEntryPrompt prompt, boolean quick) {
         super(context, prompt);
@@ -114,9 +118,11 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         this.behavior = Behavior.DEFAULT;
         if (!TextUtils.isEmpty(behaviorId)) {
             try {
-                this.behavior = Behavior.fromId(Integer.parseInt(behaviorId));
+                this.behavior = Behavior.fromId(behaviorId);
             } catch (NumberFormatException e) {}
         }
+
+        this.geoContext = prompt.getQuestion().getAdditionalAttribute(null, GEO_CONTEXT);
 
         instanceDirectory = formController.getInstancePath().getParent();
         instanceId = formController.getSubmissionMetadata().instanceId;
@@ -221,10 +227,36 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         errorTextView.setVisibility(View.GONE);
     }
 
+    /**
+     * Returns the value associated with the xform path specified in the geoContext field.
+     *
+     * @return The geo context value or NULL
+     */
+    private String getGeoContextValue() {
+        if (!TextUtils.isEmpty(geoContext)) {
+            FormController formController = Collect.getInstance().getFormController();
+            FormDef formDef = formController.getFormDef();
+            FormInstance formInstance = formDef.getInstance();
+            FormIndex curFormIndex = formController.getFormIndex();
+
+            EvaluationContext evaluationContext =
+                    new EvaluationContext(formDef.getEvaluationContext(), curFormIndex.getReference());
+
+            XPathPathExpr pathExpr = XPathReference.getPathExpr(geoContext);
+            XPathNodeset xpathNodeset = pathExpr.eval(formInstance, evaluationContext);
+            String result = (String) XPathFuncExpr.unpack(xpathNodeset);
+
+            return result;
+        }
+
+        return null;
+    }
+
     private void launchOpenMapKit() {
         try {
             //launch with intent that sends plain text
             Intent launchIntent = null;
+            String geoContextValue  = getGeoContextValue();
             if (behavior.equals(Behavior.GENERATE_OSM_FILE)) {
                 launchIntent = new Intent(ACTION_GENERATE);
             } else {
@@ -244,6 +276,8 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
             //send form file name
             launchIntent.putExtra("FORM_FILE_NAME", formFileName);
 
+            launchIntent.putExtra("GEO_CONTEXT", geoContextValue);
+
             //send OSM file name if there was a previous edit
             if (osmFileName != null) {
                 launchIntent.putExtra("OSM_EDIT_FILE_NAME", osmFileName);
@@ -257,6 +291,10 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
             PackageManager packageManager = ctx.getPackageManager();
             List<ResolveInfo> activities = packageManager.queryIntentActivities(launchIntent, 0);
             boolean isIntentSafe = activities.size() > 0;
+
+            if (!TextUtils.isEmpty(geoContext) && TextUtils.isEmpty(geoContextValue)) {
+                isIntentSafe = false;
+            }
 
             //launch activity if it is safe
             if (isIntentSafe) {
