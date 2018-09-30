@@ -65,7 +65,7 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
 
         public static Behavior fromId(String id) {
             for (Behavior cur : Behavior.values()) {
-                if (cur.id == id) {
+                if (cur.id.toLowerCase().equals(id.toLowerCase())) {
                     return cur;
                 }
             }
@@ -117,9 +117,7 @@ public class OSMWidget extends QuestionWidget implements IBinaryWidget {
         String behaviorId = prompt.getQuestion().getAdditionalAttribute(null, BEHAVIOR);
         this.behavior = Behavior.DEFAULT;
         if (!TextUtils.isEmpty(behaviorId)) {
-            try {
-                this.behavior = Behavior.fromId(behaviorId);
-            } catch (NumberFormatException e) {}
+            this.behavior = Behavior.fromId(behaviorId);
         }
 
         this.geoContext = prompt.getQuestion().getAdditionalAttribute(null, GEO_CONTEXT);
